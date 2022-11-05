@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('music_albums', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('title_id')->constrained()->cascadeOnDelete();
+
             $table->string('title');
+
             $table->timestamps();
         });
     }

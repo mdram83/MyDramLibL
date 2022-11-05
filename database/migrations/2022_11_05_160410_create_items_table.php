@@ -13,12 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('titles', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('title_type_id')->constrained()->restrictOnDelete();
+
             $table->year('published_at')->nullable();
+            $table->unsignedBigInteger('itemable_id');
+            $table->string('itemable_type');
+
             $table->timestamps();
+
+            $table->unique(['itemable_id', 'itemable_type']);
         });
     }
 
