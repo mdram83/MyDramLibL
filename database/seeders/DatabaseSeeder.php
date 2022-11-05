@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Book;
+use App\Models\MusicAlbum;
+use App\Models\Title;
+use App\Models\TitleType;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +19,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $users = User::factory(2)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $bookTitleType = TitleType::factory()->create(['code' => 'Book', 'name' => 'Book']);
+        $musicTitleType = TitleType::factory()->create(['code' => 'MusicAlbum', 'name' => 'Music Album']);
+
+        foreach ($users as $user) {
+            for ($i = 0; $i < 10; $i++) {
+
+                Book::factory()->create([
+                    'title_id' => Title::factory()->create([
+                        'user_id' => $user,
+                        'title_type_id' => $bookTitleType,
+                    ]),
+                ]);
+
+                MusicAlbum::factory()->create([
+                    'title_id' => Title::factory()->create([
+                        'user_id' => $user,
+                        'title_type_id' => $musicTitleType,
+                    ]),
+                ]);
+
+            }
+        }
+
     }
 }
