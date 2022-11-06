@@ -19,7 +19,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::factory(3)->create();
+        User::factory(2)->create();
+        User::factory()->create([
+            'username' => 'mdram83',
+            'email' => 'michal.dramowicz.test1@gmail.com',
+        ]);
+
+        $users = User::all();
 
         foreach ($users as $user) {
 
