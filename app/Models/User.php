@@ -46,4 +46,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(Item::class);
     }
+
+    public function books()
+    {
+        return $this->hasManyThrough(
+            Book::class,
+            Item::class,
+            'user_id',
+            'id',
+            'id',
+            'itemable_id'
+        )->where('itemable_type', Book::class);
+    }
+
+    public function musicAlbums()
+    {
+        return $this->hasManyThrough(
+            MusicAlbum::class,
+            Item::class,
+            'user_id',
+            'id',
+            'id',
+            'itemable_id'
+        )->where('itemable_type', MusicAlbum::class);
+    }
 }

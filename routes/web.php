@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\MusicAlbumController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +22,13 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/books', [BookController::class, 'index'])->name('books');
+
+    Route::get('/music', [MusicAlbumController::class, 'index'])->name('music');
+
+});
 
 require __DIR__.'/auth.php';

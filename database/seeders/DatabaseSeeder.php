@@ -29,12 +29,12 @@ class DatabaseSeeder extends Seeder
 
         foreach ($users as $user) {
 
-            $books = Book::factory(2)->create();
+            $books = Book::factory(20)->create();
             foreach ($books as $item) {
                 $this->createItem($user, $item);
             }
 
-            $musicAlbums = MusicAlbum::factory(2)->create();
+            $musicAlbums = MusicAlbum::factory(20)->create();
             foreach ($musicAlbums as $item) {
                 $this->createItem($user, $item);
             }

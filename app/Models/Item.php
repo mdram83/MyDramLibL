@@ -14,6 +14,8 @@ class Item extends Model
         'itemable_type',
     ];
 
+    protected $with = ['itemable'];
+
     use HasFactory;
 
     public function user()
