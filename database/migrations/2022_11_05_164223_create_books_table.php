@@ -18,6 +18,10 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('isbn')->nullable();
+            $table->string('series')->nullable();
+            $table->smallInteger('volume')->nullable();
+            $table->smallInteger('pages')->nullable();
+            $table->text('comment')->nullable();
 
             $table->timestamps();
         });

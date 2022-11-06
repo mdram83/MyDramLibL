@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('title');
+            $table->string('ean')->nullable();
+            $table->time('duration')->nullable();
+            $table->smallInteger('volumes')->nullable();
 
             $table->timestamps();
         });

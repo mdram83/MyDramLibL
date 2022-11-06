@@ -11,6 +11,9 @@ class MusicAlbum extends Model implements ItemableInterface
 
     protected $fillable = [
         'title',
+        'ean',
+        'duration',
+        'volumes',
     ];
 
     use HasFactory;

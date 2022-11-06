@@ -19,6 +19,10 @@ class BookFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'isbn' => fake()->isbn13(),
+            'series' => fake()->sentence(4),
+            'volume' => fake()->numberBetween(1, 3),
+            'pages' => fake()->numberBetween(50, 900),
+            'comment' => fake()->paragraph(),
         ];
     }
 }
