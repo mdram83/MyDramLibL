@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model implements ItemableInterface
 {
     use ItemableTrait;
+    use HasFactory;
 
     protected $fillable = [
         'title',
@@ -17,5 +18,5 @@ class Book extends Model implements ItemableInterface
         'pages',
     ];
 
-    use HasFactory;
+    protected $with = ['item'];
 }

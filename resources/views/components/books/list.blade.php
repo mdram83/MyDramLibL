@@ -42,15 +42,16 @@
                     <p class="text-sm pb-2">
                         Published: {{ $book->item->published_at }}
                     </p>
-{{--                    TODO categories/tags in model (Item?) --}}
-                    <p class="text-xs">
-                        <span class="my-1 mx-1 px-1.5 bg-gray-400 text-white rounded-xl">
-                            Crime
-                        </span>
-                        <span class="my-1 mx-1 px-1.5 bg-gray-400 text-white rounded-xl">
-                            Sci-fi
-                        </span>
-                    </p>
+
+                    @if ($book->item->tags)
+                        <p class="text-xs">
+                        @foreach ($book->item->tags as $tag)
+                            <span class="my-1 mx-1 px-1.5 bg-gray-400 text-white rounded-xl">
+                                {{ $tag->name }}
+                            </span>
+                        @endforeach
+                        </p>
+                    @endif
                 </div>
 
             </div>

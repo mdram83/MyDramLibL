@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'published_at',
@@ -16,9 +18,7 @@ class Item extends Model
         'comment',
     ];
 
-    protected $with = ['itemable'];
-
-    use HasFactory;
+    protected $with = ['tags'];
 
     public function user()
     {
@@ -28,5 +28,10 @@ class Item extends Model
     public function itemable()
     {
         return $this->morphTo();
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

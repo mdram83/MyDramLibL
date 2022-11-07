@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MusicAlbum extends Model implements ItemableInterface
+class Tag extends Model
 {
-    use ItemableTrait;
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'ean',
-        'duration',
-        'volumes',
+        'name',
     ];
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class);
+    }
 }

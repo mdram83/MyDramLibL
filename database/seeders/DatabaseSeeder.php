@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\ItemableInterface;
 use App\Models\MusicAlbum;
 use App\Models\Item;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Seeder;
@@ -18,9 +19,17 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+
+    private int $numberOfTags = 10;
+    private int $numberOfUsers = 2;
+    private int $numberOfBooks = 25;
+    private int $numberOfMusicAlbums = 25;
+
     public function run()
     {
-        User::factory(2)->create();
+        Tag::factory($this->numberOfTags)->create();
+
+        User::factory($this->numberOfUsers - 1)->create();
         User::factory()->create([
             'username' => 'mdram83',
             'email' => 'michal.dramowicz.test1@gmail.com',
@@ -30,12 +39,12 @@ class DatabaseSeeder extends Seeder
 
         foreach ($users as $user) {
 
-            $books = Book::factory(25)->create();
+            $books = Book::factory($this->numberOfBooks)->create();
             foreach ($books as $item) {
                 $this->createItem($user, $item);
             }
 
-            $musicAlbums = MusicAlbum::factory(25)->create();
+            $musicAlbums = MusicAlbum::factory($this->numberOfMusicAlbums)->create();
             foreach ($musicAlbums as $item) {
                 $this->createItem($user, $item);
             }
@@ -48,6 +57,6 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user,
             'itemable_id' => $itemable,
             'itemable_type' => array_keys(Relation::morphMap(), $itemable::class)[0],
-        ]);
+        ])->tags()->sync(Tag::where('id', rand(1, $this->numberOfTags))->get()->first());
     }
 }
