@@ -17,7 +17,9 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
+            'title' => fake()->sentence(),
             'published_at' => 2012,
+            'thumbnail' => "https://m.media-amazon.com/images/I/51ABc0hukNL._SX384_BO1,204,203,200_.jpg",
         ];
     }
 }

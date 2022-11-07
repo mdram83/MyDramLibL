@@ -18,7 +18,6 @@ class MusicAlbumFactory extends Factory
     public function definition()
     {
         return [
-            'title' => fake()->sentence(),
             'ean' => fake()->ean13(),
             'duration' => fake()->time(),
             'volumes' => fake()->biasedNumberBetween(1, 2, 'exp'),

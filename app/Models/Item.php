@@ -12,6 +12,7 @@ class Item extends Model
         'published_at',
         'itemable_id',
         'itemable_type',
+        'title',
     ];
 
     protected $with = ['itemable'];

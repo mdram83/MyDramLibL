@@ -17,9 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
-            $table->year('published_at')->nullable();
             $table->unsignedBigInteger('itemable_id');
             $table->string('itemable_type');
+
+            $table->string('title');
+            $table->year('published_at')->nullable();
+            $table->string('thumbnail')->nullable();
 
             $table->timestamps();
 

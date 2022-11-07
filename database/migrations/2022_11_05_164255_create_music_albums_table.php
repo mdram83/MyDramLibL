@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('music_albums', function (Blueprint $table) {
             $table->id();
 
-            $table->string('title');
             $table->string('ean')->nullable();
             $table->time('duration')->nullable();
             $table->smallInteger('volumes')->nullable();
