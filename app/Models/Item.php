@@ -13,6 +13,7 @@ class Item extends Model
         'itemable_id',
         'itemable_type',
         'title',
+        'comment',
     ];
 
     protected $with = ['itemable'];

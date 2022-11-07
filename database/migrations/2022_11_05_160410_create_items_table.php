@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('title');
             $table->year('published_at')->nullable();
             $table->string('thumbnail')->nullable();
+            $table->text('comment')->nullable();
 
             $table->timestamps();
 

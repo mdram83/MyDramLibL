@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('series')->nullable();
             $table->smallInteger('volume')->nullable();
             $table->smallInteger('pages')->nullable();
-            $table->text('comment')->nullable();
 
             $table->timestamps();
         });

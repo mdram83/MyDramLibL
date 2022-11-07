@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -56,7 +57,7 @@ class User extends Authenticatable
             'id',
             'id',
             'itemable_id'
-        )->where('itemable_type', Book::class);
+        )->where('itemable_type', array_keys(Relation::morphMap(), Book::class)[0]);
     }
 
     public function musicAlbums()
@@ -68,6 +69,6 @@ class User extends Authenticatable
             'id',
             'id',
             'itemable_id'
-        )->where('itemable_type', MusicAlbum::class);
+        )->where('itemable_type', array_keys(Relation::morphMap(), MusicAlbum::class)[0]);
     }
 }

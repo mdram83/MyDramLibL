@@ -11,7 +11,7 @@ class BookController extends Controller
     public function index()
     {
         return view('books.index', [
-            'books' => auth()->user()->books()->paginate(10),
+            'books' => auth()->user()->books()->latest()->paginate(10),
         ]);
     }
 }

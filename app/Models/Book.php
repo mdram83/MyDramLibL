@@ -15,7 +15,6 @@ class Book extends Model implements ItemableInterface
         'series',
         'volume',
         'pages',
-        'comment',
     ];
 
     use HasFactory;

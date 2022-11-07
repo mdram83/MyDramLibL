@@ -18,8 +18,9 @@ class ItemFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'published_at' => 2012,
+            'published_at' => fake()->year(),
             'thumbnail' => "https://m.media-amazon.com/images/I/51ABc0hukNL._SX384_BO1,204,203,200_.jpg",
+            'comment' => fake()->paragraph(),
         ];
     }
 }
