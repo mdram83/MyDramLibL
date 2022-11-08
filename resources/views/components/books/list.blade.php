@@ -19,10 +19,11 @@
                     <p class="font-semibold text-lg leading-tight">
                         <a href="/books/{{ $book->id }}" class="hover:underline">{{ $book->item->title }}</a>
                     </p>
-                    <p class="text-sm pt-1 italic">
-{{--                        TODO authors in model and dinamically displayed --}}
-                        Kozłowski, Paweł <strong>|</strong> Mróz, Remigiusz
-                    </p>
+                    @if ($book->item->artists)
+                        <p class="text-sm pt-1 italic">
+                            @foreach ($book->item->artists as $artist){{($loop->index > 0 ? ', ' : '') . $artist->getName()}}@endforeach
+                        </p>
+                    @endif
 
                     @if ($book->series)
 
@@ -39,14 +40,22 @@
                 </div>
 
                 <!-- Details -->
-                <div class="hidden sm:block">
+                <div class="hidden sm:block pl-2 sm:basis-64 flex-none text-right">
 
-                    <p class="text-sm pb-2">
-                        Published: {{ $book->item->published_at }}
-                    </p>
+                    @if ($book->item->published_at)
+                        <p class="text-xs">
+                            Published: {{ $book->item->published_at }}
+                        </p>
+                    @endif
+
+                    @if ($book->item->publisher)
+                        <p class="text-xs pb-1">
+                            {{ $book->item->publisher->name }}
+                        </p>
+                    @endif
 
                     @if ($book->item->tags)
-                        <p class="text-xs">
+                        <p class="text-xs leading-6">
                         @foreach ($book->item->tags as $tag)
                             <span class="my-1 mx-1 px-1.5 bg-gray-400 text-white rounded-xl">
                                 {{ $tag->name }}

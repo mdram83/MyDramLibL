@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('publisher_id')->nullable()->constrained()->nullOnDelete();
 
             $table->unsignedBigInteger('itemable_id');
             $table->string('itemable_type');

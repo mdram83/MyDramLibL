@@ -13,4 +13,14 @@ class Artist extends Model
         'firstname',
         'lastname',
     ];
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class);
+    }
+
+    public function getName() : string
+    {
+        return trim("{$this->firstname} {$this->lastname}");
+    }
 }

@@ -11,6 +11,7 @@ class Item extends Model
 
     protected $fillable = [
         'user_id',
+        'publisher_id',
         'published_at',
         'itemable_id',
         'itemable_type',
@@ -18,7 +19,11 @@ class Item extends Model
         'comment',
     ];
 
-    protected $with = ['tags'];
+    protected $with = [
+        'tags',
+        'artists',
+        'publisher',
+    ];
 
     public function user()
     {
@@ -33,5 +38,15 @@ class Item extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function artists()
+    {
+        return $this->belongsToMany(Artist::class);
+    }
+
+    public function publisher()
+    {
+        return $this->belongsTo(Publisher::class);
     }
 }
