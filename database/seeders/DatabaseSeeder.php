@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Artist;
 use App\Models\Book;
 use App\Models\ItemableInterface;
 use App\Models\MusicAlbum;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
      */
 
     private int $numberOfTags = 10;
+    private int $numberOfArtists = 50;
     private int $numberOfUsers = 2;
     private int $numberOfBooks = 25;
     private int $numberOfMusicAlbums = 25;
@@ -28,6 +30,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Tag::factory($this->numberOfTags)->create();
+        Artist::factory($this->numberOfArtists)->create();
 
         User::factory($this->numberOfUsers - 1)->create();
         User::factory()->create([

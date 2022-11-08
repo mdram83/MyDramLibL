@@ -15,20 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', fn() => view('welcome'));
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/books', [BookController::class, 'index'])->name('books');
-
     Route::get('/music', [MusicAlbumController::class, 'index'])->name('music');
-
 });
 
 require __DIR__.'/auth.php';

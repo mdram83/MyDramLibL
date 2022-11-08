@@ -9,18 +9,15 @@
 
                 <!-- Thumbnail -->
                 <div class="pr-2 sm:basis-24 basis-16 flex-none">
-                    <img
-                        class="max-h-24"
-                        alt="Thumbnail"
-                        src="{{ $book->item->thumbnail ?? '/images/thumbnail.png' }}">
+                    <img class="max-h-24" alt="Thumbnail"
+                        src="{{ $book->item->thumbnail ?? '/images/thumbnail.png' }}"
+                    >
                 </div>
 
                 <!-- Main data -->
                 <div class="flex-auto">
                     <p class="font-semibold text-lg leading-tight">
-                        <a href="/books/{{ $book->id }}" class="hover:underline">
-                            {{ $book->item->title }}
-                        </a>
+                        <a href="/books/{{ $book->id }}" class="hover:underline">{{ $book->item->title }}</a>
                     </p>
                     <p class="text-sm pt-1 italic">
 {{--                        TODO authors in model and dinamically displayed --}}
@@ -28,17 +25,22 @@
                     </p>
 
                     @if ($book->series)
+
                         <p class="hidden sm:block text-sm pt-1 leading-tight">
                             {{ $book->series }}
+
                             @if ($book->volume)
                                 <br> Volume {{ $book->volume }}
                             @endif
+
                         </p>
+
                     @endif
                 </div>
 
                 <!-- Details -->
                 <div class="hidden sm:block">
+
                     <p class="text-sm pb-2">
                         Published: {{ $book->item->published_at }}
                     </p>
@@ -52,6 +54,7 @@
                         @endforeach
                         </p>
                     @endif
+
                 </div>
 
             </div>
