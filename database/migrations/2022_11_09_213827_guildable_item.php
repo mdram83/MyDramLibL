@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('artist_item', function (Blueprint $table) {
+        Schema::create('guildable_item', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('artist_id')->constrained()->cascadeOnDelete();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('guildable_id')->constrained()->cascadeOnDelete()
+                ->references('id')->on('guilds');
+            $table->string('guildable_type');
 
             $table->timestamps();
-            $table->unique(['artist_id', 'item_id']);
-
+            $table->unique(['item_id', 'guildable_id', 'guildable_type']);
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('artist_item');
+        Schema::dropIfExists('guildable_item');
     }
 };

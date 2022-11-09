@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Artist>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Guild>
  */
-class ArtistFactory extends Factory
+class GuildFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class ArtistFactory extends Factory
     public function definition()
     {
         return [
-            'firstname' => rand(0, 100) > 15 ? fake()->firstName() : '',
-            'lastname' => fake()->unique()->lastName(),
+            'name' => fake()->unique()->company(),
         ];
     }
 }

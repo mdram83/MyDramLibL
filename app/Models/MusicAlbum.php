@@ -17,5 +17,7 @@ class MusicAlbum extends Model implements ItemableInterface
         'volumes',
     ];
 
-    protected $with = ['item'];
+    protected $with = [
+        'item',
+    ];
 }

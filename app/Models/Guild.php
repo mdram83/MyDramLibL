@@ -5,17 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Artist extends Model
+class Guild extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'firstname',
-        'lastname',
+        'name'
     ];
-
-    public function getName() : string
-    {
-        return trim("{$this->firstname} {$this->lastname}");
-    }
 }

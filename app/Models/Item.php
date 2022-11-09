@@ -21,13 +21,20 @@ class Item extends Model
 
     protected $with = [
         'tags',
-        'artists',
         'publisher',
+        'authors',
+        'mainArtists',
+        'mainBands',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function publisher()
+    {
+        return $this->belongsTo(Publisher::class);
     }
 
     public function itemable()
@@ -40,13 +47,18 @@ class Item extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function artists()
+    public function authors()
     {
-        return $this->belongsToMany(Artist::class);
+        return $this->morphedByMany(Author::class, 'artistable', 'artistable_item');
     }
 
-    public function publisher()
+    public function mainArtists()
     {
-        return $this->belongsTo(Publisher::class);
+        return $this->morphedByMany(MainArtist::class, 'artistable', 'artistable_item');
+    }
+
+    public function mainBands()
+    {
+        return $this->morphedByMany(MainBand::class, 'guildable', 'guildable_item');
     }
 }

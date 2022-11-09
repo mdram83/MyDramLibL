@@ -19,9 +19,9 @@
                     <p class="font-semibold text-lg leading-tight">
                         <a href="/books/{{ $book->id }}" class="hover:underline">{{ $book->item->title }}</a>
                     </p>
-                    @if ($book->item->artists)
+                    @if ($book->item->authors)
                         <p class="text-sm pt-1 italic">
-                            @foreach ($book->item->artists as $artist){{($loop->index > 0 ? ', ' : '') . $artist->getName()}}@endforeach
+                            @foreach ($book->item->authors as $author){{($loop->index > 0 ? ', ' : '') . $author->getName()}}@endforeach
                         </p>
                     @endif
 

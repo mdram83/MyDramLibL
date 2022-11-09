@@ -18,5 +18,7 @@ class Book extends Model implements ItemableInterface
         'pages',
     ];
 
-    protected $with = ['item'];
+    protected $with = [
+        'item',
+    ];
 }
