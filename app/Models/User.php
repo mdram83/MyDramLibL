@@ -57,7 +57,7 @@ class User extends Authenticatable
             'id',
             'id',
             'itemable_id'
-        )->where('itemable_type', array_keys(Relation::morphMap(), Book::class)[0]);
+        )->where('itemable_type', (new Book())->getMorphClass());
     }
 
     public function musicAlbums()
@@ -69,6 +69,6 @@ class User extends Authenticatable
             'id',
             'id',
             'itemable_id'
-        )->where('itemable_type', array_keys(Relation::morphMap(), MusicAlbum::class)[0]);
+        )->where('itemable_type', (new MusicAlbum())->getMorphClass());
     }
 }

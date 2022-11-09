@@ -10,7 +10,7 @@
                 <!-- Thumbnail -->
                 <div class="pr-2 sm:basis-24 basis-16 flex-none">
                     <img class="max-h-24" alt="Thumbnail"
-                        src="{{ $musicAlbum->item->thumbnail ?? '/images/thumbnails\music.png' }}"
+                        src="{{ $musicAlbum->item->thumbnail ?? '/images/thumbnails/music.png' }}"
                     >
                 </div>
 
@@ -19,11 +19,29 @@
                     <p class="font-semibold text-lg leading-tight">
                         <a href="/books/{{ $musicAlbum->id }}" class="hover:underline">{{ $musicAlbum->item->title }}</a>
                     </p>
-                    @if ($musicAlbum->item->artists)
-                        <p class="text-sm pt-1 italic">
-                            @foreach ($musicAlbum->item->artists as $artist){{($loop->index > 0 ? ', ' : '') . $artist->getName()}}@endforeach
+
+                    @if ($musicAlbum->item->mainBands || $musicAlbum->item->mainArtists)
+                        <p class="text-sm pt-1">
+
+                        @if ($musicAlbum->item->mainBands)
+                            <span class="font-semibold">
+                                @foreach ($musicAlbum->item->mainBands as $mainBand){{($loop->index > 0 ? ', ' : '') . strtoupper($mainBand->name)}}@endforeach
+                            </span>
+                        @endif
+
+                        @if ($musicAlbum->item->mainBands || $musicAlbum->item->mainArtists)
+                            <span>with</span>
+                        @endif
+
+                        @if ($musicAlbum->item->mainArtists)
+                            <span class="italic">
+                                @foreach ($musicAlbum->item->mainArtists as $mainArtist){{($loop->index > 0 ? ', ' : '') . $mainArtist->getName()}}@endforeach
+                            </span>
+                        @endif
+
                         </p>
                     @endif
+
 
                     @if ($musicAlbum->volumes)
                         <p class="hidden sm:block text-sm pt-1 leading-tight">
