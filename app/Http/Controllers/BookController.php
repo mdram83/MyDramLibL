@@ -10,8 +10,9 @@ class BookController extends Controller
 {
     public function index()
     {
-        return view('books.index', [
-            'books' => auth()->user()->books()->latest()->paginate(10),
+        return view('itemables.index', [
+            'itemables' => auth()->user()->books()->latest()->paginate(10),
+            'header' => 'Books',
         ]);
     }
 }

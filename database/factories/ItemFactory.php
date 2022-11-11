@@ -18,9 +18,9 @@ class ItemFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'published_at' => fake()->year(),
-            'thumbnail' => rand(1, 100) > 50
-                ? 'https://m.media-amazon.com/images/I/51ABc0hukNL._SX384_BO1,204,203,200_.jpg'
+            'published_at' => rand(1, 100) > 50 ? fake()->year() : null,
+            'thumbnail' => rand(1, 100) > 20
+                ? 'https://api.lorem.space/image/book?w=150&h=220&hash=' . md5(fake()->word())
                 : null,
             'comment' => fake()->paragraph(),
         ];

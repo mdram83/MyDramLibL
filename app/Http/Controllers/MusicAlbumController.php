@@ -8,8 +8,9 @@ class MusicAlbumController extends Controller
 {
     public function index()
     {
-        return view('music.index', [
-            'musicAlbums' => auth()->user()->musicAlbums()->latest()->paginate(10),
+        return view('itemables.index', [
+            'itemables' => auth()->user()->musicAlbums()->latest()->paginate(10),
+            'header' => 'Music Albums',
         ]);
     }
 }

@@ -18,9 +18,9 @@ class MusicAlbumFactory extends Factory
     public function definition()
     {
         return [
-            'ean' => fake()->ean13(),
-            'duration' => fake()->time(),
-            'volumes' => fake()->biasedNumberBetween(1, 2, 'exp'),
+            'ean' => rand(1, 100) >= 50 ? fake()->ean13() : null,
+            'duration' => rand(1, 100) >= 70 ? fake()->time() : null,
+            'volumes' => rand(1, 100) >= 50 ? fake()->biasedNumberBetween(1, 2, 'exp') : null,
         ];
     }
 }

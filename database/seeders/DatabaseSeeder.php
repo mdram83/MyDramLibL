@@ -35,8 +35,8 @@ class DatabaseSeeder extends Seeder
 
     private int $numberOfUsers = 2;
 
-    private int $booksPerUser = 10;
-    private int $musicAlbumsPerUser = 10;
+    private int $booksPerUser = 20;
+    private int $musicAlbumsPerUser = 20;
 
     private array $tagsPerItem = [
         'min' => 0,
@@ -107,10 +107,11 @@ class DatabaseSeeder extends Seeder
 
             $item = $this->createItem($user, $book);
 
-            $item->authors()->sync($this->authors->random(rand(
-                (int) min($this->authorsPerBook['min'], $this->authors->count()),
-                (int) min($this->authorsPerBook['max'], $this->authors->count()),
-            )));
+            $item->authors()->sync($this->getRandomCollectionItems(
+                $this->authors,
+                $this->authorsPerBook['min'],
+                $this->authorsPerBook['max'],
+            ));
         }
     }
 
@@ -120,15 +121,17 @@ class DatabaseSeeder extends Seeder
 
             $item = $this->createItem($user, $musicAlbum);
 
-            $item->mainArtists()->sync($this->mainArtists->random(rand(
-                (int) min($this->mainArtistsPerMusicAlbum['min'], $this->mainArtists->count()),
-                (int) min($this->mainArtistsPerMusicAlbum['max'], $this->mainArtists->count()),
-            )));
+            $item->mainArtists()->sync($this->getRandomCollectionItems(
+                $this->mainArtists,
+                $this->mainArtistsPerMusicAlbum['min'],
+                $this->mainArtistsPerMusicAlbum['max'],
+            ));
 
-            $item->mainBands()->sync($this->mainBands->random(rand(
-                (int) min($this->mainBandsPerMusicAlbum['min'], $this->mainBands->count()),
-                (int) min($this->mainBandsPerMusicAlbum['max'], $this->mainBands->count()),
-            )));
+            $item->mainBands()->sync($this->getRandomCollectionItems(
+                $this->mainBands,
+                $this->mainBandsPerMusicAlbum['min'],
+                $this->mainBandsPerMusicAlbum['max'],
+            ));
         }
     }
 
@@ -136,16 +139,25 @@ class DatabaseSeeder extends Seeder
     {
         $item = Item::factory()->create([
             'user_id' => $user,
-            'publisher_id' => $this->publishers->random(),
+            'publisher_id' => rand(1, 100) >= 40 ? $this->publishers->random() : null,
             'itemable_id' => $itemable,
             'itemable_type' => $itemable->getMorphClass(),
         ]);
 
-        $item->tags()->sync($this->tags->random(rand(
-            (int) min($this->tagsPerItem['min'], $this->numberOfTags),
-            (int) min($this->tagsPerItem['max'], $this->numberOfTags),
-        )));
+        $item->tags()->sync($this->getRandomCollectionItems(
+            $this->tags,
+            $this->tagsPerItem['min'],
+            $this->tagsPerItem['max'],
+        ));
 
         return $item;
+    }
+
+    private function getRandomCollectionItems(Collection $collection, int $min, int $max) : ?Collection
+    {
+        return $collection->random(rand(
+            (int) min($min, $collection->count()),
+            (int) min($max, $collection->count()),
+        ));
     }
 }
