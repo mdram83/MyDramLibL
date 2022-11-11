@@ -15,4 +15,14 @@ class BookController extends Controller
             'header' => 'Books',
         ]);
     }
+
+    public function show(int $id)
+    {
+        if ($itemable = auth()->user()->books()->where('books.id', $id)->first()) {
+            return view('itemable.show', [
+                'itemable' => $itemable,
+            ]);
+        }
+        abort(404);
+    }
 }

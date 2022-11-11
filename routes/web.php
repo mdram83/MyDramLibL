@@ -18,9 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => view('welcome'));
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+
+
     Route::get('/books', [BookController::class, 'index'])->name('books');
+    Route::get('/books/{id}', [BookController::class, 'show']);
+
+
     Route::get('/music', [MusicAlbumController::class, 'index'])->name('music');
+    Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
 });
 
 require __DIR__.'/auth.php';
