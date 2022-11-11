@@ -4,44 +4,36 @@
 {{--TODO design this view for big and small screen, feel free not to reuse below components--}}
 
 <!-- Thumbnail -->
-<x-itemables.itemable-thumbnail :src="$book->item->thumbnail" :type="'Book'"/>
+<x-itemables.itemable-thumbnail :src="$itemable->getThumbnail()" :type="'Book'"/>
 
 <!-- Main -->
 <x-itemables.itemable-main>
 
     <!-- Title -->
-    <x-itemables.itemable-main-title :href="'/books/' . $book->id" :title="$book->item->title"/>
+    <x-itemables.itemable-main-title :href="'/books/' . $itemable->id" :title="$itemable->getTitle()"/>
 
     <!-- Authors -->
-    @if ($book->item->authors)
+    @if ($itemable->getAuthors())
         <p class="text-sm pt-1 italic">
-            @foreach ($book->item->authors as $author){{($loop->index > 0 ? ', ' : '') . $author->getName()}}@endforeach
+            @foreach ($itemable->getAuthors() as $author){{($loop->index > 0 ? ', ' : '') . $author->getName()}}@endforeach
         </p>
     @endif
 
     <!-- Series -->
-    @if ($book->series)
+    @if ($itemable->series)
         <x-itemables.itemable-main-paragraph>
-            {{ $book->series }}
+            {{ $itemable->series }}
         </x-itemables.itemable-main-paragraph>
     @endif
 
     <!-- Volume -->
-    @if ($book->volume)
+    @if ($itemable->volume)
         <x-itemables.itemable-main-paragraph>
-            Volume: {{ $book->volume }}
+            Volume: {{ $itemable->volume }}
         </x-itemables.itemable-main-paragraph>
     @endif
 
 </x-itemables.itemable-main>
 
 <!-- Details -->
-<x-itemables.itemable-details>
-
-    <!-- Publishing -->
-    <x-itemables.itemable-details-publishing :item="$book->item"/>
-
-    <!-- Tags -->
-    <x-itemables.itemable-details-tags :tags="$book->item->tags"/>
-
-</x-itemables.itemable-details>
+<x-itemables.itemable-details :itemable="$itemable"/>

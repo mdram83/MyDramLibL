@@ -1,8 +1,7 @@
-@isset ($item->published_at)
-    <p class="text-xs">Published: {{ $item->published_at }}</p>
-@endisset
+@if ($itemable->getPublishedAt())
+    <p class="text-xs">Published: {{ $itemable->getPublishedAt() }}</p>
+@endif
 
-@isset ($item->publisher)
-    <p class="text-xs pb-1">{{ $item->publisher->name }}</p>
-@endisset
-
+@if ($itemable->getPublisherName())
+    <p class="text-xs pb-1">{{ $itemable->getPublisherName() }}</p>
+@endif

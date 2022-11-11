@@ -17,10 +17,10 @@ class BookFactory extends Factory
     public function definition()
     {
         return [
-            'isbn' => rand(1, 100) >= 10 ? fake()->isbn13() : null,
-            'series' => rand(1, 100) >= 80 ? fake()->sentence(4) : null,
-            'volume' => rand(1, 100) >= 50 ? fake()->numberBetween(1, 3) : null,
-            'pages' => rand(1, 100) >= 70 ? fake()->numberBetween(50, 900) : null,
+            'isbn' => rand(1, 100) > 10 ? fake()->isbn13() : null,
+            'series' => rand(1, 100) > 20 ? fake()->sentence(4) : null,
+            'volume' => rand(1, 100) > 30 ? fake()->numberBetween(1, 3) : null,
+            'pages' => rand(1, 100) > 40 ? fake()->numberBetween(50, 900) : null,
         ];
     }
 }

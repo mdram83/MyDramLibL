@@ -18,11 +18,11 @@ class ItemFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'published_at' => rand(1, 100) > 50 ? fake()->year() : null,
-            'thumbnail' => rand(1, 100) > 20
-                ? 'https://api.lorem.space/image/book?w=150&h=220&hash=' . md5(fake()->word())
+            'published_at' => rand(1, 100) > 20 ? fake()->year() : null,
+            'thumbnail' => rand(1, 100) > 30
+                ? 'https://api.lorem.space/image/book?w=150&h=220&hash=' . fake()->numberBetween(10000000, 99999999)
                 : null,
-            'comment' => fake()->paragraph(),
+            'comment' => fake()->paragraph(8),
         ];
     }
 }
