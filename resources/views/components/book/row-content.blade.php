@@ -26,7 +26,7 @@
     <!-- Volume -->
     @if ($itemable->volume)
         <x-itemables.itemable-main-paragraph>
-            Volume: {{ $itemable->volume }}
+            {{ __('Volume') }}: {{ $itemable->volume }}
         </x-itemables.itemable-main-paragraph>
     @endif
 

@@ -23,7 +23,7 @@
 
     @else
         <x-main-row>
-            No items found.
+            {{ __('No items found') }}.
         </x-main-row>
     @endif
 

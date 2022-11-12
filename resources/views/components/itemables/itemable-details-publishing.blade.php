@@ -1,5 +1,5 @@
 @if ($itemable->getPublishedAt())
-    <p class="text-xs">Published: {{ $itemable->getPublishedAt() }}</p>
+    <p class="text-xs">{{ __('Published') }}: {{ $itemable->getPublishedAt() }}</p>
 @endif
 
 @if ($itemable->getPublisherName())

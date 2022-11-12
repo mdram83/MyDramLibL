@@ -38,14 +38,14 @@
     <!-- Volumes -->
     @if ($itemable->volumes)
         <x-itemables.itemable-main-paragraph>
-            Volumes: {{ $itemable->volumes }}
+            {{ __('Volumes') }}: {{ $itemable->volumes }}
         </x-itemables.itemable-main-paragraph>
     @endif
 
     <!-- Duration -->
     @if ($itemable->duration)
         <x-itemables.itemable-main-paragraph>
-            Duration: {{ $itemable->duration }}
+            {{ __('Duration') }}: {{ $itemable->duration }}
         </x-itemables.itemable-main-paragraph>
     @endif
 

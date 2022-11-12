@@ -1,57 +1,78 @@
 @props(['itemable'])
 
-{{--TODO design this view for big and small screen, feel free not to reuse below components--}}
-
 <!-- Thumbnail -->
-<x-itemables.itemable-thumbnail :src="$itemable->getThumbnail()" :type="'MusicAlbum'"/>
+<x-itemable.itemable-thumbnail :src="$itemable->getThumbnail()" :type="'MusicAlbum'"/>
 
 <!-- Main -->
-<x-itemables.itemable-main>
+<x-itemable.itemable-main>
 
     <!-- Title -->
-    <x-itemables.itemable-main-title :href="'/music/' . $itemable->id" :title="$itemable->getTitle()"/>
+    <x-itemable.itemable-main-title :title="$itemable->getTitle()"/>
+
+    <!-- More About Item From Openlibrary.org -->
+    <p class="text-xs leading-none pt-0 pb-2 mt-0">
+        <x-itemable.itemable-link :link="'#'">{{ __('info') }}</x-itemable.itemable-link>
+    </p>
 
     <!-- Main Bands and Artists -->
     @if ($itemable->getMainBands() || $itemable->getMainArtists())
-        <p class="text-sm pt-1">
 
-            <!-- Main Bands -->
-            @if ($itemable->getMainBands())
+        <div class="pb-2">
+
+        <!-- Main Bands -->
+        @if ($itemable->getMainBands())
+            <p class="flex flex-wrap">
+            @foreach ($itemable->getMainBands() as $mainBand)
                 <span class="font-semibold">
-                    @foreach ($itemable->getMainBands() as $mainBand){{($loop->index > 0 ? ', ' : '') . strtoupper($mainBand->name)}}@endforeach
+                    {{ strtoupper($mainBand->name) }}
+                    <x-itemable.itemable-link :link="'#'">{{ __('info') }}</x-itemable.itemable-link>
+                    <x-itemable.itemable-link :link="'#'">{{ __('items') }}</x-itemable.itemable-link>
+                    @if (!$loop->last),&nbsp;@endif
                 </span>
-            @endif
+            </p>
+           @endforeach
+        @endif
 
-            <!-- Band & Artist Connector -->
-            @if ($itemable->getMainBands() && $itemable->getMainArtists())
-                <span>with</span>
-            @endif
+        <!-- Main Artists -->
+        @if ($itemable->getMainArtists())
+            <p class="flex flex-wrap">
+                @foreach ($itemable->getMainArtists() as $mainArtist)
+                    <span class="font-semibold">
+                        {{ $mainArtist->getName() }}
+                        <x-itemable.itemable-link :link="'#'">{{ __('info') }}</x-itemable.itemable-link>
+                        <x-itemable.itemable-link :link="'#'">{{ __('items') }}</x-itemable.itemable-link>
+                        @if (!$loop->last),&nbsp;@endif
+                    </span>
+                @endforeach
+            </p>
+        @endif
 
-            <!-- Main Artists -->
-            @if ($itemable->getMainArtists())
-                <span class="italic">
-                    @foreach ($itemable->getMainArtists() as $mainArtist){{($loop->index > 0 ? ', ' : '') . $mainArtist->getName()}}@endforeach
-                </span>
-            @endif
-
-        </p>
+        </div>
     @endif
+
+    <!-- Publishing -->
+    <x-itemable.itemable-main-publishing :itemable="$itemable"/>
+
+    <!-- Tags -->
+    <x-itemable.itemable-main-tags :tags="$itemable->getTags()"/>
+
+</x-itemable.itemable-main>
+
+<!-- Music Album Details -->
+<x-itemable.details>
 
     <!-- Volumes -->
-    @if ($itemable->volumes)
-        <x-itemables.itemable-main-paragraph>
-            Volumes: {{ $itemable->volumes }}
-        </x-itemables.itemable-main-paragraph>
-    @endif
+    <x-itemable.details-element :label="__('Volumes')" :value="$itemable->volumes"/>
 
     <!-- Duration -->
-    @if ($itemable->duration)
-        <x-itemables.itemable-main-paragraph>
-            Duration: {{ $itemable->duration }}
-        </x-itemables.itemable-main-paragraph>
-    @endif
+    <x-itemable.details-element :label="__('Duration')" :value="$itemable->duration"/>
 
-</x-itemables.itemable-main>
+    <!-- EAN -->
+    <x-itemable.details-element :label="__('EAN')" :value="$itemable->ean"/>
 
-<!-- Details -->
-<x-itemables.itemable-details :itemable="$itemable"/>
+</x-itemable.details>
+
+<!-- Comment -->
+@if ($itemable->getComment())
+    <x-itemable.itemable-comment :itemableType="__($itemable->getItemableType())" :comment="$itemable->getComment()"/>
+@endif

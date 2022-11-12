@@ -22,7 +22,7 @@ class ItemFactory extends Factory
             'thumbnail' => rand(1, 100) > 30
                 ? 'https://api.lorem.space/image/book?w=150&h=220&hash=' . fake()->numberBetween(10000000, 99999999)
                 : null,
-            'comment' => fake()->paragraph(8),
+            'comment' => fake()->paragraphs(3, true),
         ];
     }
 }

@@ -1,7 +1,5 @@
 @props(['itemable'])
 
-{{--TODO continue with Comment field, then placeholders for APIs or go to add/edit forms --}}
-
 <!-- Thumbnail -->
 <x-itemable.itemable-thumbnail :src="$itemable->getThumbnail()" :type="'Book'"/>
 
@@ -30,7 +28,7 @@
 </x-itemable.itemable-main>
 
 <!-- Book Details -->
-<x-itemable.details :itemableType="$itemable->getItemableType()">
+<x-itemable.details>
 
     <!-- Series -->
     <x-itemable.details-element :label="__('Series')" :value="$itemable->series"/>
@@ -45,3 +43,8 @@
     <x-itemable.details-element :label="__('ISBN')" :value="$itemable->isbn"/>
 
 </x-itemable.details>
+
+<!-- Comment -->
+@if ($itemable->getComment())
+    <x-itemable.itemable-comment :itemableType="__($itemable->getItemableType())" :comment="$itemable->getComment()"/>
+@endif
