@@ -1,39 +1,47 @@
 @props(['itemable'])
-@php($book = $itemable)
 
-{{--TODO design this view for big and small screen, feel free not to reuse below components--}}
+{{--TODO continue with Comment field, then placeholders for APIs or go to add/edit forms --}}
 
 <!-- Thumbnail -->
-<x-itemables.itemable-thumbnail :src="$itemable->getThumbnail()" :type="'Book'"/>
+<x-itemable.itemable-thumbnail :src="$itemable->getThumbnail()" :type="'Book'"/>
 
 <!-- Main -->
-<x-itemables.itemable-main>
+<x-itemable.itemable-main>
 
     <!-- Title -->
-    <x-itemables.itemable-main-title :href="'/books/' . $itemable->id" :title="$itemable->getTitle()"/>
+    <x-itemable.itemable-main-title :title="$itemable->getTitle()"/>
+
+    <!-- More About Item From Openlibrary.org -->
+    <p class="text-xs leading-none pt-0 pb-2 mt-0">
+        <x-itemable.itemable-link :link="'#'">{{ __('info') }}</x-itemable.itemable-link>
+    </p>
 
     <!-- Authors -->
-    @if ($itemable->getAuthors())
-        <p class="text-sm pt-1 italic">
-            @foreach ($itemable->getAuthors() as $author){{($loop->index > 0 ? ', ' : '') . $author->getName()}}@endforeach
-        </p>
+    @if ($itemable->getAuthors()?->count() > 0)
+        <x-book.authors :authors="$itemable->getAuthors()"/>
     @endif
+
+    <!-- Publishing -->
+    <x-itemable.itemable-main-publishing :itemable="$itemable"/>
+
+    <!-- Tags -->
+    <x-itemable.itemable-main-tags :tags="$itemable->getTags()"/>
+
+</x-itemable.itemable-main>
+
+<!-- Book Details -->
+<x-itemable.details :itemableType="$itemable->getItemableType()">
 
     <!-- Series -->
-    @if ($itemable->series)
-        <x-itemables.itemable-main-paragraph>
-            {{ $itemable->series }}
-        </x-itemables.itemable-main-paragraph>
-    @endif
+    <x-itemable.details-element :label="__('Series')" :value="$itemable->series"/>
 
     <!-- Volume -->
-    @if ($itemable->volume)
-        <x-itemables.itemable-main-paragraph>
-            Volume: {{ $itemable->volume }}
-        </x-itemables.itemable-main-paragraph>
-    @endif
+    <x-itemable.details-element :label="__('Volume')" :value="$itemable->volume"/>
 
-</x-itemables.itemable-main>
+    <!-- Pages -->
+    <x-itemable.details-element :label="__('Pages')" :value="$itemable->pages"/>
 
-<!-- Details -->
-<x-itemables.itemable-details :itemable="$itemable"/>
+    <!-- ISBN -->
+    <x-itemable.details-element :label="__('ISBN')" :value="$itemable->isbn"/>
+
+</x-itemable.details>

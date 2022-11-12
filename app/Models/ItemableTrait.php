@@ -40,4 +40,9 @@ trait ItemableTrait
     {
         return $this->item->tags;
     }
+
+    public function getItemableType() : string
+    {
+        return $this->item->itemable_type;
+    }
 }

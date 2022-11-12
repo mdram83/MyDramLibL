@@ -14,5 +14,6 @@ interface ItemableInterface
     public function getThumbnail() : ?string;
     public function getComment() : ?string;
     public function getTags() : ?Collection;
+    public function getItemableType() : string;
 
 }
