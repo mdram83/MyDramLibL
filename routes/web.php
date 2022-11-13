@@ -23,7 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::get('/books', [BookController::class, 'index'])->name('books');
+    Route::get('/books/create', [BookController::class, 'create']);
+    Route::post('books/store', [BookController::class, 'store']);
     Route::get('/books/{id}', [BookController::class, 'show']);
+
 
 
     Route::get('/music', [MusicAlbumController::class, 'index'])->name('music');

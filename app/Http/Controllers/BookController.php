@@ -16,6 +16,18 @@ class BookController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('book.create', [
+            'header' => 'Add Book',
+        ]);
+    }
+
+    public function store()
+    {
+        ddd(request()->post());
+    }
+
     public function show(int $id)
     {
         if ($itemable = auth()->user()->books()->where('books.id', $id)->first()) {
