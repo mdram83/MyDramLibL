@@ -5,7 +5,10 @@
     {{ $required ? 'required' : '' }}
     {!! $attributes->merge([
     'class' => '
-        rounded-md
+        w-full
+        py-1.5
+        text-sm
+        rounded-sm
         shadow-sm
         border-gray-300
         focus:border-indigo-300
