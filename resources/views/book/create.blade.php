@@ -93,8 +93,28 @@
                     </div>
 
                     <!-- Tags -->
-                    <x-itemable.form.label for="tags">Tags</x-itemable.form.label>
-                    TBD
+
+{{--                    TODO: grid similar to publishers for nice styline--}}
+
+                    @push('custom-scripts')
+                        @vite('resources/js/library/ajax/tags-index.js')
+                        @vite('resources/js/library/tags-operations.js')
+                    @endpush
+                    <x-itemable.form.label for="tag">Tags</x-itemable.form.label>
+                    <x-itemable.form.input type="text"
+                                           id="tag"
+                                           name="tag"
+                                           list="tags"
+                                           autocomplete="off"
+                                           onfocus="window.ajaxPopulateTagsDatalist();"
+                                           placeholder="Enter Tags..."/>
+                    <datalist id="tags"></datalist>
+                    <x-primary-button type="button"
+                                      class="w-full justify-center"
+                                      onclick="window.addTagToSelection();"
+                    >Add Tag</x-primary-button>
+                    <div id="selectedTags" class=""></div>
+
 
                     <!-- Authors -->
                     <x-itemable.form.label for="authors">Authors</x-itemable.form.label>

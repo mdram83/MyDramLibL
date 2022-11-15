@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Ajax\ISBNOpenlibraryController;
 use App\Http\Controllers\Ajax\PublisherController;
+use App\Http\Controllers\Ajax\TagController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\ISBNOpenlibrary;
 use App\Http\Controllers\MusicAlbumController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +40,8 @@ Route::middleware(['auth'/*, 'only.ajax'*/])->group(function() {
     // TODO consider adding this in middleware only.ajax (maybe call it user.ajax instead)
 
     Route::get('/ajax/publishers', [PublisherController::class, 'index']);
-    Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibrary::class, 'show']);
+    Route::get('/ajax/tags', [TagController::class, 'index']);
+    Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
 });
 
 require __DIR__.'/auth.php';

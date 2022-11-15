@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
 
+use App\Http\Controllers\Controller;
 use App\Rules\ISBN;
-use App\Utilities\API\RestAPIHandlerException;
 use Exception;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ISBNOpenlibrary extends Controller
+class ISBNOpenlibraryController extends Controller
 {
     public function show(string $isbn)
     {
@@ -24,7 +23,7 @@ class ISBNOpenlibrary extends Controller
         }
 
         try {
-            // TODO in constructor
+            // TODO in constructor and using interface
             $apiHandler = new \App\Utilities\API\ISBNOpenlibrary(new Client(), $isbn);
             if ($apiHandler->getResponseCode() == 200) {
 
