@@ -4,7 +4,7 @@
     block
     w-full
     py-0.5
-    mt-4
+    mt-3
     font-medium
     font-semibold
     text-sm

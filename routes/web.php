@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Ajax\PublisherController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ISBNOpenlibrary;
 use App\Http\Controllers\MusicAlbumController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,12 +33,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
 });
 
-Route::middleware(['auth', 'only.ajax'])->group(function() {
+Route::middleware(['auth'/*, 'only.ajax'*/])->group(function() {
     // TODO auth by default is not a good here because redirects you to log in page
     // TODO and for ajax request it should return 403
     // TODO consider adding this in middleware only.ajax (maybe call it user.ajax instead)
 
     Route::get('/ajax/publishers', [PublisherController::class, 'index']);
+    Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibrary::class, 'show']);
 });
 
 require __DIR__.'/auth.php';

@@ -19,15 +19,19 @@
                     @csrf
 
                     <!-- ISBN -->
+                    @push('custom-scripts')
+                        @vite('resources/js/library/ajax/isbn-details.js')
+                    @endpush
                     <x-itemable.form.label for="isbn" class="mt-0">ISBN</x-itemable.form.label>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <x-itemable.form.input type="text" id="isbn" name="isbn" placeholder="Enter ISBN..."/>
                         </div>
                         <div>
-                            <x-primary-button type="button" class="w-full justify-center">
-                                Get Details
-                            </x-primary-button>
+                            <x-primary-button type="button"
+                                              class="w-full justify-center"
+                                              onclick="window.ajaxGetDetailsWithISBN()"
+                            >Get Details</x-primary-button>
                         </div>
                     </div>
 
@@ -37,7 +41,7 @@
                     </x-itemable.form.label>
                     <x-itemable.form.input type="text" id="title" name="title" placeholder="Enter Title..." required/>
 
-                    <div class="grid grid-cols-4 gap-2">
+                    <div class="grid grid-cols-4 sm:gap-2 gap-1">
                         <div class="sm:col-span-2 col-span-full">
                             <!-- Series -->
                             <x-itemable.form.label for="series">Series</x-itemable.form.label>
@@ -59,7 +63,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-2">
+                    <div class="grid grid-cols-4 sm:gap-2 gap-1">
 
                         <div class="sm:col-span-3 col-span-full">
 
