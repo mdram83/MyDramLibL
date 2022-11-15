@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
 });
 
-Route::middleware(['auth'/*, 'only.ajax'*/])->group(function() {
+Route::middleware(['auth', 'only.ajax'])->group(function() {
     // TODO auth by default is not a good here because redirects you to log in page
     // TODO and for ajax request it should return 403
     // TODO consider adding this in middleware only.ajax (maybe call it user.ajax instead)

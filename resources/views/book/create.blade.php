@@ -43,23 +43,29 @@
 
                     <div class="grid grid-cols-4 sm:gap-2 gap-1">
                         <div class="sm:col-span-2 col-span-full">
+
                             <!-- Series -->
                             <x-itemable.form.label for="series">Series</x-itemable.form.label>
                             <x-itemable.form.input type="text" id="series" name="series" placeholder="Enter Series..."/>
+
                         </div>
                         <div class="sm:col-span-1 col-span-2">
+
                             <!-- Volume -->
                             <x-itemable.form.label for="volume">Volume</x-itemable.form.label>
                             <x-itemable.form.input type="number" id="volume" name="volume" placeholder="Enter Volume Number..."
                                                    min="1" max="99999"
                             />
+
                         </div>
                         <div class="sm:col-span-1 col-span-2">
+
                             <!-- Pages -->
                             <x-itemable.form.label for="pages">Pages</x-itemable.form.label>
                             <x-itemable.form.input type="number" id="pages" name="pages" placeholder="Enter Number of Pages..."
                                                    min="1" max="99999"
                             />
+
                         </div>
                     </div>
 
@@ -87,33 +93,40 @@
                             <!-- Published At -->
                             <x-itemable.form.label for="published_at">Published At</x-itemable.form.label>
                             <x-itemable.form.input type="number" id="published_at" name="published_at" placeholder="Enter Year of Publishing"
-                                                   min="-4000" max="99999"
+                                                   min="-4000" max="9999"
                             />
+
                         </div>
                     </div>
 
                     <!-- Tags -->
-
-{{--                    TODO: grid similar to publishers for nice styline--}}
+{{--                    TODO: add tags so I can read them in POST request--}}
+{{--                    TODO: add tags from ISBN ajax request--}}
 
                     @push('custom-scripts')
                         @vite('resources/js/library/ajax/tags-index.js')
                         @vite('resources/js/library/tags-operations.js')
                     @endpush
                     <x-itemable.form.label for="tag">Tags</x-itemable.form.label>
-                    <x-itemable.form.input type="text"
-                                           id="tag"
-                                           name="tag"
-                                           list="tags"
-                                           autocomplete="off"
-                                           onfocus="window.ajaxPopulateTagsDatalist();"
-                                           placeholder="Enter Tags..."/>
-                    <datalist id="tags"></datalist>
-                    <x-primary-button type="button"
-                                      class="w-full justify-center"
-                                      onclick="window.addTagToSelection();"
-                    >Add Tag</x-primary-button>
-                    <div id="selectedTags" class=""></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <x-itemable.form.input type="text"
+                                                   id="tag"
+                                                   name="tag"
+                                                   list="tags"
+                                                   autocomplete="off"
+                                                   onfocus="window.ajaxPopulateTagsDatalist();"
+                                                   placeholder="Enter Tags..."/>
+                            <datalist id="tags"></datalist>
+                        </div>
+                        <div>
+                            <x-primary-button type="button"
+                                              class="w-full justify-center"
+                                              onclick="window.addTagToSelection();"
+                            >Add Tag</x-primary-button>
+                        </div>
+                        <div id="selectedTags" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
+                    </div>
 
 
                     <!-- Authors -->
