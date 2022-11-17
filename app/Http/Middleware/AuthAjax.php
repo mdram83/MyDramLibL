@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class OnlyAjax
+class AuthAjax
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class OnlyAjax
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->ajax()){
+        if(!$request->ajax() || !auth()->check()){
             abort(403);
         }
         return $next($request);

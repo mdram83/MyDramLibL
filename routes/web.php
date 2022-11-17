@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => view('welcome'));
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
     Route::get('/books', [BookController::class, 'index'])->name('books');
@@ -33,11 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
 });
 
-Route::middleware(['auth', 'only.ajax'])->group(function() {
-    // TODO auth by default is not a good here because redirects you to log in page
-    // TODO and for ajax request it should return 403
-    // TODO consider adding this in middleware only.ajax (maybe call it auth.ajax instead)
-
+Route::middleware(['auth.ajax'])->group(function() {
     Route::get('/ajax/publishers', [PublisherController::class, 'index']);
     Route::get('/ajax/tags', [TagController::class, 'index']);
     Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
