@@ -18,16 +18,29 @@ window.addTagToSelection = function() {
     a.appendChild(document.createTextNode("\u2715"));
 
     const span = document.createElement("span");
-    span.setAttribute("id", "tag-" + tag);
-    span.setAttribute("class", "my-1 mx-1 px-2 py-1 bg-gray-400 rounded-xl");
+    span.setAttribute("id", "tag-span-" + tag);
+    span.setAttribute("class", "my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl");
     span.appendChild(document.createTextNode(tag));
     span.appendChild(a);
 
-    document.getElementById('selectedTags').appendChild(span);
-    input.value = '';
+    document.getElementById("selectedTags").appendChild(span);
+
+    const hidden = document.createElement("input");
+    hidden.setAttribute("id", "tag-hidden-" + tag);
+    hidden.setAttribute("name", "tags[]");
+    hidden.setAttribute("type", "hidden");
+    hidden.value = tag;
+
+    document.getElementById("create").appendChild(hidden);
+
+    // TODO add hidden to removal function
+
+
+    input.value = "";
     input.focus();
 }
 
-window.removeTagFromSelection = function(id) {
-    document.getElementById("tag-" + id).remove();
+window.removeTagFromSelection = function(tag) {
+    document.getElementById("tag-span-" + tag).remove();
+    document.getElementById("tag-hidden-" + tag).remove();
 }

@@ -24,7 +24,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
-
     Route::get('/books', [BookController::class, 'index'])->name('books');
     Route::get('/books/create', [BookController::class, 'create']);
     Route::post('/books/store', [BookController::class, 'store']);
@@ -37,7 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'only.ajax'])->group(function() {
     // TODO auth by default is not a good here because redirects you to log in page
     // TODO and for ajax request it should return 403
-    // TODO consider adding this in middleware only.ajax (maybe call it user.ajax instead)
+    // TODO consider adding this in middleware only.ajax (maybe call it auth.ajax instead)
 
     Route::get('/ajax/publishers', [PublisherController::class, 'index']);
     Route::get('/ajax/tags', [TagController::class, 'index']);

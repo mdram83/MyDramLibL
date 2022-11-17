@@ -15,7 +15,7 @@
         <div class="w-full flex justify-center">
             <div class="w-full max-w-2xl">
 
-                <form method="POST" action="/books/store">
+                <form id="create" method="POST" action="/books/store">
                     @csrf
 
                     <!-- ISBN -->
