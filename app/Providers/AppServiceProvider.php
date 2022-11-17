@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Utilities\API\ISBN\ISBNRestAPI;
+use App\Utilities\API\ISBN\OpenlibraryISBNRestAPI;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        app()->bind(ISBNRestAPI::class, fn() => new OpenlibraryISBNRestAPI(new Client()));
     }
 
     /**

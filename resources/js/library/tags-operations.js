@@ -1,5 +1,5 @@
-window.addTagToSelection = function(tag)
-{
+window.addTagToSelection = function(tag) {
+
     if (!tag) {
         return;
     }
@@ -48,8 +48,7 @@ window.addTagToSelection = function(tag)
     }
 }
 
-window.removeTagFromSelection = function(tag)
-{
+window.removeTagFromSelection = function(tag) {
     document.getElementById("tag-span-" + tag).remove();
     document.getElementById("tag-hidden-" + tag).remove();
 }

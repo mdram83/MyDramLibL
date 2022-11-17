@@ -26,7 +26,7 @@ window.ajaxGetDetailsWithISBN = function() {
                     window.addTagToSelection(tag);
                 });
 
-                document.getElementById('isbn-button').focus();
+                document.getElementById('comment').focus();
                 window.changeIsbnButtonStyle('success');
                 return;
             }
