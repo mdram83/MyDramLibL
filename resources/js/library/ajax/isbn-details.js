@@ -3,7 +3,7 @@ window.ajaxGetDetailsWithISBN = function() {
     const isbn = document.getElementById('isbn').value;
     if (isbn !== '') {
 
-        // changeIsbnButtonStyle('loading');
+        window.changeIsbnButtonStyle('loading');
         const xhttp = new XMLHttpRequest();
 
         xhttp.onreadystatechange = function() {
@@ -27,13 +27,12 @@ window.ajaxGetDetailsWithISBN = function() {
                 });
 
                 document.getElementById('isbn-button').focus();
-
-                // changeIsbnButtonStyle('success');
+                window.changeIsbnButtonStyle('success');
                 return;
             }
 
-            if (this.readyState === 4 && (this.status === 404 || this.status === 500)) {
-                // changeIsbnButtonStyle('failed');
+            if (this.readyState === 4 && this.status !== 200) {
+                window.changeIsbnButtonStyle('failed');
             }
         };
 
@@ -42,5 +41,35 @@ window.ajaxGetDetailsWithISBN = function() {
         xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhttp.send();
 
+    }
+}
+
+window.changeIsbnButtonStyle = function(state) {
+    const button = document.getElementById('isbn-button');
+    switch (state) {
+        case 'loading':
+            button.disabled = true;
+            button.textContent = "Loading...";
+            button.style.opacity = 0.5;
+            button.style.cursor = "progress";
+            break;
+        case 'success':
+            button.disabled = true;
+            button.textContent = "Loaded";
+            button.style.opacity = 0.8;
+            button.style.cursor = "default";
+            break;
+        case 'failed':
+            button.disabled = true;
+            button.textContent = "Not found";
+            button.style.opacity = 0.8;
+            button.style.cursor = "default";
+            break;
+        case 'enabled':
+            button.disabled = false;
+            button.textContent = "Get details";
+            button.style.opacity = 1.0;
+            button.style.cursor = "pointer";
+            break;
     }
 }

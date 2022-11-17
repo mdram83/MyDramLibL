@@ -25,7 +25,12 @@
                     <x-itemable.form.label for="isbn" class="mt-0">ISBN</x-itemable.form.label>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <x-itemable.form.input type="text" id="isbn" name="isbn" placeholder="Enter ISBN..."/>
+                            <x-itemable.form.input type="text"
+                                                   id="isbn"
+                                                   name="isbn"
+                                                   oninput="window.changeIsbnButtonStyle('enabled');"
+                                                   placeholder="Enter ISBN..."
+                            />
                         </div>
                         <div>
                             <x-primary-button type="button"
