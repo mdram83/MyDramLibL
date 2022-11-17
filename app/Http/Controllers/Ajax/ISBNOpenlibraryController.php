@@ -53,7 +53,7 @@ class ISBNOpenlibraryController extends Controller
             'series' => null,
             'volume' => null,
             'pages' => $responseArray['number_of_pages'] ?? null,
-            'category' => $responseArray['subjects'] ?? null,
+            'tags' => $responseArray['subjects'] ?? [],
         ];
 
         // TODO adjust to many authors

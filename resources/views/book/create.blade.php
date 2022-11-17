@@ -29,6 +29,7 @@
                         </div>
                         <div>
                             <x-primary-button type="button"
+                                              id="isbn-button"
                                               class="w-full justify-center"
                                               onclick="window.ajaxGetDetailsWithISBN()"
                             >Get Details</x-primary-button>
@@ -122,7 +123,7 @@
                         <div>
                             <x-primary-button type="button"
                                               class="w-full justify-center"
-                                              onclick="window.addTagToSelection();"
+                                              onclick="window.addTagToSelection(document.getElementById('tag').value);"
                             >Add Tag</x-primary-button>
                         </div>
                         <div id="selectedTags" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
