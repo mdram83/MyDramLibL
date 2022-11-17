@@ -15,6 +15,7 @@ window.ajaxGetDetailsWithISBN = function() {
                     'title',
                     'isbn',
                     'publisher',
+                    'published_at',
                     'series',
                     'volume',
                     'pages'
