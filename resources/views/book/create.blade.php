@@ -133,6 +133,9 @@
 
 
                     <!-- Authors -->
+                    @push('custom-scripts')
+                        @vite('resources/js/library/authors-operations.js')
+                    @endpush
                     <x-itemable.form.label for="authors">Authors</x-itemable.form.label>
                     <div class="grid sm:grid-cols-8 grid-cols-2 gap-2">
                         <div class="sm:col-span-3 order-first">
@@ -151,7 +154,7 @@
                                                    name="authorLastname"
                                                    list="authorLastnames"
                                                    autocomplete="off"
-                                                   {{--                                                   onfocus="window.ajaxPopulateTagsDatalist();"--}}
+{{--                                                   onfocus="window.ajaxPopulateTagsDatalist();"--}}
                                                    placeholder="Author last name..."/>
                             <datalist id="authorLastnames"></datalist>
                         </div>
@@ -159,10 +162,10 @@
                         <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
                             <x-primary-button type="button"
                                               class="w-full justify-center sm:h-auto h-full"
-{{--                                              onclick="window.addTagToSelection(document.getElementById('tag').value);"--}}
+                                              onclick="window.addAuthorToSelection(window.getAuthorFromInputs());"
                             >Add Author</x-primary-button>
                         </div>
-                        <div id="selectedAuthors" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap border border-orange-400">selected</div>
+                        <div id="selectedAuthors" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap"></div>
                     </div>
 
                     <!-- Comment -->

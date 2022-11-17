@@ -9,5 +9,5 @@ TODO:
 - List of existing authors from Ajax
 - functions to select specific (with first and last name)
 - Mapping authors from API
-   
+- refactor JS functions not to repeat code (e.g. span and 'a' elements creation)
 
