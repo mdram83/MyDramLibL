@@ -106,9 +106,6 @@
                     </div>
 
                     <!-- Tags -->
-{{--                    TODO: add tags so I can read them in POST request--}}
-{{--                    TODO: add tags from ISBN ajax request--}}
-
                     @push('custom-scripts')
                         @vite('resources/js/library/ajax/tags-index.js')
                         @vite('resources/js/library/tags-operations.js')
@@ -137,7 +134,36 @@
 
                     <!-- Authors -->
                     <x-itemable.form.label for="authors">Authors</x-itemable.form.label>
-                    TBD
+                    <div class="grid sm:grid-cols-8 grid-cols-2 gap-2">
+                        <div class="sm:col-span-3 order-first">
+                            <x-itemable.form.input type="text"
+                                                   id="authorFirstname"
+                                                   name="authorFirstname"
+                                                   list="authorFirstnames"
+                                                   autocomplete="off"
+{{--                                                   onfocus="window.ajaxPopulateTagsDatalist();"--}}
+                                                   placeholder="Author first name..."/>
+                            <datalist id="authorFirstnames"></datalist>
+                        </div>
+                        <div class="sm:col-span-3 sm:order-none order-3">
+                            <x-itemable.form.input type="text"
+                                                   id="authorLastname"
+                                                   name="authorLastname"
+                                                   list="authorLastnames"
+                                                   autocomplete="off"
+                                                   {{--                                                   onfocus="window.ajaxPopulateTagsDatalist();"--}}
+                                                   placeholder="Author last name..."/>
+                            <datalist id="authorLastnames"></datalist>
+                        </div>
+{{--                        <div class="sm:hidden"></div>--}}
+                        <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
+                            <x-primary-button type="button"
+                                              class="w-full justify-center sm:h-auto h-full"
+{{--                                              onclick="window.addTagToSelection(document.getElementById('tag').value);"--}}
+                            >Add Author</x-primary-button>
+                        </div>
+                        <div id="selectedAuthors" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap border border-orange-400">selected</div>
+                    </div>
 
                     <!-- Comment -->
                     <x-itemable.form.label for="comment">Comment</x-itemable.form.label>
