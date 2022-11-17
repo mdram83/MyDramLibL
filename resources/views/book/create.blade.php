@@ -134,7 +134,7 @@
 
                     <!-- Authors -->
                     @push('custom-scripts')
-                        @vite('resources/js/library/authors-operations.js')
+                        @vite('resources/js/library/artists-operations.js')
                     @endpush
                     <x-itemable.form.label for="authors">Authors</x-itemable.form.label>
                     <div class="grid sm:grid-cols-8 grid-cols-2 gap-2">

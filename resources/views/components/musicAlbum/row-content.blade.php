@@ -16,7 +16,7 @@
             <!-- Main Bands -->
             @if ($itemable->getMainBands())
                 <span class="font-semibold">
-                    @foreach ($itemable->getMainBands() as $mainBand){{($loop->index > 0 ? ', ' : '') . strtoupper($mainBand->name)}}@endforeach
+                    @foreach ($itemable->getMainBands() as $mainBand){{($loop->index > 0 ? ' & ' : '') . strtoupper($mainBand->name)}}@endforeach
                 </span>
             @endif
 
@@ -28,7 +28,7 @@
             <!-- Main Artists -->
             @if ($itemable->getMainArtists())
                 <span class="italic">
-                    @foreach ($itemable->getMainArtists() as $mainArtist){{($loop->index > 0 ? ', ' : '') . $mainArtist->getName()}}@endforeach
+                    @foreach ($itemable->getMainArtists() as $mainArtist){{($loop->index > 0 ? ' & ' : '') . $mainArtist->getName()}}@endforeach
                 </span>
             @endif
 

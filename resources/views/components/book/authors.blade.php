@@ -4,7 +4,7 @@
             {{ $author->getName() }}
             <x-itemable.itemable-link :link="'#'">{{ __('info') }}</x-itemable.itemable-link>
             <x-itemable.itemable-link :link="'#'">{{ __('items') }}</x-itemable.itemable-link>
-            @if (!$loop->last),&nbsp;@endif
+            @if (!$loop->last) &&nbsp;@endif
         </span>
     @endforeach
 </p>

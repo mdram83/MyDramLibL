@@ -27,7 +27,7 @@
                     {{ strtoupper($mainBand->name) }}
                     <x-itemable.itemable-link :link="'#'">{{ __('info') }}</x-itemable.itemable-link>
                     <x-itemable.itemable-link :link="'#'">{{ __('items') }}</x-itemable.itemable-link>
-                    @if (!$loop->last),&nbsp;@endif
+                    @if (!$loop->last) & @endif
                 </span>
             </p>
            @endforeach

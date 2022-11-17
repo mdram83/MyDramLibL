@@ -16,6 +16,6 @@ class Artist extends Model
 
     public function getName() : string
     {
-        return trim("{$this->firstname} {$this->lastname}");
+        return $this->lastname . ($this->firstname ? ", {$this->firstname}" : '');
     }
 }

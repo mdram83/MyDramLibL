@@ -12,7 +12,7 @@
     <!-- Authors -->
     @if ($itemable->getAuthors())
         <p class="text-sm pt-1 italic">
-            @foreach ($itemable->getAuthors() as $author){{($loop->index > 0 ? ', ' : '') . $author->getName()}}@endforeach
+            @foreach ($itemable->getAuthors() as $author){{($loop->index > 0 ? ' & ' : '') . $author->getName()}}@endforeach
         </p>
     @endif
 

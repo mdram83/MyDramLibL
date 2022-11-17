@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ajax\ArtistController;
 use App\Http\Controllers\Ajax\ISBNOpenlibraryController;
 use App\Http\Controllers\Ajax\PublisherController;
 use App\Http\Controllers\Ajax\TagController;
@@ -32,9 +33,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
 });
 
-Route::middleware(['auth.ajax'])->group(function() {
+Route::middleware([/*'auth.ajax'*/])->group(function() {
     Route::get('/ajax/publishers', [PublisherController::class, 'index']);
     Route::get('/ajax/tags', [TagController::class, 'index']);
+    Route::get('/ajax/artists', [ArtistController::class, 'index']);
     Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
 });
 
