@@ -14,15 +14,18 @@ class ArtistController extends Controller
             $firstname = $artist->firstname;
             $lastname = $artist->lastname;
 
+            $data['artists'][$artist->id]['name'] = $artist->getName();
             $data['artists'][$artist->id]['firstname'] = $firstname;
             $data['artists'][$artist->id]['lastname'] = $lastname;
-            $data['artists'][$artist->id]['name'] = $artist->getName();
 
             if ($firstname !== '') {
                 $data['firstnames'][$firstname] = $firstname;
             }
             $data['lastnames'][$lastname] = $lastname;
         }
+        sort($data['firstnames']);
+        sort($data['lastnames']);
+
         return response()->json($data);
     }
 }

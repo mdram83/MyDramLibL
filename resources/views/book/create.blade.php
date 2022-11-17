@@ -134,6 +134,7 @@
 
                     <!-- Authors -->
                     @push('custom-scripts')
+                        @vite('resources/js/library/ajax/artists-index.js')
                         @vite('resources/js/library/artists-operations.js')
                     @endpush
                     <x-itemable.form.label for="authors">Authors</x-itemable.form.label>
@@ -142,23 +143,22 @@
                             <x-itemable.form.input type="text"
                                                    id="authorFirstname"
                                                    name="authorFirstname"
-                                                   list="authorFirstnames"
+                                                   list="artistFirstnames"
                                                    autocomplete="off"
-{{--                                                   onfocus="window.ajaxPopulateTagsDatalist();"--}}
+                                                   onfocus="window.ajaxPopulateArtistsDatalist();"
                                                    placeholder="Author first name..."/>
-                            <datalist id="authorFirstnames"></datalist>
+                            <datalist id="artistFirstnames"></datalist>
                         </div>
                         <div class="sm:col-span-3 sm:order-none order-3">
                             <x-itemable.form.input type="text"
                                                    id="authorLastname"
                                                    name="authorLastname"
-                                                   list="authorLastnames"
+                                                   list="artistLastnames"
                                                    autocomplete="off"
-{{--                                                   onfocus="window.ajaxPopulateTagsDatalist();"--}}
+                                                   onfocus="window.ajaxPopulateArtistsDatalist();"
                                                    placeholder="Author last name..."/>
-                            <datalist id="authorLastnames"></datalist>
+                            <datalist id="artistLastnames"></datalist>
                         </div>
-{{--                        <div class="sm:hidden"></div>--}}
                         <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
                             <x-primary-button type="button"
                                               class="w-full justify-center sm:h-auto h-full"
