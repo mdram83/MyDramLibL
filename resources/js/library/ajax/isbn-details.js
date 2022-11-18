@@ -24,11 +24,27 @@ window.ajaxGetDetailsWithISBN = function() {
                 });
 
                 details['tags'].forEach(function (tag) {
-                    window.addTagToSelection(tag);
+                    window.addToSelection(
+                        tag,
+                        'tag',
+                        'selectedTags',
+                        'create',
+                        'tags[]',
+                        'tag',
+                        []
+                    );
                 });
 
                 details['authors'].forEach(function (artist) {
-                    window.addArtistToSelection(artist);
+                    window.addToSelection(
+                        artist,
+                        'artist',
+                        'selectedArtists',
+                        'create',
+                        'authors[]',
+                        'artistFirstname',
+                        []
+                    );
                 });
 
                 document.getElementById('title').focus();

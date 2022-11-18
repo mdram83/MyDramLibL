@@ -9,5 +9,5 @@ TODO:
 + List of existing authors from Ajax
 + functions to select specific (with first and last name) from existing data list
 + Mapping authors from API (adjust js functions then)
-- refactor JS functions not to repeat code (e.g. span and 'a' elements creation)
++ refactor JS functions not to repeat code (e.g. span and 'a' elements creation)
 

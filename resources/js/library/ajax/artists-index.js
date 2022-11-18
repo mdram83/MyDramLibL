@@ -22,9 +22,8 @@ window.ajaxPopulateArtistsDatalist = function() {
                     lastnameDatalist.append(new Option(item, item));
                 });
 
-                const artists = window.allArtists = Object.values(data['artists']);
-
-                artists.map(item => Object.values(item)).sort().forEach(function(item) {
+                window.allArtists = Object.values(data['artists']);
+                window.allArtists.map(item => Object.values(item)).sort().forEach(function(item) {
                     firstnameDatalist.append(new Option(item[1], item[0]));
                     lastnameDatalist.append(new Option(item[2], item[0]));
                 });

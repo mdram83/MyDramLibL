@@ -20,6 +20,7 @@
 
                     @push('custom-scripts')
                         @vite('resources/js/library/ajax/generic-datalist.js')
+                        @vite('resources/js/library/form-hidden-operations.js')
                     @endpush
 
                     <!-- ISBN -->
@@ -107,9 +108,6 @@
                     </div>
 
                     <!-- Tags -->
-                    @push('custom-scripts')
-                        @vite('resources/js/library/tags-operations.js')
-                    @endpush
                     <x-itemable.form.label for="tag">Tags</x-itemable.form.label>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
@@ -125,7 +123,15 @@
                         <div>
                             <x-primary-button type="button"
                                               class="w-full justify-center"
-                                              onclick="window.addTagToSelection(document.getElementById('tag').value);"
+                                              onclick="window.addToSelection(
+                                                  document.getElementById('tag').value,
+                                                  'tag',
+                                                  'selectedTags',
+                                                  'create',
+                                                  'tags[]',
+                                                  'tag',
+                                                  ['tag']
+                                              );"
                             >Add Tag</x-primary-button>
                         </div>
                         <div id="selectedTags" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
@@ -162,11 +168,15 @@
                         <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
                             <x-primary-button type="button"
                                               class="w-full justify-center sm:h-auto h-full"
-                                              onclick="
-                                                window.addArtistToSelection(
-                                                    window.getArtistFromInputs('artistFirstname', 'artistLastname')
-                                                );
-                                              "
+                                              onclick="window.addToSelection(
+                                                  window.getArtistFromInputs('artistFirstname', 'artistLastname'),
+                                                  'artist',
+                                                  'selectedArtists',
+                                                  'create',
+                                                  'authors[]',
+                                                  'artistFirstname',
+                                                  ['artistFirstname', 'artistLastname']
+                                              );"
                             >Add Author</x-primary-button>
                         </div>
                         <div id="selectedArtists" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap"></div>
