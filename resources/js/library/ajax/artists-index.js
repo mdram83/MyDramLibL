@@ -1,3 +1,5 @@
+window.allArtists = [];
+
 window.ajaxPopulateArtistsDatalist = function() {
 
     const firstnameDatalist = document.getElementById('artistFirstnames');
@@ -20,7 +22,7 @@ window.ajaxPopulateArtistsDatalist = function() {
                     lastnameDatalist.append(new Option(item, item));
                 });
 
-                const artists = /*myLibraryAuthors =*/ Object.values(data['artists']);
+                const artists = window.allArtists = Object.values(data['artists']);
                 // TODO check if required (in function assigning right first/last name based on selection)
 
                 artists.map(item => Object.values(item)).sort().forEach(function(item) {

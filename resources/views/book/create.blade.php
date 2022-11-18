@@ -141,8 +141,8 @@
                     <div class="grid sm:grid-cols-8 grid-cols-2 gap-2">
                         <div class="sm:col-span-3 order-first">
                             <x-itemable.form.input type="text"
-                                                   id="authorFirstname"
-                                                   name="authorFirstname"
+                                                   id="artistFirstname"
+                                                   name="artistFirstname"
                                                    list="artistFirstnames"
                                                    autocomplete="off"
                                                    onfocus="window.ajaxPopulateArtistsDatalist();"
@@ -151,8 +151,8 @@
                         </div>
                         <div class="sm:col-span-3 sm:order-none order-3">
                             <x-itemable.form.input type="text"
-                                                   id="authorLastname"
-                                                   name="authorLastname"
+                                                   id="artistLastname"
+                                                   name="artistLastname"
                                                    list="artistLastnames"
                                                    autocomplete="off"
                                                    onfocus="window.ajaxPopulateArtistsDatalist();"
@@ -162,10 +162,10 @@
                         <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
                             <x-primary-button type="button"
                                               class="w-full justify-center sm:h-auto h-full"
-                                              onclick="window.addAuthorToSelection(window.getAuthorFromInputs());"
+                                              onclick="window.addArtistToSelection(window.getArtistFromInputs());"
                             >Add Author</x-primary-button>
                         </div>
-                        <div id="selectedAuthors" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap"></div>
+                        <div id="selectedArtists" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap"></div>
                     </div>
 
                     <!-- Comment -->

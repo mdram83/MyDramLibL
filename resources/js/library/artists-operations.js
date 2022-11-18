@@ -1,67 +1,116 @@
-window.getAuthorFromInputs = function() {
-    const firstname = document.getElementById('authorFirstname').value.trim();
-    const lastname = document.getElementById('authorLastname').value.trim();
+window.getArtistFromInputs = function() {
+    const firstname = document.getElementById('artistFirstname').value.trim();
+    const lastname = document.getElementById('artistLastname').value.trim();
 
     if (!lastname) {
         alert('Lastname is required');
-        document.getElementById("authorLastname").focus();
+        document.getElementById("artistLastname").focus();
         return;
     }
 
     return lastname + (firstname ? ", " + firstname : "");
 }
 
-window.addAuthorToSelection = function(author) {
+window.addArtistToSelection = function(artist) {
 
-    if (!author) {
+    if (!artist) {
         return;
     }
 
-    if (document.getElementById("author-span-" + author)) {
+    if (document.getElementById("author-span-" + artist)) {
         return;
     }
 
-    const span = createSpan(author);
-    span.appendChild(createA(author));
-    document.getElementById("selectedAuthors").appendChild(span);
+    const span = createSpan(artist);
+    span.appendChild(createA(artist));
+    document.getElementById("selectedArtists").appendChild(span);
 
-    document.getElementById("create").appendChild(createHidden(author));
+    document.getElementById("create").appendChild(createHidden(artist));
 
-    document.getElementById("authorFirstname").focus();
-    document.getElementById("authorFirstname").value = "";
-    document.getElementById("authorLastname").value = "";
+    document.getElementById("artistFirstname").focus();
+    document.getElementById("artistFirstname").value = "";
+    document.getElementById("artistLastname").value = "";
 
-    function createA(author)
+    function createA(artist)
     {
         const a = document.createElement("a");
-        a.setAttribute("id", "author-a-" + author);
+        a.setAttribute("id", "artist-a-" + artist);
         a.setAttribute("class", "ml-2 font-bold cursor-pointer");
-        a.setAttribute("onclick", "removeAuthorFromSelection(\"" + author + "\");")
+        a.setAttribute("onclick", "removeArtistFromSelection(\"" + artist + "\");")
         a.appendChild(document.createTextNode("\u2715"));
         return a;
     }
 
-    function createSpan(author)
+    function createSpan(artist)
     {
         const span = document.createElement("span");
-        span.setAttribute("id", "author-span-" + author);
+        span.setAttribute("id", "artist-span-" + artist);
         span.setAttribute("class", "my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl");
-        span.appendChild(document.createTextNode(author));
+        span.appendChild(document.createTextNode(artist));
         return span;
     }
 
-    function createHidden(author)
+    function createHidden(artist)
     {
         const hidden = document.createElement("input");
-        hidden.setAttribute("id", "author-hidden-" + author);
+        hidden.setAttribute("id", "artist-hidden-" + artist);
         hidden.setAttribute("name", "authors[]");
         hidden.setAttribute("type", "hidden");
-        hidden.value = author;
+        hidden.value = artist;
         return hidden;
     }
 }
 
-window.removeAuthorFromSelection = function(author) {
-    document.getElementById("author-span-" + author).remove();
-    document.getElementById("author-hidden-" + author).remove();
+window.removeArtistFromSelection = function(artist) {
+    document.getElementById("artist-span-" + artist).remove();
+    document.getElementById("artist-hidden-" + artist).remove();
 }
+
+window.useSelectedArtist = function(input) {
+
+    const selectedArtist = input.value;
+    const options = document.getElementById(input.list.id).childNodes;
+    for (let i = 0; i < options.length; i++) {
+        if(selectedArtist === options[i].value) {
+            if (options[i].value !== options[i].label) {
+                for (let j = 0; j < window.allArtists.length; j++) {
+                    if (selectedArtist === window.allArtists[j]['name']) {
+                        document.getElementById('artistFirstname').value = window.allArtists[j]['firstname'];
+                        document.getElementById('artistLastname').value = window.allArtists[j]['lastname'];
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+let artistKeypress = false;
+
+document.getElementById("artistFirstname").addEventListener("keydown", (e) => {
+    if(e.key) {
+        artistKeypress = true;
+    }
+});
+
+document.getElementById("artistFirstname").addEventListener('input', (e) => {
+    if (artistKeypress === false) {
+        useSelectedArtist(document.getElementById('artistFirstname'));
+    }
+    artistKeypress = false;
+});
+
+document.getElementById("artistLastname").addEventListener("keydown", (e) => {
+    if(e.key) {
+        artistKeypress = true;
+    }
+});
+
+document.getElementById("artistLastname").addEventListener('input', (e) => {
+    if (artistKeypress === false) {
+        useSelectedArtist(document.getElementById('artistLastname'));
+    }
+    artistKeypress = false;
+});
