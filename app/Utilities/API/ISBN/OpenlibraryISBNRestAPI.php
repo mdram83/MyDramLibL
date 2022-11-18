@@ -103,22 +103,21 @@ class OpenlibraryISBNRestAPI extends RestAPIHandlerBase implements ISBNRestAPI
 
         $details = [
             'title' => $data['title'] ?? null,
-            'authorFirstname' => null,
-            'authorLastname' => null,
+            'authors' => [],
             'isbn' => $this->isbn,
             'publisher' => $data['publishers'][0] ?? null,
-            'published_at' => $data['publish_date'] ?? null,
+            'published_at' => isset($data['publish_date']) ? substr($data['publish_date'], -4) : null,
             'series' => null,
             'volume' => null,
             'pages' => $data['number_of_pages'] ?? null,
             'tags' => $data['subjects'] ?? [],
         ];
 
-        // TODO adjust to many authors
-        if ($author = $data['authors'][0]['name'] ?? null) {
-            $splitPosition = strrpos($author, ' ');
-            $details['authorFirstname'] = trim(substr($author, 0, $splitPosition));
-            $details['authorLastname'] = trim(substr($author, $splitPosition));
+        foreach ($data['authors'] as $author) {
+            $splitPosition = strrpos($author['name'], ' ');
+            $firstname = trim(substr($author['name'], 0, $splitPosition));
+            $lastname = trim(substr($author['name'], $splitPosition));
+            $details['authors'][] = $lastname . ($firstname ? ", $firstname" : '');
         }
 
         if ($series = $data['series'][0] ?? null) {

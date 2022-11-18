@@ -17,7 +17,7 @@ window.addArtistToSelection = function(artist) {
         return;
     }
 
-    if (document.getElementById("author-span-" + artist)) {
+    if (document.getElementById("artist-span-" + artist)) {
         return;
     }
 

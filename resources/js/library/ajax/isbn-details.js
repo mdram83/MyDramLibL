@@ -27,7 +27,11 @@ window.ajaxGetDetailsWithISBN = function() {
                     window.addTagToSelection(tag);
                 });
 
-                document.getElementById('comment').focus();
+                details['authors'].forEach(function (artist) {
+                    window.addArtistToSelection(artist);
+                });
+
+                document.getElementById('title').focus();
                 window.changeIsbnButtonStyle('success');
                 return;
             }
