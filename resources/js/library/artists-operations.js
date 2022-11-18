@@ -1,10 +1,10 @@
-window.getArtistFromInputs = function() {
-    const firstname = document.getElementById('artistFirstname').value.trim();
-    const lastname = document.getElementById('artistLastname').value.trim();
+window.getArtistFromInputs = function(firstnameId, lastnameId) {
+    const firstname = document.getElementById(firstnameId).value.trim();
+    const lastname = document.getElementById(lastnameId).value.trim();
 
     if (!lastname) {
         alert('Lastname is required');
-        document.getElementById("artistLastname").focus();
+        document.getElementById(lastnameId).focus();
         return;
     }
 

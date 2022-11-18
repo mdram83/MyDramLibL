@@ -162,7 +162,11 @@
                         <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
                             <x-primary-button type="button"
                                               class="w-full justify-center sm:h-auto h-full"
-                                              onclick="window.addArtistToSelection(window.getArtistFromInputs());"
+                                              onclick="
+                                                window.addArtistToSelection(
+                                                    window.getArtistFromInputs('artistFirstname', 'artistLastname')
+                                                );
+                                              "
                             >Add Author</x-primary-button>
                         </div>
                         <div id="selectedArtists" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap"></div>
