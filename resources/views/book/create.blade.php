@@ -18,6 +18,10 @@
                 <form id="create" method="POST" action="/books/store">
                     @csrf
 
+                    @push('custom-scripts')
+                        @vite('resources/js/library/ajax/generic-datalist.js')
+                    @endpush
+
                     <!-- ISBN -->
                     @push('custom-scripts')
                         @vite('resources/js/library/ajax/isbn-details.js')
@@ -80,16 +84,13 @@
                         <div class="sm:col-span-3 col-span-full">
 
                             <!-- Publisher -->
-                            @push('custom-scripts')
-                                @vite('resources/js/library/ajax/publishers-index.js')
-                            @endpush
                             <x-itemable.form.label for="publisher">Publisher</x-itemable.form.label>
                             <x-itemable.form.input type="text"
                                                    id="publisher"
                                                    name="publisher"
                                                    list="publishers"
                                                    autocomplete="off"
-                                                   onfocus="window.ajaxPopulatePublishersDatalist();"
+                                                   onfocus="window.ajaxPopulateGenericDatalist('publishers', 'name', '/ajax/publishers');"
                                                    placeholder="Enter Publisher..."/>
                             <datalist id="publishers"></datalist>
                         </div>
@@ -107,7 +108,6 @@
 
                     <!-- Tags -->
                     @push('custom-scripts')
-                        @vite('resources/js/library/ajax/tags-index.js')
                         @vite('resources/js/library/tags-operations.js')
                     @endpush
                     <x-itemable.form.label for="tag">Tags</x-itemable.form.label>
@@ -118,7 +118,7 @@
                                                    name="tag"
                                                    list="tags"
                                                    autocomplete="off"
-                                                   onfocus="window.ajaxPopulateTagsDatalist();"
+                                                   onfocus="window.ajaxPopulateGenericDatalist('tags', 'name', '/ajax/tags');"
                                                    placeholder="Enter Tags..."/>
                             <datalist id="tags"></datalist>
                         </div>

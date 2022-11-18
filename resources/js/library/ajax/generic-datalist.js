@@ -1,6 +1,6 @@
-window.ajaxPopulateTagsDatalist = function() {
+window.ajaxPopulateGenericDatalist = function(datalistId, attributeName, url) {
 
-    const datalist = document.getElementById('tags');
+    const datalist = document.getElementById(datalistId);
 
     if (datalist.options.length === 0) {
 
@@ -10,14 +10,12 @@ window.ajaxPopulateTagsDatalist = function() {
             if (this.readyState === 4 && this.status === 200) {
 
                 JSON.parse(this.responseText).forEach(function (item) {
-                    const option = document.createElement('option');
-                    option.value = item['name'];
-                    datalist.appendChild(option);
+                    datalist.append(new Option(item[attributeName]));
                 });
             }
         };
 
-        xhttp.open("GET", "/ajax/tags", true);
+        xhttp.open("GET", url, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhttp.send();

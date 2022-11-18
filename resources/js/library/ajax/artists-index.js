@@ -23,7 +23,6 @@ window.ajaxPopulateArtistsDatalist = function() {
                 });
 
                 const artists = window.allArtists = Object.values(data['artists']);
-                // TODO check if required (in function assigning right first/last name based on selection)
 
                 artists.map(item => Object.values(item)).sort().forEach(function(item) {
                     firstnameDatalist.append(new Option(item[1], item[0]));
