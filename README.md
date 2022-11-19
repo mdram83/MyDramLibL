@@ -10,4 +10,11 @@ TODO:
 + functions to select specific (with first and last name) from existing data list
 + Mapping authors from API (adjust js functions then)
 + refactor JS functions not to repeat code (e.g. span and 'a' elements creation)
+2. Store Book
+- Inputs Validation
+- Redirect for errors
+- Searching/Creating low level entities
+- Creating High level entities (what first?)
+- Redirect for errors?
+- Redirect for success
 

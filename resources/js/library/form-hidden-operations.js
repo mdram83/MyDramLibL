@@ -1,4 +1,4 @@
-window.addToSelection = function(value, prefix, divId, formId, hiddenInputName, focusId, reset) {
+window.addToSelection = function(value, prefix, divId, formId, hiddenInputName, focusId = null, reset = []) {
 
     if (!value) {
         return;
@@ -13,7 +13,10 @@ window.addToSelection = function(value, prefix, divId, formId, hiddenInputName, 
     document.getElementById(divId).appendChild(span);
     document.getElementById(formId).appendChild(createHidden(value, prefix, hiddenInputName));
 
-    document.getElementById(focusId).focus();
+    if (focusId) {
+        document.getElementById(focusId).focus();
+    }
+
     reset.forEach(function(item) {
         document.getElementById(item).value = "";
     });
