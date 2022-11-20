@@ -41,7 +41,7 @@ class BookController extends Controller
             'pages' => ['integer', 'min:1', 'max:9999', 'nullable'],
             'publisher' => ['max:255', new OneLiner()],
             'published_at' => ['integer', 'min:1901', 'max:2155', 'nullable'],
-            'tags.*' => ['string', 'max:255', new OneLiner(), 'nullable'],
+            'tags.*' => ['string', 'max:30', new OneLiner(), 'nullable'],
             'authors.*' => [new ArtistName(), new OneLiner(), 'string'],
             'comment' => ['string', 'nullable'],
         ]);
@@ -99,12 +99,13 @@ class BookController extends Controller
             DB::rollBack();
 
             return redirect()->back()->withErrors([
-                'save' => 'Sorry, we encountered unexpected error when saving your item. Please try again.'
+                'general' => 'Sorry, we encountered unexpected error when saving your item. Please try again.'
             ])->withInput();
 
         }
 
-        return redirect("/books/{$book->id}");//->with('success', 'Your new item has been created.');
+        return redirect("/books/{$book->id}")
+            ->with('success', 'Your book has been added.');
 
     }
 

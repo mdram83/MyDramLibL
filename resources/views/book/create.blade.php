@@ -27,7 +27,7 @@
                     @push('custom-scripts')
                         @vite('resources/js/library/ajax/isbn-details.js')
                     @endpush
-                    <x-itemable.form.label for="isbn" class="mt-0">ISBN</x-itemable.form.label>
+                    <x-itemable.form.label for="isbn" value="ISBN" class="mt-0"/>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <x-itemable.form.input type="text"
@@ -35,7 +35,7 @@
                                                    name="isbn"
                                                    oninput="window.changeIsbnButtonStyle('enabled');"
                                                    value="{{ old('isbn') }}"
-                                                   placeholder="Enter ISBN..."
+                                                   placeholder="Start here..."
                             />
                         </div>
                         <div>
@@ -50,13 +50,13 @@
 
                     <!-- Title -->
                     <x-itemable.form.label for="title">
-                        Title&nbsp;<span class="text-red-700 font-bold">*</span>
+                        Title <span class="text-red-700 font-bold">*</span>
                     </x-itemable.form.label>
                     <x-itemable.form.input type="text"
                                            id="title"
                                            name="title"
                                            value="{{ old('title') }}"
-                                           placeholder="Enter Title..."
+                                           placeholder="Add title"
                                            required
                     />
                     <x-itemable.form.error name="title"/>
@@ -65,12 +65,12 @@
                         <div class="sm:col-span-2 col-span-full">
 
                             <!-- Series -->
-                            <x-itemable.form.label for="series">Series</x-itemable.form.label>
+                            <x-itemable.form.label for="series" value="Series"/>
                             <x-itemable.form.input type="text"
                                                    id="series"
                                                    name="series"
                                                    value="{{ old('series') }}"
-                                                   placeholder="Enter Series..."
+                                                   placeholder="Add series"
                             />
                             <x-itemable.form.error name="series"/>
 
@@ -78,12 +78,12 @@
                         <div class="sm:col-span-1 col-span-2">
 
                             <!-- Volume -->
-                            <x-itemable.form.label for="volume">Volume</x-itemable.form.label>
+                            <x-itemable.form.label for="volume" value="Volume"/>
                             <x-itemable.form.input type="number"
                                                    id="volume"
                                                    name="volume"
                                                    value="{{ old('volume') }}"
-                                                   placeholder="Enter Volume Number..."
+                                                   placeholder="and volume no."
                                                    min="1"
                                                    max="9999"
                             />
@@ -93,12 +93,12 @@
                         <div class="sm:col-span-1 col-span-2">
 
                             <!-- Pages -->
-                            <x-itemable.form.label for="pages">Pages</x-itemable.form.label>
+                            <x-itemable.form.label for="pages" value="Pages"/>
                             <x-itemable.form.input type="number"
                                                    id="pages"
                                                    name="pages"
                                                    value="{{ old('pages') }}"
-                                                   placeholder="Enter Number of Pages..."
+                                                   placeholder="No. of pages"
                                                    min="1"
                                                    max="9999"
                             />
@@ -112,7 +112,7 @@
                         <div class="sm:col-span-3 col-span-full">
 
                             <!-- Publisher -->
-                            <x-itemable.form.label for="publisher">Publisher</x-itemable.form.label>
+                            <x-itemable.form.label for="publisher" value="Publisher"/>
                             <x-itemable.form.input type="text"
                                                    id="publisher"
                                                    name="publisher"
@@ -120,7 +120,7 @@
                                                    autocomplete="off"
                                                    onfocus="window.ajaxPopulateGenericDatalist('publishers', 'name', '/ajax/publishers');"
                                                    value="{{ old('publisher') }}"
-                                                   placeholder="Enter Publisher..."
+                                                   placeholder="Select/add publisher"
                             />
                             <x-itemable.form.error name="publisher"/>
                             <datalist id="publishers"></datalist>
@@ -129,12 +129,12 @@
                         <div class="sm:col-span-1 col-span-full">
 
                             <!-- Published At -->
-                            <x-itemable.form.label for="published_at">Published At</x-itemable.form.label>
+                            <x-itemable.form.label for="published_at" value="Published At"/>
                             <x-itemable.form.input type="number"
                                                    id="published_at"
                                                    name="published_at"
                                                    value="{{ old('published_at') }}"
-                                                   placeholder="Enter Year of Publishing"
+                                                   placeholder="and published year"
                                                    min="1901"
                                                    max="2155"
                             />
@@ -143,7 +143,7 @@
                     </div>
 
                     <!-- Tags -->
-                    <x-itemable.form.label for="tag">Tags</x-itemable.form.label>
+                    <x-itemable.form.label for="tag" value="Tags"/>
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <x-itemable.form.input type="text"
@@ -152,7 +152,7 @@
                                                    list="tags"
                                                    autocomplete="off"
                                                    onfocus="window.ajaxPopulateGenericDatalist('tags', 'name', '/ajax/tags');"
-                                                   placeholder="Enter Tags..."
+                                                   placeholder="Select/add tags"
                             />
                             <datalist id="tags"></datalist>
                         </div>
@@ -186,7 +186,7 @@
                         @vite('resources/js/library/ajax/artists-index.js')
                         @vite('resources/js/library/artists-operations.js')
                     @endpush
-                    <x-itemable.form.label for="authors">Authors</x-itemable.form.label>
+                    <x-itemable.form.label for="authors" value="Authors"/>
                     <div class="grid sm:grid-cols-8 grid-cols-2 gap-2">
                         <div class="sm:col-span-3 order-first">
                             <x-itemable.form.input type="text"
@@ -195,7 +195,7 @@
                                                    list="artistFirstnames"
                                                    autocomplete="off"
                                                    onfocus="window.ajaxPopulateArtistsDatalist();"
-                                                   placeholder="Author first name..."
+                                                   placeholder="Select/add first name"
                             />
                             <datalist id="artistFirstnames"></datalist>
                         </div>
@@ -206,7 +206,7 @@
                                                    list="artistLastnames"
                                                    autocomplete="off"
                                                    onfocus="window.ajaxPopulateArtistsDatalist();"
-                                                   placeholder="Author last name..."
+                                                   placeholder="Select/add last name"
                             />
                             <datalist id="artistLastnames"></datalist>
                         </div>
@@ -236,10 +236,10 @@
                     />
 
                     <!-- Comment -->
-                    <x-itemable.form.label for="comment">Comment</x-itemable.form.label>
+                    <x-itemable.form.label for="comment" value="Comment"/>
                     <x-itemable.form.textarea id="comment"
                                               name="comment"
-                                              placeholder="Your Comment..."
+                                              placeholder="Your comments"
                                               rows="3"
                     >{{ old('comment') }}</x-itemable.form.textarea>
                     <x-itemable.form.error name="comment" class="mt-0.5 mb-4"/>
@@ -248,7 +248,6 @@
                     <div class="flex justify-center">
                         <x-primary-button class="w-full justify-center">Add</x-primary-button>
                     </div>
-                    <x-itemable.form.error name="save" class="mt-0.5 mb-4"/>
 
                 </form>
 

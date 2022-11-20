@@ -32,6 +32,9 @@
             </main>
         </div>
 
+        <!-- Flash Message -->
+        <x-flash/>
+
     @stack('custom-scripts')
 
     </body>

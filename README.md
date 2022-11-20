@@ -10,7 +10,8 @@ Store Book
 + Creating High level entities (what first?)
 + Redirect for errors/exception while creating entities
 + Redirect for success
-- Success message / Error message (general)
++ Success message / Error message (general)
++ Consider Tag max 30 chars or even less (at the end this is a tag)
 - Adding thumbnail...
 
 
