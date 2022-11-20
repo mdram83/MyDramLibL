@@ -48,6 +48,8 @@
                     </div>
                     <x-itemable.form.error name="isbn"/>
 
+                    <input type="hidden" id="thumbnail" name="thumbnail" value="{{ old('thumbnail') }}"/>
+
                     <!-- Title -->
                     <x-itemable.form.label for="title">
                         Title <span class="text-red-700 font-bold">*</span>

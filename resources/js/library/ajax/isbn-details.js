@@ -14,6 +14,7 @@ window.ajaxGetDetailsWithISBN = function() {
                 [
                     'title',
                     'isbn',
+                    'thumbnail',
                     'publisher',
                     'published_at',
                     'series',
@@ -22,6 +23,8 @@ window.ajaxGetDetailsWithISBN = function() {
                 ].forEach(function (item) {
                     document.getElementById(item).value = details[item] ?? document.getElementById(item).value;
                 });
+
+                console.log(details);
 
                 details['tags'].forEach(function (tag) {
                     window.addToSelection(

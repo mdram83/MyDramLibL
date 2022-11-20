@@ -13,6 +13,7 @@ class Item extends Model
         'user_id',
         'publisher_id',
         'published_at',
+        'thumbnail',
         'itemable_id',
         'itemable_type',
         'title',

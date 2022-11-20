@@ -105,6 +105,16 @@ class OpenlibraryISBNRestAPI extends RestAPIHandlerBase implements ISBNRestAPI
             'title' => $data['title'] ?? null,
             'authors' => [],
             'isbn' => $this->isbn,
+            'thumbnail' =>
+                $data['covers']['medium'] ?? (
+                    $data['covers']['large'] ?? (
+                        $data['covers']['small'] ?? (
+                            $data['covers'][0] ? 'https://covers.openlibrary.org/b/id/' . $data['covers'][0] . '-M.jpg' : (
+                                $data['thumbnail_url'] ?? null
+                            )
+                        )
+                    )
+                ),
             'publisher' => $data['publishers'][0] ?? null,
             'published_at' => isset($data['publish_date']) ? substr($data['publish_date'], -4) : null,
             'series' => null,

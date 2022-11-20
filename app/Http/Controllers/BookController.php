@@ -13,6 +13,7 @@ use App\Rules\OneLiner;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
@@ -45,6 +46,11 @@ class BookController extends Controller
             'authors.*' => [new ArtistName(), new OneLiner(), 'string'],
             'comment' => ['string', 'nullable'],
         ]);
+
+        $validator = Validator::make(request()->post(), [
+            'thumbnail' => ['max:1000', 'url', 'nullable', new OneLiner()],
+        ]);
+        $thumbnail = ($validator->fails()) ? null : $validator->safe()->only(['thumbnail'])['thumbnail'];
 
         try {
 
@@ -86,6 +92,7 @@ class BookController extends Controller
                 'itemable_type' => $book->getMorphClass(),
                 'title' => $attributes['title'],
                 'published_at' => $attributes['published_at'],
+                'thumbnail' => $thumbnail,
                 'comment' => $attributes['comment'],
             ]);
 
@@ -95,6 +102,8 @@ class BookController extends Controller
             DB::commit();
 
         } catch (Exception $e) {
+
+            ddd($e);
 
             DB::rollBack();
 
