@@ -5,7 +5,7 @@
     </div>
 
     <div class="text-xs italic">
-        {{ $comment }}
+        {!! nl2br(e($comment)) !!}
     </div>
 
 </div>

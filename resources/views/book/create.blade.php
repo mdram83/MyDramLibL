@@ -248,6 +248,7 @@
                     <div class="flex justify-center">
                         <x-primary-button class="w-full justify-center">Add</x-primary-button>
                     </div>
+                    <x-itemable.form.error name="save" class="mt-0.5 mb-4"/>
 
                 </form>
 

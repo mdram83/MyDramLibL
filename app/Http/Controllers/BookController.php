@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Item;
+use App\Models\Publisher;
+use App\Models\Tag;
 use App\Rules\ArtistName;
 use App\Rules\ISBN;
 use App\Rules\OneLiner;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -36,12 +41,71 @@ class BookController extends Controller
             'pages' => ['integer', 'min:1', 'max:9999', 'nullable'],
             'publisher' => ['max:255', new OneLiner()],
             'published_at' => ['integer', 'min:1901', 'max:2155', 'nullable'],
-            'tags.*' => ['alpha_dash'],
+            'tags.*' => ['string', 'max:255', new OneLiner(), 'nullable'],
             'authors.*' => [new ArtistName(), new OneLiner(), 'string'],
             'comment' => ['string', 'nullable'],
         ]);
 
-        ddd($attributes);
+        try {
+
+            DB::beginTransaction();
+
+            $publisher =
+                isset($attributes['publisher']) ?
+                    (
+                        Publisher::where('name', $attributes['publisher'])->first() ??
+                        Publisher::create(['name' => $attributes['publisher']])
+                    ) :
+                    null;
+
+            $tags = collect($attributes['tags'] ?? [])->map(fn($tag) =>
+                Tag::where('name', $tag)->first() ?? Tag::create(['name' => $tag])
+            );
+
+            $authors = collect($attributes['authors'] ?? [])->map(function ($author) {
+                $names = explode(', ', $author);
+                $firstname = $names[1] ?? null;
+                $lastname = $names[0];
+
+                return
+                    Author::where('firstname', $firstname)->where('lastname', $lastname)->first() ??
+                    Author::create(['firstname' => $firstname, 'lastname' => $lastname]);
+            });
+
+            $book = Book::create([
+                'isbn' => $attributes['isbn'],
+                'series' => $attributes['series'],
+                'volume' => $attributes['volume'],
+                'pages' => $attributes['pages'],
+            ]);
+
+            $item = Item::create([
+                'user_id' => auth()->user()->id,
+                'publisher_id' => $publisher->id ?? null,
+                'itemable_id' => $book->id,
+                'itemable_type' => $book->getMorphClass(),
+                'title' => $attributes['title'],
+                'published_at' => $attributes['published_at'],
+                'comment' => $attributes['comment'],
+            ]);
+
+            $item->tags()->sync($tags->map(fn($tag) => $tag->id));
+            $item->authors()->sync($authors->map(fn($author) => $author->id));
+
+            DB::commit();
+
+        } catch (Exception $e) {
+
+            DB::rollBack();
+
+            return redirect()->back()->withErrors([
+                'save' => 'Sorry, we encountered unexpected error when saving your item. Please try again.'
+            ])->withInput();
+
+        }
+
+        return redirect("/books/{$book->id}");//->with('success', 'Your new item has been created.');
+
     }
 
     public function show(int $id)
