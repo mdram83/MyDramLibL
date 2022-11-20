@@ -58,52 +58,42 @@ class BookController extends Controller
 
             $publisher =
                 isset($attributes['publisher']) ?
-                    (
-                        Publisher::where('name', $attributes['publisher'])->first() ??
-                        Publisher::create(['name' => $attributes['publisher']])
-                    ) :
-                    null;
+                    Publisher::firstOrCreate(['name' => $attributes['publisher']])
+                    : null;
 
-            $tags = collect($attributes['tags'] ?? [])->map(fn($tag) =>
-                Tag::where('name', $tag)->first() ?? Tag::create(['name' => $tag])
-            );
+            $tags = collect($attributes['tags'] ?? [])
+                ->map(fn($tag) => Tag::firstOrCreate(['name' => $tag]));
 
-            $authors = collect($attributes['authors'] ?? [])->map(function ($author) {
-                $names = explode(', ', $author);
-                $firstname = $names[1] ?? null;
-                $lastname = $names[0];
+            $authors = collect($attributes['authors'] ?? [])
+                ->map(function ($author) {
+                    $names = explode(', ', $author);
+                    $firstname = $names[1] ?? null;
+                    $lastname = $names[0];
 
-                return
-                    Author::where('firstname', $firstname)->where('lastname', $lastname)->first() ??
-                    Author::create(['firstname' => $firstname, 'lastname' => $lastname]);
-            });
+                    return Author::firstOrCreate(['firstname' => $firstname, 'lastname' => $lastname]);
+                });
 
-            $book = Book::create([
-                'isbn' => $attributes['isbn'],
-                'series' => $attributes['series'],
-                'volume' => $attributes['volume'],
-                'pages' => $attributes['pages'],
-            ]);
+            $book = Book::create(request()->only(['isbn', 'series', 'volume', 'pages']));
 
-            $item = Item::create([
+            $item = Item::create(array_merge([
                 'user_id' => auth()->user()->id,
                 'publisher_id' => $publisher->id ?? null,
                 'itemable_id' => $book->id,
                 'itemable_type' => $book->getMorphClass(),
-                'title' => $attributes['title'],
-                'published_at' => $attributes['published_at'],
                 'thumbnail' => $thumbnail,
-                'comment' => $attributes['comment'],
-            ]);
+            ], request()->only(['title', 'published_at', 'comment'])));
 
-            $item->tags()->sync($tags->map(fn($tag) => $tag->id));
-            $item->authors()->sync($authors->map(fn($author) => $author->id));
+            $item->tags()->sync(
+                $tags->map(fn($tag) => $tag->id)
+            );
+
+            $item->authors()->sync(
+                $authors->map(fn($author) => $author->id)
+            );
 
             DB::commit();
 
         } catch (Exception $e) {
-
-            ddd($e);
 
             DB::rollBack();
 
