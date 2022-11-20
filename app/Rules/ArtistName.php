@@ -20,11 +20,11 @@ class ArtistName implements InvokableRule
             $fail(':attribute must not have coma in first or last name.');
         }
 
-        // TODO below seems not working
-        foreach (explode($value, ',') as $namePart) {
+        foreach (explode(',', $value) as $namePart) {
             if (mb_strlen($namePart) > 255) {
-                $fail(':attribute first and last name must not exceed 255 characters.');
+                $fail('Each :attribute first and last name must not exceed 255 characters.');
             }
         }
+
     }
 }

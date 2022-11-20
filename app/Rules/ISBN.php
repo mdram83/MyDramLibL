@@ -17,7 +17,7 @@ class ISBN implements InvokableRule
     public function __invoke($attribute, $value, $fail)
     {
         if (!$this->isValidISBN($value)) {
-            $fail(':attribute is not valid ISBN.');
+            $fail('Provided :attribute is not a valid ISBN number.');
         }
     }
 

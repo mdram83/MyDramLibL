@@ -37,7 +37,7 @@ class BookController extends Controller
             'publisher' => ['max:255', new OneLiner()],
             'published_at' => ['integer', 'min:1901', 'max:2155', 'nullable'],
             'tags.*' => ['alpha_dash'],
-            'authors.*' => [new ArtistName(), new OneLiner()],
+            'authors.*' => [new ArtistName(), new OneLiner(), 'string'],
             'comment' => ['string', 'nullable'],
         ]);
 

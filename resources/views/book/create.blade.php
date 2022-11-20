@@ -211,7 +211,13 @@
                             />
                             <datalist id="artistLastnames"></datalist>
                             <x-itemable.form.error-array name="authors"/>
-{{--                            TODO add restoring old authors from request if failed (like tags)--}}
+                            <x-itemable.form.restore-hidden
+                                httpName="authors"
+                                prefix="artist"
+                                divId="selectedArtists"
+                                formId="create"
+                                hiddenInputName="authors[]"
+                            />
                         </div>
                         <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
                             <x-primary-button type="button"
