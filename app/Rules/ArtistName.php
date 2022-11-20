@@ -17,7 +17,7 @@ class ArtistName implements InvokableRule
     public function __invoke($attribute, $value, $fail)
     {
         if (substr_count($value, ',') > 1 || str_starts_with($value, ',') || str_ends_with($value, ',')) {
-            $fail(':attribute must not have coma in first or last name.');
+            $fail('Selected :attribute must not have coma in first or last name.');
         }
 
         foreach (explode(',', $value) as $namePart) {

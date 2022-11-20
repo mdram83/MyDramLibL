@@ -37,16 +37,16 @@
                                                    value="{{ old('isbn') }}"
                                                    placeholder="Enter ISBN..."
                             />
-                            <x-itemable.form.error name="isbn"/>
                         </div>
                         <div>
                             <x-primary-button type="button"
                                               id="isbn-button"
                                               class="w-full justify-center"
-                                              onclick="window.ajaxGetDetailsWithISBN()"
+                                              onclick="window.ajaxGetDetailsWithISBN();"
                             >Get Details</x-primary-button>
                         </div>
                     </div>
+                    <x-itemable.form.error name="isbn"/>
 
                     <!-- Title -->
                     <x-itemable.form.label for="title">
@@ -154,14 +154,6 @@
                                                    onfocus="window.ajaxPopulateGenericDatalist('tags', 'name', '/ajax/tags');"
                                                    placeholder="Enter Tags..."
                             />
-                            <x-itemable.form.error-array name="tags"/>
-                            <x-itemable.form.restore-hidden
-                                httpName="tags"
-                                prefix="tag"
-                                divId="selectedTags"
-                                formId="create"
-                                hiddenInputName="tags[]"
-                            />
                             <datalist id="tags"></datalist>
                         </div>
                         <div>
@@ -180,7 +172,14 @@
                         </div>
                         <div id="selectedTags" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
                     </div>
-
+                    <x-itemable.form.error-array name="tags" class=""/>
+                    <x-itemable.form.restore-hidden
+                        httpName="tags"
+                        prefix="tag"
+                        divId="selectedTags"
+                        formId="create"
+                        hiddenInputName="tags[]"
+                    />
 
                     <!-- Authors -->
                     @push('custom-scripts')
@@ -210,14 +209,6 @@
                                                    placeholder="Author last name..."
                             />
                             <datalist id="artistLastnames"></datalist>
-                            <x-itemable.form.error-array name="authors"/>
-                            <x-itemable.form.restore-hidden
-                                httpName="authors"
-                                prefix="artist"
-                                divId="selectedArtists"
-                                formId="create"
-                                hiddenInputName="authors[]"
-                            />
                         </div>
                         <div class="sm:col-span-2 sm:order-none order-2 row-span-2">
                             <x-primary-button type="button"
@@ -235,6 +226,14 @@
                         </div>
                         <div id="selectedArtists" class="col-span-full order-last text-sm text-white leading-6 flex flex-wrap"></div>
                     </div>
+                    <x-itemable.form.error-array name="authors"/>
+                    <x-itemable.form.restore-hidden
+                        httpName="authors"
+                        prefix="artist"
+                        divId="selectedArtists"
+                        formId="create"
+                        hiddenInputName="authors[]"
+                    />
 
                     <!-- Comment -->
                     <x-itemable.form.label for="comment">Comment</x-itemable.form.label>
@@ -243,7 +242,7 @@
                                               placeholder="Your Comment..."
                                               rows="3"
                     >{{ old('comment') }}</x-itemable.form.textarea>
-                    <x-itemable.form.error name="comment"/>
+                    <x-itemable.form.error name="comment" class="mt-0.5 mb-4"/>
 
                     <!-- Submit -->
                     <div class="flex justify-center">
