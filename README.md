@@ -2,16 +2,8 @@ MyDramLibL is remake of MyDramLibrary that is now based on Laravel.
 As it is much easier and help me in learning the framework will continue project with Laravel.
 
 TODO:
-Store Book
-+ Inputs Validation
-+ Redirect for errors in validation
-+ Better error messages (layout in web and mobile)
-+ Searching/Creating low level entities
-+ Creating High level entities (what first?)
-+ Redirect for errors/exception while creating entities
-+ Redirect for success
-+ Success message / Error message (general)
-+ Consider Tag max 30 chars or even less (at the end this is a tag)
-+ Adding thumbnail from Openlibrary
-
+- More Add buttons (on Add from, Show, Edit?)
+- Edit Book (similar to add, not really more)
+- Delete Book (item and itemable separately, rest is covered by db relations)
+- Then same for Music Album (and then try to minimize repeated code)
 
