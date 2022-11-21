@@ -25,11 +25,54 @@ class BookController extends Controller
         ]);
     }
 
+    public function show(int $id)
+    {
+        if ($itemable = auth()->user()->books()->where('books.id', $id)->first()) {
+            return view('itemable.show', [
+                'itemable' => $itemable,
+            ]);
+        }
+        abort(404);
+    }
+
     public function create()
     {
         return view('book.create', [
             'header' => 'Add Book',
         ]);
+    }
+
+    public function edit(int $id)
+    {
+        if ($itemable = auth()->user()->books()->where('books.id', $id)->first()) {
+            return view('itemable.edit', [
+                'itemable' => $itemable,
+            ]);
+        }
+        abort(404);
+    }
+
+    public function update(int $id)
+    {
+        $attributes = request()->validate([
+            'isbn' => [new ISBN(), 'nullable'],
+            'title' => ['required', 'max:255', new OneLiner()],
+            'series' => ['max:255', new OneLiner()],
+            'volume' => ['integer', 'min:1', 'max:9999', 'nullable'],
+            'pages' => ['integer', 'min:1', 'max:9999', 'nullable'],
+            'publisher' => ['max:255', new OneLiner()],
+            'published_at' => ['integer', 'min:1901', 'max:2155', 'nullable'],
+            'tags.*' => ['string', 'max:30', new OneLiner(), 'nullable'],
+            'authors.*' => [new ArtistName(), new OneLiner(), 'string'],
+            'comment' => ['string', 'nullable'],
+        ]);
+
+        $validator = Validator::make(request()->post(), [
+            'thumbnail' => ['max:1000', 'url', 'nullable', new OneLiner()],
+        ]);
+        $thumbnail = ($validator->fails()) ? null : $validator->safe()->only(['thumbnail'])['thumbnail'];
+
+        dd([$attributes, $thumbnail]);
     }
 
     public function store()
@@ -106,15 +149,5 @@ class BookController extends Controller
         return redirect("/books/{$book->id}")
             ->with('success', 'Your book has been added.');
 
-    }
-
-    public function show(int $id)
-    {
-        if ($itemable = auth()->user()->books()->where('books.id', $id)->first()) {
-            return view('itemable.show', [
-                'itemable' => $itemable,
-            ]);
-        }
-        abort(404);
     }
 }

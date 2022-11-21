@@ -1,4 +1,4 @@
-window.ajaxGetDetailsWithISBN = function() {
+window.ajaxGetDetailsWithISBN = function(formId) {
 
     const isbn = document.getElementById('isbn').value;
     if (isbn !== '') {
@@ -24,14 +24,12 @@ window.ajaxGetDetailsWithISBN = function() {
                     document.getElementById(item).value = details[item] ?? document.getElementById(item).value;
                 });
 
-                console.log(details);
-
                 details['tags'].forEach(function (tag) {
                     window.addToSelection(
                         tag,
                         'tag',
                         'selectedTags',
-                        'create',
+                        formId,
                         'tags[]',
                         'tag',
                         []
@@ -43,7 +41,7 @@ window.ajaxGetDetailsWithISBN = function() {
                         artist,
                         'artist',
                         'selectedArtists',
-                        'create',
+                        formId,
                         'authors[]',
                         'artistFirstname',
                         []

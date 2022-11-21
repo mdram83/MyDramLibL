@@ -1,6 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
+
         <div class="flex items-center">
             <div class="flex-auto items-center">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -14,7 +15,6 @@
                 >Add</x-library-button>
             </div>
         </div>
-
 
     </x-slot>
 

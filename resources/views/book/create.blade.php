@@ -42,7 +42,7 @@
                             <x-primary-button type="button"
                                               id="isbn-button"
                                               class="w-full justify-center"
-                                              onclick="window.ajaxGetDetailsWithISBN();"
+                                              onclick="window.ajaxGetDetailsWithISBN('create');"
                             >Get Details</x-primary-button>
                         </div>
                     </div>
