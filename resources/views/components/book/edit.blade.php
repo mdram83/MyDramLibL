@@ -1,7 +1,6 @@
 <div class="w-full flex justify-center">
     <div class="w-full max-w-2xl">
 
-{{--        TODO continue adjusting form to EDIT form--}}
         <form id="edit" method="POST" action="/books/{{ $itemable->id }}">
             @csrf
             @method('PATCH')
