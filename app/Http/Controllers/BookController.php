@@ -54,6 +54,26 @@ class BookController extends Controller
         abort(404);
     }
 
+    public function destroy(int $id)
+    {
+        $book = auth()->user()->books()->where('books.id', $id)->firstOrFail();
+
+        try {
+            DB::beginTransaction();
+            $book->item->delete();
+            $book->delete();
+            DB::commit();
+
+        } catch (Exception) {
+
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'general' => 'Sorry, we encountered unexpected error when deleting your item. Please try again.'
+            ]);
+        }
+        return redirect('books')->with('success', 'Your book has been deleted');
+    }
+
     public function update(int $id)
     {
         $attributes = $this->getValidatedAttributes();
@@ -83,7 +103,7 @@ class BookController extends Controller
 
             DB::commit();
 
-        } catch (Exception $e) {
+        } catch (Exception) {
 
             DB::rollBack();
             return $this->onBookSaveErrors();
@@ -116,7 +136,7 @@ class BookController extends Controller
 
             DB::commit();
 
-        } catch (Exception $e) {
+        } catch (Exception) {
 
             DB::rollBack();
             return $this->onBookSaveErrors();

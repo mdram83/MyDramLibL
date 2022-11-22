@@ -1,8 +1,10 @@
-@props(['disabled' => false, 'required' => false])
+@props(['disabled' => false, 'required' => false, 'readonly' => false, 'checked' => false])
 
 <input
     {{ $disabled ? 'disabled' : '' }}
     {{ $required ? 'required' : '' }}
+    {{ $readonly ? 'readonly' : '' }}
+    {{ $checked ? 'checked' : '' }}
     {!! $attributes->merge([
     'class' => '
         w-full

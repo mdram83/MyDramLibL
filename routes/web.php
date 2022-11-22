@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/books/{id}', [BookController::class, 'show']);
     Route::get('/books/{id}/edit', [BookController::class, 'edit']);
     Route::patch('/books/{id}', [BookController::class, 'update']);
+    Route::delete('/books/{id}', [BookController::class, 'destroy']);
 
     Route::get('/music', [MusicAlbumController::class, 'index'])->name('music');
     Route::get('/music/{id}', [MusicAlbumController::class, 'show']);

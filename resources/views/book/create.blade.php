@@ -48,7 +48,16 @@
                     </div>
                     <x-itemable.form.error name="isbn"/>
 
-                    <input type="hidden" id="thumbnail" name="thumbnail" value="{{ old('thumbnail') }}"/>
+                    <!-- Thumbnail -->
+                    <x-itemable.form.input type="url"
+                                           id="thumbnail"
+                                           name="thumbnail"
+                                           value="{{ old('thumbnail') }}"
+                                           readonly
+                                           class="hidden"
+                    />
+
+
 
                     <!-- Title -->
                     <x-itemable.form.label for="title">

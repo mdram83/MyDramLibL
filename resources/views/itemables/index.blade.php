@@ -8,11 +8,13 @@
                     {{ __($header) }}
                 </h2>
             </div>
+
             <div class="flex-auto items-center text-right">
-                <x-library-button
-                    class="-my-1"
-                    onclick="location.href = '{{ request()->route()->uri() . '/create' }}'"
-                >Add</x-library-button>
+
+                <div class="inline-flex">
+                    <x-itemable.button.add/>
+                </div>
+
             </div>
         </div>
 

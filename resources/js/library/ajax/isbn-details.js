@@ -48,7 +48,7 @@ window.ajaxGetDetailsWithISBN = function(formId) {
                     );
                 });
 
-                document.getElementById('title').focus();
+                document.getElementById('isbn').focus();
                 window.changeIsbnButtonStyle('success');
                 return;
             }

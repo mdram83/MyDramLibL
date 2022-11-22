@@ -8,11 +8,13 @@
                     {{ __($itemable->getItemableType()) . ' ' . __('Details')}}
                 </h2>
             </div>
+
             <div class="flex-auto items-center text-right">
-                <x-library-button
-                    class="-my-1"
-                    onclick="location.href = '{{ request()->url() . '/edit' }}'"
-                >Edit</x-library-button>
+
+                <div class="inline-flex"><x-itemable.button.add/></div>
+                <div class="inline-flex"><x-itemable.button.edit/></div>
+                <div class="inline-flex"><x-itemable.button.delete id="{{ $itemable->id }}"/></div>
+
             </div>
         </div>
 
