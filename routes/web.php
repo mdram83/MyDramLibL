@@ -33,6 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/books/{id}', [BookController::class, 'destroy']);
 
     Route::get('/music', [MusicAlbumController::class, 'index'])->name('music');
+    Route::get('/music/create', [MusicAlbumController::class, 'create']);
+    Route::post('/music/store', [MusicAlbumController::class, 'store']);
     Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
 });
 

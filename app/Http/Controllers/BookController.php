@@ -12,7 +12,6 @@ use App\Rules\ISBN;
 use App\Rules\OneLiner;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -54,7 +53,7 @@ class BookController extends Controller
         abort(404);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id) : RedirectResponse
     {
         $book = auth()->user()->books()->where('books.id', $id)->firstOrFail();
 
@@ -74,7 +73,7 @@ class BookController extends Controller
         return redirect('books')->with('success', 'Your book has been deleted');
     }
 
-    public function update(int $id)
+    public function update(int $id) : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();
 
@@ -111,7 +110,7 @@ class BookController extends Controller
         return $this->onBookSaved($book->id);
     }
 
-    public function store()
+    public function store() : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();
 
@@ -143,6 +142,8 @@ class BookController extends Controller
         }
         return $this->onBookSaved($book->id);
     }
+
+
 
     private function getValidatedAttributes() : array
     {

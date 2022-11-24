@@ -23,4 +23,16 @@ class MusicAlbumController extends Controller
         }
         abort(404);
     }
+
+    public function create()
+    {
+        return view('music.create', [
+            'header' => 'Add Music Album',
+        ]);
+    }
+
+    public function store()
+    {
+        dd(request()->all());
+    }
 }
