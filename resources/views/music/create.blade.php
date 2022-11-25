@@ -185,7 +185,6 @@
                     @push('custom-scripts')
                         @vite('resources/js/library/ajax/artists-index.js')
                         @vite('resources/js/library/artists-operations.js')
-{{--                        TODO Add similar for Main Bands (guilds-operations.js)--}}
                     @endpush
                     <x-itemable.form.label for="mainArtists" value="Main Artists"/>
                     <div class="grid sm:grid-cols-8 grid-cols-2 gap-2">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Ajax\ArtistController;
+use App\Http\Controllers\Ajax\GuildController;
 use App\Http\Controllers\Ajax\ISBNOpenlibraryController;
 use App\Http\Controllers\Ajax\PublisherController;
 use App\Http\Controllers\Ajax\TagController;
@@ -42,6 +43,7 @@ Route::middleware(['auth.ajax'])->group(function() {
     Route::get('/ajax/publishers', [PublisherController::class, 'index']);
     Route::get('/ajax/tags', [TagController::class, 'index']);
     Route::get('/ajax/artists', [ArtistController::class, 'index']);
+    Route::get('/ajax/guilds', [GuildController::class, 'index']);
     Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
 });
 

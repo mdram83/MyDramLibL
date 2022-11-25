@@ -28,6 +28,13 @@ class Item extends Model
         'mainBands',
     ];
 
+    public function syncCollections(array $relationCollection) : void
+    {
+        foreach ($relationCollection as $relationName => $collection) {
+            $this->$relationName()->sync($collection->map(fn($item) => $item->id));
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

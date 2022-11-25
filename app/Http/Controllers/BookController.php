@@ -6,6 +6,9 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Item;
 use App\Models\Publisher;
+use App\Models\Repositories\ArtistRepositoryInterface;
+use App\Models\Repositories\PublisherRepositoryInterface;
+use App\Models\Repositories\TagRepositoryInterface;
 use App\Models\Tag;
 use App\Rules\ArtistName;
 use App\Rules\ISBN;
@@ -73,7 +76,12 @@ class BookController extends Controller
         return redirect('books')->with('success', 'Your book has been deleted');
     }
 
-    public function update(int $id) : RedirectResponse
+    public function update(
+        int $id,
+        TagRepositoryInterface $tagRepository,
+        PublisherRepositoryInterface $publisherRepository,
+        ArtistRepositoryInterface $artistRepository
+    ) : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();
 
@@ -88,17 +96,21 @@ class BookController extends Controller
             }
 
             $book->item->fill(array_merge([
-                'publisher_id' => $this->getPublisherByName($attributes['publisher'] ?? null)?->id,
+                'publisher_id' => isset($attributes['publisher'])
+                    ? $publisherRepository->getByName($attributes['publisher'])->id
+                    : null,
             ], request()->only(['title', 'published_at', 'comment', 'thumbnail'])));
             if ($book->item->isDirty()) {
                 $book->item->save();
             }
 
-            $this->syncItemWithTagsAndAuthors(
-                $book->item,
-                $this->getTagsByNames($attributes['tags'] ?? []),
-                $this->getAuthorsByNames($attributes['authors'] ?? [])
-            );
+            $book->item->syncCollections([
+                'tags' => $tagRepository->getByNames($attributes['tags'] ?? []),
+                'authors' => $artistRepository->getArtistsByNames(
+                    Author::class,
+                    $attributes['authors'] ?? []
+                ),
+            ]);
 
             DB::commit();
 
@@ -110,7 +122,11 @@ class BookController extends Controller
         return $this->onBookSaved($book->id);
     }
 
-    public function store() : RedirectResponse
+    public function store(
+        TagRepositoryInterface $tagRepository,
+        PublisherRepositoryInterface $publisherRepository,
+        ArtistRepositoryInterface $artistRepository
+    ) : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();
 
@@ -122,16 +138,20 @@ class BookController extends Controller
 
             $item = Item::create(array_merge([
                 'user_id' => auth()->user()->id,
-                'publisher_id' => $this->getPublisherByName($attributes['publisher'] ?? null)?->id,
+                'publisher_id' =>  isset($attributes['publisher'])
+                    ? $publisherRepository->getByName($attributes['publisher'])->id
+                    : null,
                 'itemable_id' => $book->id,
                 'itemable_type' => $book->getMorphClass(),
             ], request()->only(['title', 'published_at', 'comment', 'thumbnail'])));
 
-            $this->syncItemWithTagsAndAuthors(
-                $item,
-                $this->getTagsByNames($attributes['tags'] ?? []),
-                $this->getAuthorsByNames($attributes['authors'] ?? [])
-            );
+            $item->syncCollections([
+                'tags' => $tagRepository->getByNames($attributes['tags'] ?? []),
+                'authors' => $artistRepository->getArtistsByNames(
+                    Author::class,
+                    $attributes['authors'] ?? []
+                ),
+            ]);
 
             DB::commit();
 
@@ -166,34 +186,6 @@ class BookController extends Controller
         $thumbnail = ($validator->fails()) ? null : $validator->safe()->only(['thumbnail']);
 
         return array_merge($attributes, $thumbnail);
-    }
-
-    private function getPublisherByName(?string $name) : ?Publisher
-    {
-        return isset($name) ? Publisher::firstOrCreate(['name' => $name]) : null;
-    }
-
-    private function getTagsByNames(array $names) : Collection
-    {
-        return collect($names)->map(fn($tag) => Tag::firstOrCreate(['name' => $tag]));
-    }
-
-    private function getAuthorsByNames(array $names) : Collection
-    {
-        return collect($names)->map(function ($name) {
-
-            $nameParts = explode(', ', $name);
-            $firstname = $nameParts[1] ?? null;
-            $lastname = $nameParts[0];
-
-            return Author::firstOrCreate(['firstname' => $firstname, 'lastname' => $lastname]);
-        });
-    }
-
-    private function syncItemWithTagsAndAuthors(Item $item, Collection $tags, Collection $authors) : void
-    {
-        $item->tags()->sync($tags->map(fn($tag) => $tag->id));
-        $item->authors()->sync($authors->map(fn($author) => $author->id));
     }
 
     private function onBookSaved(int $id) : RedirectResponse
