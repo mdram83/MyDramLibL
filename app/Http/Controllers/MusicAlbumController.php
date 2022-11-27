@@ -24,18 +24,19 @@ class MusicAlbumController extends Controller
 
     public function index()
     {
-        return $this->onIndex('musicAlbums', 'Music Albums');
+        return $this->onIndex('musicAlbums', 'Music Albums', 'musicAlbum.row-content');
     }
 
     public function show(int $id)
     {
-        return $this->onShow($id, 'musicAlbums', 'music_albums');
+        return $this->onShow($id, 'musicAlbums', 'music_albums', 'musicAlbum.show-content');
     }
 
     public function create()
     {
-        return view('music.create', [
+        return view('itemable.create', [
             'header' => 'Add Music Album',
+            'componentName' => 'musicAlbum.create'
         ]);
     }
 

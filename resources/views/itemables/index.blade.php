@@ -23,7 +23,6 @@
     @if ($itemables->count())
 
         @foreach ($itemables as $itemable)
-            @php ( $componentName = lcfirst((new ReflectionClass($itemable::class))->getShortName()) . '.row-content' )
             <x-main-row>
                 <x-dynamic-component
                     :component="$componentName"

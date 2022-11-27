@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use ReflectionClass;
 
 trait ItemableTrait
 {
@@ -50,25 +51,36 @@ trait ItemableTrait
         ])->withInput();
     }
 
-    protected function onIndex(string $userRelationshipName, string $header) : View
+    protected function onIndex(string $userRelationshipName, string $header, string $componentName) : View
     {
         return view('itemables.index', [
             'itemables' => auth()->user()->$userRelationshipName()->latest()->paginate(10),
             'header' => $header,
+            'componentName' => $componentName,
         ]);
     }
 
-    protected function onShow(int $itemableId, string $userRelationshipName, string $itemableTableName) : View
+    protected function onShow(
+        int $itemableId,
+        string $userRelationshipName,
+        string $itemableTableName,
+        string $componentName
+    ) : View
     {
         return view('itemable.show', [
             'itemable' => $this->getUserItemable($itemableId, $userRelationshipName, $itemableTableName),
+            'componentName' => $componentName,
         ]);
     }
 
     protected function onEdit(int $itemableId, string $userRelationshipName, string $itemableTableName) : View
     {
+
+        $itemable = $this->getUserItemable($itemableId, $userRelationshipName, $itemableTableName);
+
         return view('itemable.edit', [
-            'itemable' => $this->getUserItemable($itemableId, $userRelationshipName, $itemableTableName),
+            'itemable' => $itemable,
+            'componentName' => lcfirst((new ReflectionClass($itemable::class))->getShortName()) . '.edit',
         ]);
     }
 

@@ -21,18 +21,19 @@ class BookController extends Controller
 
     public function index()
     {
-        return $this->onIndex('books', 'Books');
+        return $this->onIndex('books', 'Books', 'book.row-content');
     }
 
     public function show(int $id)
     {
-        return $this->onShow($id, 'books', 'books');
+        return $this->onShow($id, 'books', 'books', 'book.show-content');
     }
 
     public function create()
     {
-        return view('book.create', [
+        return view('itemable.create', [
             'header' => 'Add Book',
+            'componentName' => 'book.create'
         ]);
     }
 
