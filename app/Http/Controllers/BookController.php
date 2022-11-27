@@ -19,14 +19,27 @@ class BookController extends Controller
 {
     use ItemableTrait;
 
+    public function __construct(
+        protected string $userRelationshipName = 'books',
+        protected string $itemableTableName = 'books',
+        protected string $indexComponentName = 'book.row-content',
+        protected string $showComponentName = 'book.show-content',
+        protected string $editComponentName = 'book.edit',
+        protected string $indexRouteName = 'books',
+        protected string $showUriPrefix = '/books/'
+    )
+    {
+
+    }
+
     public function index()
     {
-        return $this->onIndex('books', 'Books', 'book.row-content');
+        return $this->onIndex('Books');
     }
 
     public function show(int $id)
     {
-        return $this->onShow($id, 'books', 'books', 'book.show-content');
+        return $this->onShow($id);
     }
 
     public function create()
@@ -39,12 +52,12 @@ class BookController extends Controller
 
     public function edit(int $id)
     {
-        return $this->onEdit($id, 'books', 'books');
+        return $this->onEdit($id);
     }
 
     public function destroy(int $id) : RedirectResponse
     {
-        return $this->onDestroy($id, 'books', 'books', 'books');
+        return $this->onDestroy($id);
     }
 
     public function update(
@@ -55,7 +68,7 @@ class BookController extends Controller
     ) : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();
-        $itemable = $this->getUserItemable($id, 'books', 'books');
+        $itemable = $this->getUserItemable($id);
 
         try {
 
@@ -76,7 +89,7 @@ class BookController extends Controller
             DB::rollBack();
             return $this->onItemableSaveError();
         }
-        return $this->onItemableSaved("/books/{$itemable->id}");
+        return $this->onItemableSaved($itemable->id);
     }
 
     public function store(
@@ -106,7 +119,7 @@ class BookController extends Controller
             DB::rollBack();
             return $this->onItemableSaveError();
         }
-        return $this->onItemableSaved("/books/{$itemable->id}");
+        return $this->onItemableSaved($itemable->id);
     }
 
     private function getValidatedAttributes() : array

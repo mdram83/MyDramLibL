@@ -15,9 +15,11 @@ use ReflectionClass;
 
 trait ItemableTrait
 {
-    protected function getUserItemable(int $itemableId, string $userRelationshipName, string $itemableTableName) : Model
+    protected function getUserItemable(int $itemableId) : Model
     {
-        return auth()->user()->$userRelationshipName()->where("{$itemableTableName}.id", $itemableId)->firstOrFail();
+        return auth()->user()->{$this->userRelationshipName}()
+            ->where("{$this->itemableTableName}.id", $itemableId)
+            ->firstOrFail();
     }
 
     protected function getValidatedThumbnail() : ?string
@@ -39,9 +41,9 @@ trait ItemableTrait
         ];
     }
 
-    protected function onItemableSaved(string $uri) : RedirectResponse
+    protected function onItemableSaved(int $itemableId) : RedirectResponse
     {
-        return redirect($uri)->with('success', 'Your item has been saved');
+        return redirect($this->showUriPrefix . $itemableId)->with('success', 'Your item has been saved');
     }
 
     protected function onItemableSaveError() : RedirectResponse
@@ -51,51 +53,37 @@ trait ItemableTrait
         ])->withInput();
     }
 
-    protected function onIndex(string $userRelationshipName, string $header, string $componentName) : View
+    protected function onIndex(string $header) : View
     {
         return view('itemables.index', [
-            'itemables' => auth()->user()->$userRelationshipName()->latest()->paginate(10),
+            'itemables' => auth()->user()->{$this->userRelationshipName}()->latest()->paginate(10),
             'header' => $header,
-            'componentName' => $componentName,
+            'componentName' => $this->indexComponentName,
         ]);
     }
 
-    protected function onShow(
-        int $itemableId,
-        string $userRelationshipName,
-        string $itemableTableName,
-        string $componentName
-    ) : View
+    protected function onShow(int $itemableId) : View
     {
         return view('itemable.show', [
-            'itemable' => $this->getUserItemable($itemableId, $userRelationshipName, $itemableTableName),
-            'componentName' => $componentName,
+            'itemable' => $this->getUserItemable($itemableId),
+            'componentName' => $this->showComponentName,
         ]);
     }
 
-    protected function onEdit(int $itemableId, string $userRelationshipName, string $itemableTableName) : View
+    protected function onEdit(int $itemableId) : View
     {
 
-        $itemable = $this->getUserItemable($itemableId, $userRelationshipName, $itemableTableName);
+        $itemable = $this->getUserItemable($itemableId);
 
         return view('itemable.edit', [
             'itemable' => $itemable,
-            'componentName' => lcfirst((new ReflectionClass($itemable::class))->getShortName()) . '.edit',
+            'componentName' => $this->editComponentName,
         ]);
     }
 
-    protected function onDestroy(
-        int $itemableId,
-        string $userRelationshipName,
-        string $itemableTableName,
-        string $indexRouteName
-    ) : RedirectResponse
+    protected function onDestroy(int $itemableId) : RedirectResponse
     {
-        $itemable = $this->getUserItemable(
-            $itemableId,
-            $userRelationshipName,
-            $itemableTableName
-        );
+        $itemable = $this->getUserItemable($itemableId);
 
         try {
 
@@ -107,7 +95,7 @@ trait ItemableTrait
                 'general' => 'Sorry, we encountered unexpected error when deleting your item'
             ]);
         }
-        return redirect($indexRouteName)->with('success', 'Your item has been deleted');
+        return redirect($this->indexRouteName)->with('success', 'Your item has been deleted');
     }
 
     protected function deleteItemable(Model $itemable) : void
@@ -130,7 +118,8 @@ trait ItemableTrait
     protected function createItem(
         Model $itemable,
         ?string $publisherName,
-        IPublisherRepository $publisherRepository) : Item
+        IPublisherRepository $publisherRepository
+    ) : Item
     {
         return Item::create(array_merge([
             'user_id' => auth()->user()->id,
@@ -146,7 +135,8 @@ trait ItemableTrait
     protected function updateItem(
         Item $item,
         ?string $publisherName,
-        IPublisherRepository $publisherRepository) : Item
+        IPublisherRepository $publisherRepository
+    ) : Item
     {
         $item->fill(array_merge([
             'publisher_id' => isset($publisherName)

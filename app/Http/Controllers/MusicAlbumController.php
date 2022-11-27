@@ -22,14 +22,27 @@ class MusicAlbumController extends Controller
 {
     use ItemableTrait;
 
+    public function __construct(
+        protected string $userRelationshipName = 'musicAlbums',
+        protected string $itemableTableName = 'music_albums',
+        protected string $indexComponentName = 'musicAlbum.row-content',
+        protected string $showComponentName = 'musicAlbum.show-content',
+        protected string $editComponentName = 'musicAlbum.edit',
+        protected string $indexRouteName = 'music',
+        protected string $showUriPrefix = '/music/'
+    )
+    {
+
+    }
+
     public function index()
     {
-        return $this->onIndex('musicAlbums', 'Music Albums', 'musicAlbum.row-content');
+        return $this->onIndex('Music Albums');
     }
 
     public function show(int $id)
     {
-        return $this->onShow($id, 'musicAlbums', 'music_albums', 'musicAlbum.show-content');
+        return $this->onShow($id);
     }
 
     public function create()
@@ -42,12 +55,12 @@ class MusicAlbumController extends Controller
 
     public function edit(int $id)
     {
-        return $this->onEdit($id, 'musicAlbums', 'music_albums');
+        return $this->onEdit($id);
     }
 
     public function destroy(int $id) : RedirectResponse
     {
-        return $this->onDestroy($id, 'musicAlbums', 'music_albums', 'music');
+        return $this->onDestroy($id);
     }
 
     public function update(
@@ -59,7 +72,7 @@ class MusicAlbumController extends Controller
     ) : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();
-        $itemable = $this->getUserItemable($id, 'musicAlbums', 'music_albums');
+        $itemable = $this->getUserItemable($id);
 
         try {
 
@@ -81,7 +94,7 @@ class MusicAlbumController extends Controller
             DB::rollBack();
             return $this->onItemableSaveError();
         }
-        return $this->onItemableSaved("/music/{$itemable->id}");
+        return $this->onItemableSaved($itemable->id);
     }
 
     public function store(
@@ -113,7 +126,7 @@ class MusicAlbumController extends Controller
             DB::rollBack();
             return $this->onItemableSaveError();
         }
-        return $this->onItemableSaved("/music/{$itemable->id}");
+        return $this->onItemableSaved($itemable->id);
     }
 
     private function getValidatedAttributes() : array
