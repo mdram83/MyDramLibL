@@ -57,8 +57,6 @@
                                            class="hidden"
                     />
 
-
-
                     <!-- Title -->
                     <x-itemable.form.label for="title">
                         Title <span class="text-red-700 font-bold">*</span>
@@ -81,7 +79,7 @@
                                                    step="1"
                                                    id="duration"
                                                    name="duration"
-                                                   min="00:00:01" {{--TODO after testing change to 00:00:00--}}
+                                                   min="00:00:00"
                                                    max="99:99:99"
                                                    value="{{ old('duration') }}"
                                                    placeholder="Add duration"

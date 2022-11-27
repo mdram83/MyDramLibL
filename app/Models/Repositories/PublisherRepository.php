@@ -3,8 +3,9 @@
 namespace App\Models\Repositories;
 
 use App\Models\Publisher;
+use App\Models\Repositories\Interfaces\IPublisherRepository;
 
-class PublisherRepository implements PublisherRepositoryInterface
+class PublisherRepository implements IPublisherRepository
 {
 
     public function getByName(string $name): Publisher

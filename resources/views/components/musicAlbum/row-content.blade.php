@@ -21,7 +21,7 @@
             @endif
 
             <!-- Band & Artist Connector -->
-            @if ($itemable->getMainBands() && $itemable->getMainArtists())
+            @if ($itemable->getMainBands()->count() && $itemable->getMainArtists()->count())
                 <span>with</span>
             @endif
 

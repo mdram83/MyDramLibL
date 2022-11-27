@@ -37,6 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/music/create', [MusicAlbumController::class, 'create']);
     Route::post('/music/store', [MusicAlbumController::class, 'store']);
     Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
+    Route::get('/music/{id}/edit', [MusicAlbumController::class, 'edit']);
+    Route::patch('/music/{id}', [MusicAlbumController::class, 'update']);
+    Route::delete('/music/{id}', [MusicAlbumController::class, 'destroy']);
 });
 
 Route::middleware(['auth.ajax'])->group(function() {

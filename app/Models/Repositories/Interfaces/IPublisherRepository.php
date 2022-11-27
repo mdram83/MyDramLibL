@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Repositories;
+namespace App\Models\Repositories\Interfaces;
 
 use App\Models\Publisher;
 
-interface PublisherRepositoryInterface
+interface IPublisherRepository
 {
     public function getByName(string $name) : Publisher;
 }

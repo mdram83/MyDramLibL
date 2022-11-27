@@ -3,13 +3,13 @@
 namespace App\Providers;
 
 use App\Models\Repositories\ArtistRepository;
-use App\Models\Repositories\ArtistRepositoryInterface;
 use App\Models\Repositories\GuildRepository;
-use App\Models\Repositories\GuildRepositoryInterface;
+use App\Models\Repositories\Interfaces\IArtistRepository;
+use App\Models\Repositories\Interfaces\IGuildRepository;
+use App\Models\Repositories\Interfaces\IPublisherRepository;
+use App\Models\Repositories\Interfaces\ITagRepository;
 use App\Models\Repositories\PublisherRepository;
-use App\Models\Repositories\PublisherRepositoryInterface;
 use App\Models\Repositories\TagRepository;
-use App\Models\Repositories\TagRepositoryInterface;
 use App\Utilities\API\ISBN\ISBNRestAPI;
 use App\Utilities\API\ISBN\OpenlibraryISBNRestAPI;
 use GuzzleHttp\Client;
@@ -26,10 +26,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         app()->bind(ISBNRestAPI::class, fn() => new OpenlibraryISBNRestAPI(new Client()));
-        app()->bind(TagRepositoryInterface::class, fn() => new TagRepository());
-        app()->bind(PublisherRepositoryInterface::class, fn() => new PublisherRepository());
-        app()->bind(ArtistRepositoryInterface::class, fn() => new ArtistRepository());
-        app()->bind(GuildRepositoryInterface::class, fn() => new GuildRepository());
+        app()->bind(ITagRepository::class, fn() => new TagRepository());
+        app()->bind(IPublisherRepository::class, fn() => new PublisherRepository());
+        app()->bind(IArtistRepository::class, fn() => new ArtistRepository());
+        app()->bind(IGuildRepository::class, fn() => new GuildRepository());
     }
 
     /**

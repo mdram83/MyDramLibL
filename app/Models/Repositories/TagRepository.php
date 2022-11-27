@@ -2,10 +2,11 @@
 
 namespace App\Models\Repositories;
 
+use App\Models\Repositories\Interfaces\ITagRepository;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
 
-class TagRepository implements TagRepositoryInterface
+class TagRepository implements ITagRepository
 {
     public function getByNames(array $names) : Collection
     {

@@ -7,8 +7,6 @@ TODO:
 
 - Move models (Books etc.) to dedicated namespaces
 - Cleanup view templates and components (incl. directory structure and js. files)
-- Consider repository/factory (e.g. Store Book or related items)
-- Consider Form Requests (special class for Request, need to check)
 - Nicer confirm window for Delete (not raw browser "confirm")
 - Home screens for guest and auth (and MVP is ready to deploy...)
 - Then functionalities (groups/friends, filtering, buying recommendations etc.)

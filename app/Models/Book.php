@@ -12,7 +12,6 @@ class Book extends Model implements ItemableInterface
     use HasFactory;
 
     protected $fillable = [
-        'title',
         'isbn',
         'series',
         'volume',

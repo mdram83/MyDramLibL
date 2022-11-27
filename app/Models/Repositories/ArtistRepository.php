@@ -2,12 +2,13 @@
 
 namespace App\Models\Repositories;
 
+use App\Models\Repositories\Interfaces\IArtistRepository;
 use Illuminate\Support\Collection;
 
-class ArtistRepository implements ArtistRepositoryInterface
+class ArtistRepository implements IArtistRepository
 {
 
-    public function getArtistsByNames(string $modelClassname, array $names): Collection
+    public function getByNames(string $modelClassname, array $names): Collection
     {
         return collect($names)->map(function ($name) use ($modelClassname) {
 

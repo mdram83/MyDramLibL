@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Repositories;
+namespace App\Models\Repositories\Interfaces;
 
 use Illuminate\Support\Collection;
 
-interface TagRepositoryInterface
+interface ITagRepository
 {
     public function getByNames(array $names) : Collection;
 }
