@@ -3,7 +3,6 @@ As it is much easier and help me in learning the framework will continue project
 
 TODO:
 - EAN details for Music Albums through some API
-- All saves - camel case user inputs (Guilds, Tags, Artist, Publishers)
 
 - Move models (Books, Artists, etc.) to dedicated namespaces
 - Nicer confirm window for Delete (not raw browser "confirm")
