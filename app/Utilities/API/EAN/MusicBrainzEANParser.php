@@ -5,8 +5,6 @@ namespace App\Utilities\API\EAN;
 class MusicBrainzEANParser
 {
 
-    private array $releases = [];
-    private array $coverArtReleases = [];
     private array $coverArt = [
         '250' => null,
         'small' => null,
@@ -29,7 +27,6 @@ class MusicBrainzEANParser
 
     public function __construct(private MusicBrainzEANMusicRestAPI $api)
     {
-
     }
 
     public function parseSearchResponse(array $releases): void
@@ -40,7 +37,7 @@ class MusicBrainzEANParser
             $this->setPublished($release['date'] ?? null);
             $this->setVolumes($release['media'] ?? []);
 
-            $this->releases[$release['id']] = false; // REQUIRED FOR ENRICHEMENT, DIFFERENT FORMAT?
+            $this->api->addRelease($release['id']);
         }
     }
 
@@ -54,13 +51,13 @@ class MusicBrainzEANParser
         $this->addTags($release['genres'] ?? []);
 
         if (isset($release['cover-art-archive']['count']) && $release['cover-art-archive']['count'] > 0) {
-            $this->coverArtReleases[] = $release['id']; // REQUIRED FOR COVERS, DIFFERENT FORMAT?
+            $this->api->addCoverArtRelease($release['id']);
         }
     }
 
-    private function parseCoverResponse(array $images): void
+    public function parseCoverResponse(array $images): void
     {
-        foreach ($images as $image) {
+        foreach ($images['images'] ?? [] as $image) {
 
             if ($image['front'] ?? false === true) {
                 $this->coverArt['image'] ??= ($image['image'] ?? null);
@@ -76,39 +73,6 @@ class MusicBrainzEANParser
                 }
             }
         }
-    }
-
-    private function setBestCoverForThumbnail(): void
-    {
-        if (isset($this->thumbnail)) {
-            return;
-        }
-        $this->thumbnail =
-            $this->coverArt['250'] ?? (
-                $this->coverArt['small'] ?? (
-                    $this->coverArt['500'] ?? (
-                        $this->coverArt['large'] ?? (
-                            $this->coverArt['1200'] ?? (
-                                $this->coverArt['image'] ?? null
-        )))));
-    }
-
-    public function getContent(): array
-    {
-        $this->setBestCoverForThumbnail();
-
-        return [
-            'ean' => $this->ean, // this one not set...
-            'thumbnail' => $this->thumbnail,
-            'title' => $this->title,
-            'duration' => $this->duration,
-            'volumes' => $this->volumes,
-            'publisher' => $this->publisher,
-            'published' => $this->published,
-            'mainArtists' => $this->mainArtists,
-            'mainBands' => $this->mainBands,
-            'tags' => $this->tags,
-        ];
     }
 
     public function setEAN(string $ean): void
@@ -187,6 +151,44 @@ class MusicBrainzEANParser
                 $this->tags[$tag['name']] = $tag['name'];
             }
         }
+    }
+
+    private function setBestCoverForThumbnail(): void
+    {
+        if (isset($this->thumbnail)) {
+            return;
+        }
+        $this->thumbnail =
+            $this->coverArt['250'] ?? (
+            $this->coverArt['small'] ?? (
+            $this->coverArt['500'] ?? (
+            $this->coverArt['large'] ?? (
+            $this->coverArt['1200'] ?? (
+            $this->coverArt['image'] ?? null
+        )))));
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function getContent(): array
+    {
+        $this->setBestCoverForThumbnail();
+
+        return [
+            'ean' => $this->ean,
+            'thumbnail' => $this->thumbnail,
+            'title' => $this->title,
+            'duration' => $this->duration,
+            'volumes' => $this->volumes,
+            'publisher' => $this->publisher,
+            'published' => $this->published,
+            'mainArtists' => $this->mainArtists,
+            'mainBands' => $this->mainBands,
+            'tags' => $this->tags,
+        ];
     }
 
 }
