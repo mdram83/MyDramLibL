@@ -184,10 +184,10 @@ class MusicBrainzEANParser
             'duration' => $this->duration,
             'volumes' => $this->volumes,
             'publisher' => $this->publisher,
-            'published' => $this->published,
-            'mainArtists' => $this->mainArtists,
-            'mainBands' => $this->mainBands,
-            'tags' => $this->tags,
+            'published_at' => $this->published,
+            'mainArtists' => array_values($this->mainArtists),
+            'mainBands' => array_values($this->mainBands),
+            'tags' => array_values($this->tags),
         ];
     }
 

@@ -12,10 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'));
 
-Route::get('/mbtest/{ean}', [EANMusicController::class, 'show']);
-Route::get('/isbntest/{isbn}', [ISBNOpenlibraryController::class, 'show']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
     Route::get('/books', [BookController::class, 'index'])->name('books');
@@ -35,12 +34,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/music/{id}', [MusicAlbumController::class, 'destroy']);
 });
 
+
 Route::middleware(['auth.ajax'])->group(function() {
+
     Route::get('/ajax/publishers', [PublisherController::class, 'index']);
     Route::get('/ajax/tags', [TagController::class, 'index']);
     Route::get('/ajax/artists', [ArtistController::class, 'index']);
     Route::get('/ajax/guilds', [GuildController::class, 'index']);
     Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
+    Route::get('/ajax/ean/{ean}', [EANMusicController::class, 'show']);
 });
 
 require __DIR__.'/auth.php';
