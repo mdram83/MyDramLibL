@@ -10,6 +10,8 @@ use App\Models\Repositories\Interfaces\IPublisherRepository;
 use App\Models\Repositories\Interfaces\ITagRepository;
 use App\Models\Repositories\PublisherRepository;
 use App\Models\Repositories\TagRepository;
+use App\Utilities\API\EAN\MusicBrainzEANMusicRestAPI;
+use App\Utilities\API\EAN\EANMusicRestAPI;
 use App\Utilities\API\ISBN\ISBNRestAPI;
 use App\Utilities\API\ISBN\OpenlibraryISBNRestAPI;
 use GuzzleHttp\Client;
@@ -26,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         app()->bind(ISBNRestAPI::class, fn() => new OpenlibraryISBNRestAPI(new Client()));
+        app()->bind(EANMusicRestAPI::class, fn() => new MusicBrainzEANMusicRestAPI(new Client()));
+
         app()->bind(ITagRepository::class, fn() => new TagRepository());
         app()->bind(IPublisherRepository::class, fn() => new PublisherRepository());
         app()->bind(IArtistRepository::class, fn() => new ArtistRepository());
