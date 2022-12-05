@@ -9,13 +9,10 @@ use GuzzleHttp\Exception\ClientException;
 
 class OpenlibraryISBNRestAPI extends RestAPIHandlerBase implements ISBNRestAPI
 {
-    private Client $client;
-    private string $isbn;
-    private bool $sent = false;
+    protected string $isbn;
 
-    public function __construct(Client $client)
+    public function __construct(protected Client $client)
     {
-        $this->client = $client;
         $this->setMethod('GET');
     }
 
@@ -25,59 +22,13 @@ class OpenlibraryISBNRestAPI extends RestAPIHandlerBase implements ISBNRestAPI
         $this->setURI("https://openlibrary.org/api/books?bibkeys=ISBN:$isbn&jscmd=details&format=json");
     }
 
-    public function setURI(string $address): void
-    {
-        if (isset($this->uri)) {
-            throw new RestAPIHandlerException('API issue: URI already set');
-        }
-        parent::setURI($address);
-    }
-
-    public function setMethod(string $method): void
-    {
-        if (isset($this->method)) {
-            throw new RestAPIHandlerException('API issue: Method already set');
-        }
-        parent::setMethod($method);
-    }
-
-    protected function setResponseCode(int $responseCode): void
-    {
-        $this->responseCode = $responseCode;
-    }
-
-    public function getResponseCode(): int
-    {
-        if (!$this->sent) {
-            $this->send();
-        }
-        return parent::getResponseCode();
-    }
-
-    protected function setResponseContent(mixed $responseContent): void
-    {
-        $this->responseContent = $responseContent;
-    }
-
-    public function getResponseContent(): mixed
-    {
-        if (!$this->sent) {
-            $this->send();
-        }
-        return parent::getResponseContent();
-    }
-
     public function send(): bool
     {
-        if ($this->sent) {
-            throw new RestAPIHandlerException('API issue: Request already sent');
-        }
         if (!isset($this->isbn)) {
             throw new RestAPIHandlerException('API issue: ISBN not defined');
         }
         try {
-            $this->sent = true;
-            $response = $this->client->request($this->getMethod(), $this->uri);
+            $response = $this->client->request($this->method, $this->uri);
 
             if ($response->getBody() == '{}') {
                 $this->consider404();
@@ -88,7 +39,7 @@ class OpenlibraryISBNRestAPI extends RestAPIHandlerBase implements ISBNRestAPI
             $this->setResponseContent($response->getBody());
             return true;
 
-        } catch (ClientException $e) {
+        } catch (ClientException) {
             $this->consider404();
             return false;
         }
@@ -137,11 +88,5 @@ class OpenlibraryISBNRestAPI extends RestAPIHandlerBase implements ISBNRestAPI
         }
 
         return $details;
-    }
-
-    private function consider404(): void
-    {
-        $this->setResponseCode(404);
-        $this->setResponseContent(null);
     }
 }

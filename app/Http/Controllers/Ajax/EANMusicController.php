@@ -26,6 +26,7 @@ class EANMusicController extends Controller
         try {
 
             $musicRestAPI->setEAN($ean);
+            $musicRestAPI->send();
 
             if ($musicRestAPI->getResponseCode() == 200) {
                 return response()->json($musicRestAPI->getParsedContent(), 200);

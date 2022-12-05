@@ -7,14 +7,9 @@ use GuzzleHttp\Exception\ClientException;
 
 class RestAPIHandlerGuzzle extends RestAPIHandlerBase implements RestAPIHandler
 {
-
     protected Client $client;
 
-    public function __construct(
-        protected array $headers,
-        string $uri,
-        string $method = 'GET'
-    )
+    public function __construct(protected array $headers, string $uri, string $method = 'GET')
     {
         $this->client = new Client();
         $this->setURI($uri);
@@ -33,15 +28,4 @@ class RestAPIHandlerGuzzle extends RestAPIHandlerBase implements RestAPIHandler
             return false;
         }
     }
-
-    protected function setResponseCode(int $responseCode): void
-    {
-        $this->responseCode = $responseCode;
-    }
-
-    protected function setResponseContent(mixed $responseContent): void
-    {
-        $this->responseContent = $responseContent;
-    }
-
 }

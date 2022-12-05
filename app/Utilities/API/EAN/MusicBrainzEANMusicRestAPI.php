@@ -10,11 +10,9 @@ use GuzzleHttp\Exception\ClientException;
 
 class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicRestAPI
 {
-    private array $headers;
-    private string $ean;
-    private bool $sent = false;
-
-    private array $uriConfig = [
+    protected array $headers;
+    protected string $ean;
+    protected array $uriConfig = [
         'search' => [
             'prefix' => 'https://musicbrainz.org/ws/2/',
             'main' => 'release?query=barcode:',
@@ -31,13 +29,11 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
             'suffix' => '',
         ],
     ];
+    protected array $releases = [];
+    protected array $coverArtReleases = [];
+    protected MusicBrainzEANParser $parser;
 
-    private MusicBrainzEANParser $parser;
-
-    private array $releases = [];
-    private array $coverArtReleases = [];
-
-    public function __construct(private Client $client)
+    public function __construct(protected Client $client)
     {
         $this->headers = [
             'User-Agent' => config('services.musicbrainz.user_agent'),
@@ -54,68 +50,11 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
         $this->setURI($this->prepareUri('search', $ean));
     }
 
-    private function prepareUri(string $requestType, ?string $body): string
-    {
-        return
-            $this->uriConfig[$requestType]['prefix'] .
-            $this->uriConfig[$requestType]['main'] .
-            ($body ?? '') .
-            $this->uriConfig[$requestType]['suffix'];
-    }
-
-    public function setURI(string $address): void
-    {
-        if (isset($this->uri)) {
-            throw new RestAPIHandlerException('API issue: URI already set');
-        }
-        parent::setURI($address);
-    }
-
-    public function setMethod(string $method): void
-    {
-        if (isset($this->method)) {
-            throw new RestAPIHandlerException('API issue: Method already set');
-        }
-        parent::setMethod($method);
-    }
-
-    protected function setResponseCode(int $responseCode): void
-    {
-        $this->responseCode = $responseCode;
-    }
-
-    public function getResponseCode(): int
-    {
-        if (!$this->sent) {
-            $this->send();
-        }
-        return parent::getResponseCode();
-    }
-
-    protected function setResponseContent(mixed $responseContent): void
-    {
-        $this->responseContent = $responseContent;
-    }
-
-    public function getResponseContent(): mixed
-    {
-        if (!$this->sent) {
-            $this->send();
-        }
-        return parent::getResponseContent();
-    }
-
     public function send(): bool
     {
-        if ($this->sent) {
-            throw new RestAPIHandlerException('API issue: Request already sent');
-        }
-
         if (!isset($this->ean)) {
             throw new RestAPIHandlerException('API issue: EAN not defined');
         }
-
-        $this->sent = true;
 
         try {
 
@@ -138,9 +77,37 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
         return true;
     }
 
-    private function sendSearchRequest(): bool
+    public function getParsedContent(): array
     {
-        $response = $this->client->request($this->getMethod(), $this->uri, ['headers' => $this->headers]);
+        if ($this->responseCode !== 200) {
+            throw new RestAPIHandlerException('Can not parse content for unsuccessful request');
+        }
+
+        return $this->parser->getContent();
+    }
+
+    public function addRelease(string $release): void
+    {
+        $this->releases[$release] = $release;
+    }
+
+    public function addCoverArtRelease(string $release): void
+    {
+        $this->coverArtReleases[$release] = $release;
+    }
+
+    protected function prepareUri(string $requestType, ?string $body): string
+    {
+        return
+            $this->uriConfig[$requestType]['prefix'] .
+            $this->uriConfig[$requestType]['main'] .
+            ($body ?? '') .
+            $this->uriConfig[$requestType]['suffix'];
+    }
+
+    protected function sendSearchRequest(): bool
+    {
+        $response = $this->client->request($this->method, $this->uri, ['headers' => $this->headers]);
 
         if (json_decode($response->getBody(), true)['releases'] == []) {
             return false;
@@ -152,7 +119,7 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
         return true;
     }
 
-    private function sendReleaseRequest(string $mbid): array
+    protected function sendReleaseRequest(string $mbid): array
     {
         try {
             $releaseAPI = new RestAPIHandlerGuzzle(
@@ -168,7 +135,7 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
         return json_decode($releaseAPI->getResponseContent(), true);
     }
 
-    private function sendCoverRequest(string $mbid): array
+    protected function sendCoverRequest(string $mbid): array
     {
         try {
             $coverAPI = new RestAPIHandlerGuzzle(
@@ -184,9 +151,9 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
         return json_decode($coverAPI->getResponseContent(), true);
     }
 
-    private function enrichReleaseContent(): void
+    protected function enrichReleaseContent(): void
     {
-        foreach ($this->releases as $mbid => $release) {
+        foreach ($this->releases as $mbid) {
 
             $release = $this->sendReleaseRequest($mbid);
 
@@ -197,7 +164,7 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
         }
     }
 
-    private function enrichCoverContent(): void
+    protected function enrichCoverContent(): void
     {
         foreach ($this->coverArtReleases as $mbid) {
 
@@ -212,30 +179,5 @@ class MusicBrainzEANMusicRestAPI extends RestAPIHandlerBase implements EANMusicR
             }
 
         }
-    }
-
-    public function getParsedContent(): array
-    {
-        if ($this->responseCode !== 200) {
-            throw new RestAPIHandlerException('Can not parse content for unsuccessful request');
-        }
-
-        return $this->parser->getContent();
-    }
-
-    public function addRelease(string $release): void
-    {
-        $this->releases[$release] = false; // REQUIRED FOR ENRICHEMENT, DIFFERENT FORMAT?
-    }
-
-    public function addCoverArtRelease(string $release): void
-    {
-        $this->coverArtReleases[] = $release; // REQUIRED FOR COVERS, DIFFERENT FORMAT?
-    }
-
-    private function consider404(): void
-    {
-        $this->setResponseCode(404);
-        $this->setResponseContent(null);
     }
 }

@@ -23,6 +23,8 @@ class ISBNOpenlibraryController extends Controller
 
         try {
             $isbnRestApi->setISBN($isbn);
+            $isbnRestApi->send();
+
             if ($isbnRestApi->getResponseCode() == 200) {
 
                 return response()->json($isbnRestApi->getParsedContent());

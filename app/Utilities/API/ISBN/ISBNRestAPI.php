@@ -6,5 +6,6 @@ use App\Utilities\API\RestAPIHandler;
 
 interface ISBNRestAPI extends RestAPIHandler
 {
-    public function getParsedContent() : array;
+    public function getParsedContent(): array;
+    public function setISBN(string $isbn): void;
 }

@@ -4,50 +4,52 @@ namespace App\Utilities\API;
 
 abstract class RestAPIHandlerBase implements RestAPIHandler
 {
-    protected ?string $uri = null;
-    protected ?string $method = null;
-    protected ?int $responseCode = null;
-    protected mixed $responseContent = null;
-
-    abstract protected function setResponseCode(int $responseCode): void;
-    abstract protected function setResponseContent(mixed $responseContent): void;
-
-    public function setURI(string $address): void
-    {
-        if (static::isValidURI($address)) {
-            $this->uri = $address;
-        } else {
-            throw new RestAPIHandlerException('API issue: Incorrect URI parameter');
-        }
-    }
-
-    public function getURI(): ?string
-    {
-        return $this->uri;
-    }
-
-    public function setMethod(string $method): void
-    {
-        if (static::isValidMethod($method)) {
-            $this->method = $method;
-        } else {
-            throw new RestAPIHandlerException('API issue: Incorrect HTTP method parameter');
-        }
-    }
-
-    public function getMethod(): ?string
-    {
-        return $this->method;
-    }
+    protected ?string $uri;
+    protected ?string $method;
+    protected ?int $responseCode;
+    protected mixed $responseContent;
 
     public function getResponseCode(): int
     {
+        if (!isset($this->responseCode)) {
+            throw new RestAPIHandlerException('Request code not set');
+        }
         return $this->responseCode;
     }
 
     public function getResponseContent(): mixed
     {
+        if (!isset($this->responseCode)) {
+            throw new RestAPIHandlerException('Request code not set');
+        }
         return $this->responseContent;
+    }
+
+    protected function setResponseCode(int $responseCode): void
+    {
+        $this->responseCode = $responseCode;
+    }
+
+    protected function setResponseContent(mixed $responseContent): void
+    {
+        $this->responseContent = $responseContent;
+    }
+
+    protected function setURI(string $address): void
+    {
+        if (!static::isValidURI($address)) {
+            throw new RestAPIHandlerException('Incorrect URI parameter');
+        }
+        $this->uri = $address;
+    }
+
+    protected function setMethod(string $method): void
+    {
+        if (!static::isValidMethod($method)) {
+            throw new RestAPIHandlerException('API issue: Incorrect HTTP method parameter');
+
+        }
+        $this->method = $method;
     }
 
     protected static function isValidURI(string $address) : bool
@@ -58,5 +60,11 @@ abstract class RestAPIHandlerBase implements RestAPIHandler
     protected static function isValidMethod(string $method) : bool
     {
         return in_array($method, ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], true);
+    }
+
+    protected function consider404(): void
+    {
+        $this->setResponseCode(404);
+        $this->setResponseContent(null);
     }
 }

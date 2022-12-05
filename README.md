@@ -2,10 +2,9 @@ MyDramLibL is remake of MyDramLibrary that is now based on Laravel.
 As it is much easier and help me in learning the framework will continue project with Laravel.
 
 TODO:
-- Clean up API interface and classes (many not used functions, too much complicated vs usage)
+- Move models (Books, Artists, etc.) to dedicated namespaces
 
 MVP
-- Move models (Books, Artists, etc.) to dedicated namespaces
 - Nicer confirm window for Delete (not raw browser "confirm")
 - Home screens for guest and auth
 - Inform user that Publisher, Tags, Artists and Guilds are public
