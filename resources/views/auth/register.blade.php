@@ -50,6 +50,16 @@
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
+            <div class="mt-4">
+                <x-input-label for="beta_code" :value="__('Beta Code')" />
+
+                <x-text-input id="beta_code" class="block mt-1 w-full"
+                              type="password"
+                              name="beta_code" required />
+
+                <x-input-error :messages="$errors->get('beta_code')" class="mt-2" />
+            </div>
+
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
