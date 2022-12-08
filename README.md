@@ -3,7 +3,8 @@ As it is much easier and help me in learning the framework will continue project
 Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functions and eloquent with magic methods.
 
 MVP
-- Home screens for guest and auth
+- Use my logo for login, register and logged user header (all pages)
+- Dashboard screen (or no dashboard at all) for logged user
 - Inform user that Publisher, Tags, Artists and Guilds are public (and what is visible to whom)
 - Inform user that username should not hold personal data
 - Check registration/emailing/password reset on server with email working
