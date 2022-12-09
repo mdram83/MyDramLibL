@@ -12,28 +12,31 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'));
 
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
-    Route::get('/books', [BookController::class, 'index'])->name('books');
-    Route::get('/books/create', [BookController::class, 'create']);
-    Route::post('/books/store', [BookController::class, 'store']);
-    Route::get('/books/{id}', [BookController::class, 'show']);
-    Route::get('/books/{id}/edit', [BookController::class, 'edit']);
-    Route::patch('/books/{id}', [BookController::class, 'update']);
-    Route::delete('/books/{id}', [BookController::class, 'destroy']);
+    Route::controller(BookController::class)->group(function() {
+        Route::get('/books', 'index')->name('books');
+        Route::get('/books/create', 'create');
+        Route::post('/books/store', 'store');
+        Route::get('/books/{id}', 'show');
+        Route::get('/books/{id}/edit', 'edit');
+        Route::patch('/books/{id}', 'update');
+        Route::delete('/books/{id}', 'destroy');
+    });
 
-    Route::get('/music', [MusicAlbumController::class, 'index'])->name('music');
-    Route::get('/music/create', [MusicAlbumController::class, 'create']);
-    Route::post('/music/store', [MusicAlbumController::class, 'store']);
-    Route::get('/music/{id}', [MusicAlbumController::class, 'show']);
-    Route::get('/music/{id}/edit', [MusicAlbumController::class, 'edit']);
-    Route::patch('/music/{id}', [MusicAlbumController::class, 'update']);
-    Route::delete('/music/{id}', [MusicAlbumController::class, 'destroy']);
+    Route::controller(MusicAlbumController::class)->group(function() {
+        Route::get('/music', 'index')->name('music');
+        Route::get('/music/create', 'create');
+        Route::post('/music/store', 'store');
+        Route::get('/music/{id}', 'show');
+        Route::get('/music/{id}/edit', 'edit');
+        Route::patch('/music/{id}', 'update');
+        Route::delete('/music/{id}', 'destroy');
+    });
+
 });
-
 
 Route::middleware(['auth.ajax'])->group(function() {
 
