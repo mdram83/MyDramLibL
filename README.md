@@ -8,7 +8,6 @@ MVP
 - Check registration/emailing/password reset on server with email working
 - Check process of email confirmation and what you can and can not do without it
 - How to handle cookies and inform user about it
-- Not Laravel default logos, footers 
 - How to publish JS scripts (nmp...)
 - How to optimize production code (check laravel documentation)
 

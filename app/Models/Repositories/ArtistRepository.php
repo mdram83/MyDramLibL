@@ -13,7 +13,7 @@ class ArtistRepository implements IArtistRepository
         return collect($names)->map(function ($name) use ($modelClassname) {
 
             $nameParts = explode(', ', $name);
-            $firstname = $nameParts[1] ?? null;
+            $firstname = $nameParts[1] ?? '';
             $lastname = $nameParts[0];
 
             return $modelClassname::firstOrCreate(['firstname' => $firstname, 'lastname' => $lastname]);
