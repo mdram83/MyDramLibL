@@ -61,10 +61,10 @@ class BookController extends Controller
     }
 
     public function update(
-        int $id,
         ITagRepository $tagRepository,
         IPublisherRepository $publisherRepository,
-        IArtistRepository $artistRepository
+        IArtistRepository $artistRepository,
+        int $id
     ) : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();

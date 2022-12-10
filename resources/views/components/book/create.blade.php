@@ -1,4 +1,4 @@
-<x-itemable.form.form action="/books/store">
+<x-itemable.form.form action="/books">
 
     <!-- ISBN -->
     <x-itemable.form.elements.book.isbn/>

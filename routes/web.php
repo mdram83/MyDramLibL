@@ -16,25 +16,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
-    Route::controller(BookController::class)->group(function() {
-        Route::get('/books', 'index')->name('books');
-        Route::get('/books/create', 'create');
-        Route::post('/books/store', 'store');
-        Route::get('/books/{id}', 'show');
-        Route::get('/books/{id}/edit', 'edit');
-        Route::patch('/books/{id}', 'update');
-        Route::delete('/books/{id}', 'destroy');
-    });
+    Route::resource('books', BookController::class)->names([
+       'index' => 'books',
+    ]);
 
-    Route::controller(MusicAlbumController::class)->group(function() {
-        Route::get('/music', 'index')->name('music');
-        Route::get('/music/create', 'create');
-        Route::post('/music/store', 'store');
-        Route::get('/music/{id}', 'show');
-        Route::get('/music/{id}/edit', 'edit');
-        Route::patch('/music/{id}', 'update');
-        Route::delete('/music/{id}', 'destroy');
-    });
+    Route::resource('music', MusicAlbumController::class)->names([
+        'index' => 'music',
+    ]);
 
 });
 

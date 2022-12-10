@@ -64,11 +64,11 @@ class MusicAlbumController extends Controller
     }
 
     public function update(
-        int $id,
         ITagRepository $tagRepository,
         IPublisherRepository $publisherRepository,
         IArtistRepository $artistRepository,
-        IGuildRepository $guildRepository
+        IGuildRepository $guildRepository,
+        int $id
     ) : RedirectResponse
     {
         $attributes = $this->getValidatedAttributes();

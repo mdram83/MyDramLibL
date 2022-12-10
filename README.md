@@ -10,6 +10,7 @@ MVP
 - Check registration/emailing/password reset on server with email working
 - Check process of email confirmation and what you can and can not do without it
 - How to publish JS scripts (nmp...)
+- Consider rate limit (by ip/email?) on register/login
 - How to optimize production code (check laravel documentation)
 
 Later:

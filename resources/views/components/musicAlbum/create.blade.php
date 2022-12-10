@@ -1,4 +1,4 @@
-<x-itemable.form.form action="/music/store">
+<x-itemable.form.form action="/music">
 
     <!-- EAN -->
     <x-itemable.form.elements.musicAlbum.ean/>
