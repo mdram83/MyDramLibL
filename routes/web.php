@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'));
 
+Route::get('/test', function() {
+    dd (session());
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
@@ -19,11 +23,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('books', BookController::class)->names([
        'index' => 'books',
     ]);
-
     Route::resource('music', MusicAlbumController::class)->names([
         'index' => 'music',
     ]);
-
 });
 
 Route::middleware(['auth.ajax'])->group(function() {
