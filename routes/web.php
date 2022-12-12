@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'));
 
-Route::get('/test', function() {
-    dd (session());
-});
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');

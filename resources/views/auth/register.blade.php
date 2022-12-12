@@ -50,6 +50,7 @@
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
+            <!-- Beta Users Code -->
             <div class="mt-4">
                 <x-input-label for="beta_code" :value="__('Beta Code')" />
 
@@ -68,6 +69,9 @@
                 <x-primary-button class="ml-4">
                     {{ __('Register') }}
                 </x-primary-button>
+            </div>
+            <div class="mt-3 text-center text-sm">
+                <p>By registering you confirm that you've read and agree with <a href="#" class="underline">Terms & Privacy</a></p>
             </div>
         </form>
     </x-auth-card>
