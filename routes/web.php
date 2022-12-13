@@ -10,7 +10,8 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\MusicAlbumController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => view('welcome'));
+Route::get('/', fn() => view('welcome'))->name('about');
+Route::get('/terms', fn() => view('terms'))->name('terms');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

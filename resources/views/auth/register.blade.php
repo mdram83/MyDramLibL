@@ -70,8 +70,9 @@
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
+
             <div class="mt-3 text-center text-sm">
-                <p>By registering you confirm that you've read and agree with <a href="#" class="underline">Terms & Privacy</a></p>
+                <p>By registering you confirm that you've read and agree with <a href="{{ route('terms') }}" class="underline">Terms & Privacy</a></p>
             </div>
         </form>
     </x-auth-card>
