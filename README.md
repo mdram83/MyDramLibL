@@ -3,7 +3,6 @@ As it is much easier and help me in learning the framework will continue project
 Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functions and eloquent with magic methods.
 
 MVP
-- Add about/terms footer in app layout (for all pages)
 - Check registration/emailing/password reset on server with email working
 - Check process of email confirmation and what you can and can not do without it
 - How to publish JS scripts (nmp run build?...)

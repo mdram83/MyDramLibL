@@ -14,7 +14,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+
+        <div class="min-h-screen bg-gray-100 relative pb-8">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -30,6 +31,13 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <div class="absolute bottom-0 h-8 w-full mb-2">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <x-application-footer/>
+                </div>
+            </div>
+
         </div>
 
         <!-- Flash Message -->
