@@ -3,10 +3,7 @@ As it is much easier and help me in learning the framework will continue project
 Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functions and eloquent with magic methods.
 
 MVP
-- How to handle cookies and inform user about it
-- Inform user that Publisher, Tags, Artists and Guilds are public (and what is visible to whom)
-- Inform user that items with their content and username may be visible to other users (maybe items public later)
-- Inform user that username should not hold personal data?
+- Add about/terms footer in app layout (for all pages)
 - Check registration/emailing/password reset on server with email working
 - Check process of email confirmation and what you can and can not do without it
 - How to publish JS scripts (nmp run build?...)
