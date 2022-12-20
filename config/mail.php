@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', $_ENV['MAIL_MAILER'] ?? 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,13 +36,13 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'host' => env('MAIL_HOST', $_ENV['MAIL_HOST'] ?? 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', $_ENV['MAIL_PORT'] ?? 587),
+            'encryption' => env('MAIL_ENCRYPTION', $_ENV['MAIL_ENCRYPTION'] ?? 'tls'),
+            'username' => env('MAIL_USERNAME', $_ENV['MAIL_USERNAME'] ?? null),
+            'password' => env('MAIL_PASSWORD', $_ENV['MAIL_PASSWORD'] ?? null),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'local_domain' => env('MAIL_EHLO_DOMAIN', $_ENV['MAIL_EHLO_DOMAIN'] ?? null),
         ],
 
         'ses' => [
@@ -59,12 +59,12 @@ return [
 
         'sendmail' => [
             'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+            'path' => env('MAIL_SENDMAIL_PATH', $_ENV['MAIL_SENDMAIL_PATH'] ?? '/usr/sbin/sendmail -bs -i'),
         ],
 
         'log' => [
             'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
+            'channel' => env('MAIL_LOG_CHANNEL', $_ENV['MAIL_LOG_CHANNEL'] ?? null),
         ],
 
         'array' => [
@@ -92,8 +92,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', $_ENV['MAIL_FROM_ADDRESS'] ?? 'hello@example.com'),
+        'name' => env('MAIL_FROM_NAME', $_ENV['MAIL_FROM_NAME'] ?? 'Example'),
     ],
 
     /*

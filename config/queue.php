@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    'default' => env('QUEUE_CONNECTION', $_ENV['QUEUE_CONNECTION'] ?? 'sync'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,19 +53,19 @@ return [
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
-            'queue' => env('SQS_QUEUE', 'default'),
-            'suffix' => env('SQS_SUFFIX'),
-            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'key' => env('AWS_ACCESS_KEY_ID', $_ENV['AWS_ACCESS_KEY_ID'] ?? null),
+            'secret' => env('AWS_SECRET_ACCESS_KEY', $_ENV['AWS_SECRET_ACCESS_KEY'] ?? null),
+            'prefix' => env('SQS_PREFIX', $_ENV['SQS_PREFIX'] ?? 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
+            'queue' => env('SQS_QUEUE', $_ENV['SQS_QUEUE'] ?? 'default'),
+            'suffix' => env('SQS_SUFFIX', $_ENV['SQS_SUFFIX'] ?? null),
+            'region' => env('AWS_DEFAULT_REGION', $_ENV['AWS_DEFAULT_REGION'] ?? 'eu-central-1'),
             'after_commit' => false,
         ],
 
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
-            'queue' => env('REDIS_QUEUE', 'default'),
+            'queue' => env('REDIS_QUEUE', $_ENV['REDIS_QUEUE'] ?? 'default'),
             'retry_after' => 90,
             'block_for' => null,
             'after_commit' => false,
@@ -85,8 +85,8 @@ return [
     */
 
     'failed' => [
-        'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
-        'database' => env('DB_CONNECTION', 'mysql'),
+        'driver' => env('QUEUE_FAILED_DRIVER', $_ENV['QUEUE_FAILED_DRIVER'] ?? 'database-uuids'),
+        'database' => env('DB_CONNECTION', $_ENV['DB_CONNECTION'] ?? 'mysql'),
         'table' => 'failed_jobs',
     ],
 

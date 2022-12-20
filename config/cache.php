@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
+    'default' => env('CACHE_DRIVER', $_ENV['CACHE_DRIVER'] ?? 'file'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,18 +56,18 @@ return [
 
         'memcached' => [
             'driver' => 'memcached',
-            'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
+            'persistent_id' => env('MEMCACHED_PERSISTENT_ID', $_ENV['MEMCACHED_PERSISTENT_ID'] ?? null),
             'sasl' => [
-                env('MEMCACHED_USERNAME'),
-                env('MEMCACHED_PASSWORD'),
+                env('MEMCACHED_USERNAME', $_ENV['MEMCACHED_USERNAME'] ?? null),
+                env('MEMCACHED_PASSWORD', $_ENV['MEMCACHED_PASSWORD'] ?? null),
             ],
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT => 2000,
             ],
             'servers' => [
                 [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
-                    'port' => env('MEMCACHED_PORT', 11211),
+                    'host' => env('MEMCACHED_HOST', $_ENV['MEMCACHED_HOST'] ?? '127.0.0.1'),
+                    'port' => env('MEMCACHED_PORT', $_ENV['MEMCACHED_PORT'] ?? 11211),
                     'weight' => 100,
                 ],
             ],
@@ -81,11 +81,11 @@ return [
 
         'dynamodb' => [
             'driver' => 'dynamodb',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-            'table' => env('DYNAMODB_CACHE_TABLE', 'cache'),
-            'endpoint' => env('DYNAMODB_ENDPOINT'),
+            'key' => env('AWS_ACCESS_KEY_ID', $_ENV['AWS_ACCESS_KEY_ID'] ?? null),
+            'secret' => env('AWS_SECRET_ACCESS_KEY', $_ENV['AWS_SECRET_ACCESS_KEY'] ?? null),
+            'region' => env('AWS_DEFAULT_REGION', $_ENV['AWS_DEFAULT_REGION'] ?? 'eu-central-1'),
+            'table' => env('DYNAMODB_CACHE_TABLE', $_ENV['DYNAMODB_CACHE_TABLE'] ?? 'cache'),
+            'endpoint' => env('DYNAMODB_ENDPOINT', $_ENV['DYNAMODB_ENDPOINT'] ?? null),
         ],
 
         'octane' => [
@@ -105,6 +105,11 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
+    'prefix' => env(
+        'CACHE_PREFIX',
+        $_ENV['CACHE_PREFIX'] ?? Str::slug(env(
+            'APP_NAME', $_ENV['APP_NAME'] ?? 'laravel'
+        ), '_').'_cache_'
+    ),
 
 ];

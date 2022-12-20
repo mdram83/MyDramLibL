@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', $_ENV['FILESYSTEM_DISK'] ?? 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,20 +39,23 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL', $_ENV['APP_URL'] ?? null).'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'key' => env('AWS_ACCESS_KEY_ID', $_ENV['AWS_ACCESS_KEY_ID'] ?? null),
+            'secret' => env('AWS_SECRET_ACCESS_KEY', $_ENV['AWS_SECRET_ACCESS_KEY'] ?? null),
+            'region' => env('AWS_DEFAULT_REGION', $_ENV['AWS_DEFAULT_REGION'] ?? null),
+            'bucket' => env('AWS_BUCKET', $_ENV['AWS_BUCKET'] ?? null),
+            'url' => env('AWS_URL', $_ENV['AWS_URL'] ?? null),
+            'endpoint' => env('AWS_ENDPOINT', $_ENV['AWS_ENDPOINT'] ?? null),
+            'use_path_style_endpoint' => env(
+                'AWS_USE_PATH_STYLE_ENDPOINT',
+                $_ENV['AWS_USE_PATH_STYLE_ENDPOINT'] ?? false
+            ),
             'throw' => false,
         ],
 
