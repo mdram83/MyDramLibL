@@ -1,3 +1,5 @@
+import '../js/library/ajax/isbn-details';
+
 import './bootstrap';
 
 import Alpine from 'alpinejs';
