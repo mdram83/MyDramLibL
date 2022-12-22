@@ -1,7 +1,7 @@
 @props(['value' => null])
 
 @push('custom-scripts')
-    @vite('resources/js/isbn-details.js')
+    @vite('resources/js/library/ajax/isbn-details.js')
 @endpush
 
 <x-itemable.form.label for="isbn" value="ISBN" class="mt-0"/>
