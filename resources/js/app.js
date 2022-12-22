@@ -1,6 +1,5 @@
 import.meta.glob([
-    '../js/library/**',
-    '../js/library/ajax/**',
+    '/resources/js/library/ajax/isbn-details.js',
 ]);
 
 import './bootstrap';
