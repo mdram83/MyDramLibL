@@ -1,7 +1,8 @@
 import './bootstrap';
 
 import.meta.glob([
-    './library/ajax/isbn-details',
+    './library/*.js',
+    './library/ajax/*.js',
 ]);
 
 import Alpine from 'alpinejs';
