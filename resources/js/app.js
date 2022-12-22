@@ -1,4 +1,4 @@
-import '../js/library/ajax/isbn-details';
+import.meta.glob('./library/ajax/isbn-details.js');
 
 import './bootstrap';
 
