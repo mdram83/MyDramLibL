@@ -49,4 +49,4 @@ jobs:
         run: aws elasticbeanstalk update-environment --environment-name ${{env.EBS_ENVIRONMENT_NAME}} --version-label "ver-${{ github.sha }}"
        
       - name: Print Success Message on Completion
-        run: echo "CI/CD pipeline ran successfully" >> $GITHUB_OUTPUT
+        run: echo "CI/CD pipeline ran successfully"
