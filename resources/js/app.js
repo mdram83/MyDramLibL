@@ -1,4 +1,4 @@
-import.meta.glob('./library/ajax/isbn-details.js');
+const modules = import.meta.glob('./library/ajax/isbn-details.js');
 
 import './bootstrap';
 
