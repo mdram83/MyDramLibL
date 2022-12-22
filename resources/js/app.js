@@ -1,5 +1,5 @@
 import.meta.glob([
-    'resources/js/library/ajax/*.js',
+    './library/ajax/*.js',
 ]);
 
 import './bootstrap';
