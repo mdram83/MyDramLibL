@@ -1,5 +1,5 @@
-const modules = import.meta.glob([
-    '/resources/js/library/ajax/*.js',
+import.meta.glob([
+    'resources/js/library/ajax/*.js',
 ]);
 
 import './bootstrap';
