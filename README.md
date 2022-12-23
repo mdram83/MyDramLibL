@@ -3,11 +3,10 @@ As it is much easier and help me in learning the framework will continue project
 Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functions and eloquent with magic methods.
 
 MVP
-- Check registration/emailing/password reset on server with email working
 - Check process of email confirmation and what you can and can not do without it
-- How to publish JS scripts (nmp run build?...)
-- Consider rate limit (by ip/email?) on register/login (maybe stupid idea)
-- How to optimize production code (check laravel documentation)
+- Check registration/emailing/password reset on server with email working
+- How to optimize production code during build (check laravel documentation)
+- How do I later change db tables without loosing data (without fresh migration/seed)
 
 Later:
 - Dashboard page for logged user

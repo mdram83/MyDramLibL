@@ -16,7 +16,7 @@ class BetaCode implements InvokableRule
      */
     public function __invoke($attribute, $value, $fail)
     {
-        if ($value != config('auth.beta_code')) {
+        if ($value != config('app.beta_code')) {
             $fail('Incorrect Beta Code');
         }
     }

@@ -213,5 +213,6 @@ return [
     ])->toArray(),
 
     'app_version' => env('APP_VERSION', $_ENV['APP_VERSION'] ?? 'beta'),
+    'beta_code' => env('APP_BETA_CODE', $_ENV['APP_BETA_CODE'] ?? null),
 
 ];
