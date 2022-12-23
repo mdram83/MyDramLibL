@@ -1,4 +1,5 @@
-import.meta.glob('./library/**/*.js');
+const modules = import.meta.glob('./library/**/*.js');
+console.log(modules);
 
 import './bootstrap';
 
