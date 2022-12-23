@@ -4,8 +4,10 @@ Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functi
 
 MVP
 - How to optimize production code during build (check laravel documentation)
+- Favicon
 - Turn on https
 - Set up dedicated domain name (do I need it)
+- Set APP_DEBUG to false (ENV in prod, do it after last checks)
 
 Later:
 - Dashboard page for logged user
