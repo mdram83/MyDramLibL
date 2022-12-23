@@ -4,7 +4,6 @@ Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functi
 
 MVP
 - How to optimize production code during build (check laravel documentation)
-- How do I later change db tables without loosing data (without fresh migration/seed)
 - Turn on https
 - Set up dedicated domain name (do I need it)
 
