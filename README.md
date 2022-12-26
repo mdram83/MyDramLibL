@@ -5,7 +5,11 @@ Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functi
 MVP
 - Turn on https
 - Set up dedicated domain name (do I need it)
+- Change (after https is defined) emails with Gmail smtp
 - Set APP_DEBUG to false (ENV in prod, do it after last checks)
+
+Bugs:
+- Edit button is not Teal (bg-blue seems to be passed and overwrite values in prod)
 
 Later:
 - Dashboard page for logged user
