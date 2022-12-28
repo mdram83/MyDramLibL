@@ -3,7 +3,6 @@ As it is much easier and help me in learning the framework will continue project
 Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functions and eloquent with magic methods.
 
 MVP
-- Set up dedicated domain name (do I need it)
 - Turn on https
 - Change (after https is defined) emails with Gmail smtp (do I really need/want this?)
 - Set APP_DEBUG to false (ENV in prod, do it after last checks)
