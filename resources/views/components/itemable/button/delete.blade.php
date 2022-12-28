@@ -6,13 +6,11 @@
 >
     @csrf
     @method('DELETE')
-    <x-library-button type="submit"
-                      class="
-                          bg-rose-500
-                          hover:bg-rose-400
-                          active:bg-rose-600
-                          focus:border-rose-600
-                          focus:ring ring-rose-300
-                      "
-    >Delete</x-library-button>
+    <x-library-button class="
+        bg-rose-500
+        hover:bg-rose-400
+        active:bg-rose-600
+        focus:border-rose-600
+        focus:ring ring-rose-300
+    ">Delete</x-library-button>
 </form>
