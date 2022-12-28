@@ -128,7 +128,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        $_ENV['SESSION_COOKIE'] ?? Str::slug(env('APP_NAME', $_ENV['APP_NAME'] ?? 'laravel'), '_').'_session'
+        $_ENV['SESSION_COOKIE'] ?? Str::slug(env('APP_NAME', $_ENV['APP_NAME'] ?? 'mydramlibrary'), '_').'_session'
     ),
 
     /*
