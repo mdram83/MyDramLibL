@@ -3,7 +3,6 @@ As it is much easier and help me in learning the framework will continue project
 Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functions and eloquent with magic methods.
 
 MVP
-- Buy/generate ssl certificate signed by CA
 - Set APP_DEBUG to false (ENV in prod, do it after last checks)
 
 Bugs:
