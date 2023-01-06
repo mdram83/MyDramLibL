@@ -7,9 +7,25 @@
 <x-itemable.itemable-main>
 
     <!-- Title -->
-    <x-itemable.itemable-main-title :title="$itemable->getTitle()"/>
+    <x-itemable.itemable-main-title :title="$itemable->getTitle()">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="#ff6200"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="inline-block align-middle pb-1 hover:cursor-pointer"
+             onclick="alert('no playlist found for the album.');"
+        >
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+        </svg>
+    </x-itemable.itemable-main-title>
 
-    <!-- More About Item From Openlibrary.org -->
+    <!-- More About Item From Somewhere... -->
     <p class="text-xs leading-none pt-0 pb-2 mt-0">
         <x-itemable.itemable-link :link="'#'">{{ __('info') }}</x-itemable.itemable-link>
     </p>
@@ -29,8 +45,8 @@
                     <x-itemable.itemable-link :link="'#'">{{ __('items') }}</x-itemable.itemable-link>
                     @if (!$loop->last) & @endif
                 </span>
+            @endforeach
             </p>
-           @endforeach
         @endif
 
         <!-- Main Artists -->
