@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 
 class PlayMusicAlbumController extends Controller
 {
-    protected string $ean;
+    protected ?string $ean;
     protected string $title;
     protected array $artists;
     protected SpotifyRestAPIAuthorization $authorization;
