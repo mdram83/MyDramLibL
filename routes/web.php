@@ -4,6 +4,7 @@ use App\Http\Controllers\Ajax\ArtistController;
 use App\Http\Controllers\Ajax\EANMusicController;
 use App\Http\Controllers\Ajax\GuildController;
 use App\Http\Controllers\Ajax\ISBNOpenlibraryController;
+use App\Http\Controllers\Ajax\PlayMusicAlbumController;
 use App\Http\Controllers\Ajax\PublisherController;
 use App\Http\Controllers\Ajax\TagController;
 use App\Http\Controllers\BookController;
@@ -33,6 +34,7 @@ Route::middleware(['auth.ajax'])->group(function() {
     Route::get('/ajax/guilds', [GuildController::class, 'index']);
     Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
     Route::get('/ajax/ean/{ean}', [EANMusicController::class, 'show']);
+    Route::get('/ajax/play-music-links/{id}', [PlayMusicAlbumController::class, 'show']);
 });
 
 require __DIR__.'/auth.php';

@@ -35,4 +35,11 @@ return [
         'user_agent' => env('MUSICBRAINZ_USER_AGENT', $_ENV['MUSICBRAINZ_USER_AGENT'] ?? null),
     ],
 
+    'spotify' => [
+        'api' => [
+            'client_id' => env('SPOTIFY_API_CLIENT_ID', $_ENV['SPOTIFY_API_CLIENT_ID'] ?? null),
+            'client_secret' => env('SPOTIFY_API_CLIENT_SECRET', $_ENV['SPOTIFY_API_CLIENT_SECRET'] ?? null),
+        ],
+    ],
+
 ];
