@@ -9,15 +9,13 @@ use GuzzleHttp\Exception\ClientException;
 
 class SpotifyRestAPI extends RestAPIHandlerBase
 {
-    protected SpotifyRestAPIAuthorization $authorization;
-    protected string $ean;
     protected array $headers;
 
-    public function __construct(
-        protected Client $client,
-    )
+    protected string $uriPrefix = 'https://api.spotify.com/v1/search?q=';
+    protected string $uriSuffix = '&type=album&limit=1';
+
+    public function __construct(protected Client $client, protected SpotifyRestAPIAuthorization $authorization)
     {
-        $this->authorization = new SpotifyRestAPIAuthorization();
         $this->method = 'GET';
         $this->headers = [
             'Accept' => 'application/json',
@@ -28,14 +26,25 @@ class SpotifyRestAPI extends RestAPIHandlerBase
 
     public function setEAN(string $ean): void
     {
-        $this->ean = $ean;
-        $this->setURI('https://api.spotify.com/v1/search?q=upc%3A' . $ean . '&type=album');
+        $this->setURI("{$this->uriPrefix}upc%3A{$ean}{$this->uriSuffix}");
+    }
+
+    public function setTitleAndArtist(string $title, string $artist = null): void
+    {
+        $title = rawurlencode($title);
+        $artist = isset($artist) ? rawurlencode($artist) : null;
+
+        $this->setURI(
+            "{$this->uriPrefix}album%3D{$title}"
+            . (isset($artist) ? "%26artist%3D{$artist}" : '')
+            . $this->uriSuffix
+        );
     }
 
     public function send(): bool
     {
-        if (!isset($this->ean)) {
-            throw new RestAPIHandlerException('API issue: EAN not defined');
+        if (!isset($this->uri)) {
+            throw new RestAPIHandlerException('API issue: search parameter not defined');
         }
 
         try {

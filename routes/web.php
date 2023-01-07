@@ -34,7 +34,7 @@ Route::middleware(['auth.ajax'])->group(function() {
     Route::get('/ajax/guilds', [GuildController::class, 'index']);
     Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
     Route::get('/ajax/ean/{ean}', [EANMusicController::class, 'show']);
-    Route::get('/ajax/play-music-links/{ean}', [PlayMusicAlbumController::class, 'show']);
+    Route::get('/ajax/play-music-links/{id}', [PlayMusicAlbumController::class, 'show']);
 });
 
 require __DIR__.'/auth.php';
