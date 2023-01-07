@@ -11,3 +11,4 @@ What next?
 - Consider Form Request instance for itemable (with Book, Music Album child classes)
 - Check sth like require_once on blade side to add artists and guilds datalist only once - @pushOnce
 - Considering adding movies, games and boardgames and music scores (for family)
+- Consider adding podcasts or other digital materials not really owned by user (but as a kind of favorite resources)
