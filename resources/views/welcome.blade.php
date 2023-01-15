@@ -66,12 +66,13 @@
 
         <div class="ml-12">
             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                Application is developed using PHP, JavaScript, TailwindCSS, Laravel
-                with tools such us GitHub, PhpStorm and is utilizing APIs from
-                <a href="https://openlibrary.org/developers/api" class="underline text-gray-900 dark:text-white">openlibrary.org</a>
-                and
-                <a href="https://musicbrainz.org/doc/MusicBrainz_API" class="underline text-gray-900 dark:text-white">musicbrainz.org</a>
-
+                I have used following tech and skills for this application: PHP, MySQL, Git (GitHub and GitHub Actions),
+                REST API (using APIs from
+                <a href="https://openlibrary.org/developers/api" class="underline text-gray-900 dark:text-white">openlibrary.org</a>,
+                <a href="https://musicbrainz.org/doc/MusicBrainz_API" class="underline text-gray-900 dark:text-white">musicbrainz.org</a>,
+                <a href="https://developer.spotify.com/documentation/web-api/" class="underline text-gray-900 dark:text-white">Spotify Web API</a> and
+                <a href="https://developers.google.com/youtube/v3" class="underline text-gray-900 dark:text-white">YouTube Data API</a>),
+                JavaScript, CSS (incl. Tailwind CSS), Laravel, HTML, AWS, PhpStorm and some more.
             </div>
         </div>
     </div>
