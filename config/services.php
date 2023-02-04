@@ -42,4 +42,10 @@ return [
         ],
     ],
 
+    'youtube' => [
+        'api' => [
+            'key' => env('YOUTUBE_API_KEY', $_ENV['YOUTUBE_API_KEY'] ?? NULL),
+        ],
+    ],
+
 ];

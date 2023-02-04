@@ -9,19 +9,24 @@ window.ajaxGetPlayMusicLinks = function(musicAlbumId, triggerElement) {
 
             const links = JSON.parse(this.responseText);
 
-            window.openSpotifyWebLink = function() {
-                window.open(links['spotify_web_link'], '_blank');
+            let linkSpotify = links['spotify_web_link'];
+            let linkYoutube = links['youtube_link'];
+
+            if (linkSpotify != null) {
+                handleSpotifyLink(linkSpotify);
+            }
+
+            if (linkYoutube != null) {
+                handleYoutubeLink(linkYoutube);
             }
 
             setTriggerElementToLoaded(triggerElement);
-            setLinkElementToLoaded(document.getElementById('spotify_link'));
-
             return;
         }
 
         if (this.readyState === 4 && this.status !== 200) {
             setTriggerElementToFailed(triggerElement)
-            alert('Can not find any link to play this music album');
+            alert('Can not find any links to play this music album');
         }
     };
 
@@ -51,9 +56,25 @@ window.ajaxGetPlayMusicLinks = function(musicAlbumId, triggerElement) {
         triggerElement.setAttribute('stroke', '#9ca3af');
     }
 
-    function setLinkElementToLoaded(linkElement)
+    function setLinkElementToLoaded(linkElement, linkFunction)
     {
         linkElement.classList.remove('hidden');
-        linkElement.setAttribute('onclick','window.openSpotifyWebLink();');
+        linkElement.setAttribute('onclick', linkFunction);
+    }
+
+    function handleSpotifyLink(link)
+    {
+        window.openSpotifyWebLink = function() {
+            window.open(link, '_blank');
+        }
+        setLinkElementToLoaded(document.getElementById('spotify_link'), 'openSpotifyWebLink();');
+    }
+
+    function handleYoutubeLink(link)
+    {
+        window.openYouTubeLink = function() {
+            window.open(link, '_blank');
+        }
+        setLinkElementToLoaded(document.getElementById('youtube_link'), 'openYouTubeLink();');
     }
 }
