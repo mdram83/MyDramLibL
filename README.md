@@ -3,9 +3,7 @@ As it is much easier and help me in learning the framework will continue project
 Though there is a debt (in learning and SOLID) using Laravel, e.g. helper functions and eloquent with magic methods.
 
 What next?
-- Spotify API/Links to music albums
-- Then functionalities (groups/friends, more itemable types, filtering, buying recommendations etc.)
-- Dashboard page for logged user
+- Then functionalities (groups/friends, dashboard, more itemable types, filtering, buying recommendations etc.)
 - Nicer confirm window for Delete (not raw browser "confirm")
 - Consider more attributes for Music Album (Supporting Bands, Supporting Artists)
 - Consider Form Request instance for itemable (with Book, Music Album child classes)
