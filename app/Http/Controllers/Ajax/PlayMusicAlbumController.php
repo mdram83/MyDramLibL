@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
+use App\Models\MusicAlbum;
 use App\Utilities\API\Spotify\SpotifyRestAPI;
 use App\Utilities\API\Spotify\SpotifyRestAPIAuthorization;
 use App\Utilities\API\YouTube\YouTubeRestAPI;
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Http\JsonResponse;
 
 class PlayMusicAlbumController extends Controller
 {
@@ -17,20 +19,37 @@ class PlayMusicAlbumController extends Controller
     protected SpotifyRestAPIAuthorization $authorization;
 
     protected array $links = [];
+    protected MusicAlbum $musicAlbum;
 
     public function show(int $id)
     {
         $this->loadMusicAlbumParams($id);
-        $this->generateSpotifyLink();
-        $this->generateYouTubeLink();
 
         if ($this->links === []) {
-            return response()->json(null, 404);
+
+            $this->generateSpotifyLink();
+            $this->generateYouTubeLink();
+
+            if ($this->links === []) {
+                return response()->json(null, 404);
+            }
+
+            try {
+                $this->setMusicAlbumLinksUnsaved($this->links);
+            } catch (Exception) {
+                return $this->returnServerError();
+            }
+
         }
 
+        try {
+            $this->updateMusicAlbumPlayCount();
+        } catch (Exception) {
+            return $this->returnServerError();
+        }
+
+
         return response()->json($this->links);
-
-
     }
 
     protected function generateSpotifyLink(): void
@@ -102,18 +121,39 @@ class PlayMusicAlbumController extends Controller
 
     protected function loadMusicAlbumParams(int $musicAlbumId): void
     {
-        $musicAlbum = auth()->user()->musicAlbums()->where('music_albums.id', $musicAlbumId)->firstOrFail();
+        $this->musicAlbum = auth()->user()->musicAlbums()->where('music_albums.id', $musicAlbumId)->firstOrFail();
 
-        $this->ean = $musicAlbum->ean;
-        $this->title = $musicAlbum->item->title;
+        $this->ean = $this->musicAlbum->ean;
+        $this->title = $this->musicAlbum->item->title;
 
         $this->artists = array_merge(
-            $musicAlbum->item->mainArtists
+            $this->musicAlbum->item->mainArtists
                 ->map(fn($item) => trim($item->firstname . ' ' . $item->lastname))
                 ->toArray(),
-            $musicAlbum->item->mainBands
+            $this->musicAlbum->item->mainBands
                 ->map(fn($item) => $item->name)
                 ->toArray()
         );
+
+        $this->links = $this->musicAlbum->links == null ? [] : unserialize($this->musicAlbum->links);
     }
+
+    protected function setMusicAlbumLinksUnsaved(array $links): void
+    {
+        $this->musicAlbum->links = serialize($links);
+    }
+
+    protected function updateMusicAlbumPlayCount(): void
+    {
+        $this->musicAlbum->play_count++;
+        $this->musicAlbum->played_on = now();
+        $this->musicAlbum->save();
+    }
+
+    protected function returnServerError(): JsonResponse
+    {
+        return response()->json([], 500);
+    }
+
+
 }

@@ -15,6 +15,9 @@ class MusicAlbum extends Model implements ItemableInterface
         'ean',
         'duration',
         'volumes',
+        'links',
+        'play_count',
+        'played_on',
     ];
 
     protected $with = [
