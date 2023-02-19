@@ -14,6 +14,7 @@
 
                     @foreach($items as $item)
                         {{ $item->id }}
+                        {{ \App\Utilities\Librarian\Navigator::getItemableShowLink($item) }}
                     @endforeach
 
                     <p>Welcome in Library. When done, you will see most important information on this page like
