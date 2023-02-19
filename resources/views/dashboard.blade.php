@@ -12,9 +12,16 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
+                    Recently added:
                     @foreach($items as $item)
                         {{ $item->id }}
                         {{ \App\Utilities\Librarian\Navigator::getItemableShowLink($item) }}
+                    @endforeach
+
+                    Recently played:
+                    @foreach($played as $musicAlbum)
+                        {{ $musicAlbum->id }}
+                        {{ \App\Utilities\Librarian\Navigator::getItemableShowLink($musicAlbum->item) }}
                     @endforeach
 
                     <p>Welcome in Library. When done, you will see most important information on this page like
