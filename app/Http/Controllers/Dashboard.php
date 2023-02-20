@@ -12,6 +12,8 @@ class Dashboard extends Controller
         // recently added friends' items
         // recently added friends
 
+        // remember about quick links
+
         return view('dashboard', [
             'items' => auth()->user()->items()->withOnly([])->latest()->take(5)->get(),
             'played' => auth()->user()->musicAlbums()
