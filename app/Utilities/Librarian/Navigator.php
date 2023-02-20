@@ -3,12 +3,10 @@
 namespace App\Utilities\Librarian;
 
 use App\Models\Item;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
-abstract class Navigator
+class Navigator implements NavigatorInterface
 {
-
-    protected const LIBRARY_MAP = [
+    protected array $libraryMap = [
         'itemables' => [
             'Book' => [
                 'routeName' => 'books',
@@ -19,10 +17,14 @@ abstract class Navigator
         ],
     ];
 
-    public static function getItemableShowLink(Item $item): string
+    public function getItemableShowLink(Item $item): string
     {
+        if (!isset($this->libraryMap['itemables'][$item->itemable_type])) {
+            throw new NavigatorException('Itemable type not found');
+        }
+
         return route(
-            static::LIBRARY_MAP['itemables'][$item->itemable_type]['routeName'] . '.show',
+            $this->libraryMap['itemables'][$item->itemable_type]['routeName'] . '.show',
             $item->itemable_id
         );
     }

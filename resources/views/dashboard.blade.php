@@ -15,13 +15,13 @@
                     Recently added:
                     @foreach($items as $item)
                         {{ $item->id }}
-                        {{ \App\Utilities\Librarian\Navigator::getItemableShowLink($item) }}
+                        {{ $navigator->getItemableShowLink($item) }}
                     @endforeach
 
                     Recently played:
                     @foreach($played as $musicAlbum)
                         {{ $musicAlbum->id }}
-                        {{ \App\Utilities\Librarian\Navigator::getItemableShowLink($musicAlbum->item) }}
+                        {{ $navigator->getItemableShowLink($musicAlbum->item) }}
                     @endforeach
 
                     <p>Welcome in Library. When done, you will see most important information on this page like
