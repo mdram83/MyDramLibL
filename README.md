@@ -19,3 +19,5 @@ Some Tech improvements required
 - All views menu could read from Navigator instead of hard coded
 - Unit tests in Laravel...
 - Missing Interfaces
+- Played_on should be stored on item not itemable so there is standard way to access it (or itemable interface...)
+- Played_on could also use kind of class/configuration to store different methods with e.g. icon link and labels

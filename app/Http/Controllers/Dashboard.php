@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Utilities\Librarian\NavigatorInterface;
 use Illuminate\Http\Request;
 
 class Dashboard extends Controller
 {
-    public function __invoke()
+    public function __invoke(NavigatorInterface $navigator)
     {
 
         // recently added friends' items
         // recently added friends
-
-        // remember about quick links
 
         return view('dashboard', [
             'items' => auth()->user()->items()->withOnly([])->latest()->take(5)->get(),
