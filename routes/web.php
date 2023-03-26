@@ -25,6 +25,7 @@ Route::get('/terms', fn() => view('terms'))->name('terms');
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/friends', fn() => 'Friends here...')->name('friends');
 
     Route::resource('books', BookController::class)->names([
        'index' => 'books',

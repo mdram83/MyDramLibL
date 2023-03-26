@@ -40,6 +40,25 @@
                             </li>
                         @endforeach
 
+                        <li class="py-0.5">
+
+                            <div class="flex items-center">
+
+                                <x-svg icon="users"
+                                       stroke="#ff6200"
+                                       width="20"
+                                       height="20"
+                                       class="mr-2"
+                                />
+
+                                <a href="{{ route('friends') }}"
+                                   class="hover:underline"
+                                >Friends</a>
+
+                            </div>
+
+                        </li>
+
                     </ul>
 
                 </x-dashboard.widget>
