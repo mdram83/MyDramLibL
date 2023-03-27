@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
     private int $numberOfArtists = 200;
     private int $numberOfGuilds = 100;
 
-    private int $numberOfUsers = 2;
+    private int $numberOfUsers = 5;
 
     private int $booksPerUser = 20;
     private int $musicAlbumsPerUser = 20;
@@ -89,7 +89,16 @@ class DatabaseSeeder extends Seeder
             'username' => 'mdram83',
             'email' => 'michal.dramowicz.test1@gmail.com',
         ]);
-        User::factory($this->numberOfUsers - 1)->create();
+        User::factory()->create([
+            'username' => 'test1',
+            'email' => 'test1@testblabla.com',
+        ]);
+        User::factory()->create([
+            'username' => 'test2',
+            'email' => 'test2@testblabla.com',
+        ]);
+
+        User::factory($this->numberOfUsers - 3)->create();
         $this->users = User::all();
     }
 

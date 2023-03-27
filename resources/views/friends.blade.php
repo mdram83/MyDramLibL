@@ -35,7 +35,7 @@
                                     </td>
                                     <td>Username 1</td>
                                     <td class="flex justify-end items-center">
-                                        <x-svg icon="user-x"
+                                        <x-svg icon="user-minus"
                                                stroke="rgb(220 38 38)"
                                                width="20"
                                                height="20"
