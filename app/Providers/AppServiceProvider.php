@@ -10,6 +10,7 @@ use App\Models\Repositories\Interfaces\IPublisherRepository;
 use App\Models\Repositories\Interfaces\ITagRepository;
 use App\Models\Repositories\PublisherRepository;
 use App\Models\Repositories\TagRepository;
+use App\Models\User;
 use App\Utilities\API\EAN\MusicBrainzEANMusicRestAPI;
 use App\Utilities\API\EAN\EANMusicRestAPI;
 use App\Utilities\API\ISBN\ISBNRestAPI;
@@ -47,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::enforceMorphMap([
+            'User' => User::class,
             'Book' => 'App\Models\Book',
             'Music Album' => 'App\Models\MusicAlbum',
             'Author' => 'App\Models\Author',
