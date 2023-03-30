@@ -7,7 +7,6 @@ use App\Models\User;
 use App\View\Utilities\FriendshipTranslator;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Multicaret\Acquaintances\Models\Friendship;
 use Illuminate\Http\Request;
 
 class FriendsController extends Controller
