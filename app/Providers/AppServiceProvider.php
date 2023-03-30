@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Repositories\ArtistRepository;
+use App\Models\Repositories\FriendsRepository;
 use App\Models\Repositories\GuildRepository;
 use App\Models\Repositories\Interfaces\IArtistRepository;
+use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Models\Repositories\Interfaces\IGuildRepository;
 use App\Models\Repositories\Interfaces\IPublisherRepository;
 use App\Models\Repositories\Interfaces\ITagRepository;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         app()->bind(IArtistRepository::class, fn() => new ArtistRepository());
         app()->bind(IGuildRepository::class, fn() => new GuildRepository());
         app()->bind(NavigatorInterface::class, fn() => new Navigator());
+        app()->bind(IFriendsRepository::class, fn() => new FriendsRepository());
     }
 
     /**

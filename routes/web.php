@@ -9,6 +9,7 @@ use App\Http\Controllers\Ajax\PublisherController;
 use App\Http\Controllers\Ajax\TagController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\MusicAlbumController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,12 @@ Route::get('/terms', fn() => view('terms'))->name('terms');
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('/friends', fn() => view('friends'))->name('friends');
+
+    Route::resource('friends', FriendsController::class)
+        ->except(['create', 'show', 'edit'])
+        ->names([
+            'index' => 'friends',
+        ]);
 
     Route::resource('books', BookController::class)->names([
        'index' => 'books',

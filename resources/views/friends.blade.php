@@ -13,6 +13,12 @@
 
                     <div class="text-lg leading-7 font-semibold">Friends and Invites</div>
 
+                    @if (!$friends->count())
+                        <div class="flex justify-center mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            Your list is empty. Invite friends using below window.
+                        </div>
+                    @endif
+
                     <div class="flex justify-center mt-2 text-gray-600 dark:text-gray-400 text-sm">
 
                         <table class="table-fixed w-full sm:max-w-2xl w-full">
@@ -24,50 +30,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="border-b font-medium dark:border-neutral-500">
-                                    <td class="h-10 flex justify-center items-center">
-                                        <x-svg icon="users"
-                                               stroke="rgb(34 197 94)"
-                                               width="20"
-                                               height="20"
-                                               class="m-2"
-                                        />
-                                    </td>
-                                    <td>Username 1</td>
-                                    <td class="flex justify-end items-center">
-                                        <x-svg icon="user-minus"
-                                               stroke="rgb(220 38 38)"
-                                               width="20"
-                                               height="20"
-                                               class="m-2"
-                                        />
-                                    </td>
-                                </tr>
-                                <tr class="border-b font-medium dark:border-neutral-500">
-                                    <td class="h-10 flex justify-center items-center">
-                                        <x-svg icon="clock"
-                                               stroke="rgb(245 158 11)"
-                                               width="20"
-                                               height="20"
-                                               class="m-2"
-                                        />
-                                    </td>
-                                    <td>Username 2</td>
-                                    <td class="flex justify-end items-center">
-                                        <x-svg icon="user-check"
-                                               stroke="rgb(34 197 94)"
-                                               width="20"
-                                               height="20"
-                                               class="m-2"
-                                        />
-                                        <x-svg icon="user-x"
-                                               stroke="rgb(220 38 38)"
-                                               width="20"
-                                               height="20"
-                                               class="m-2"
-                                        />
-                                    </td>
-                                </tr>
+
+                                <!-- List Friends -->
+
+                                @foreach ($friends as $friend)
+                                    <tr class="border-b font-medium dark:border-neutral-500">
+                                        <td class="h-10 flex justify-center items-center">
+                                            <x-svg icon="{{ $friendshipTranslator->getStatusIconName($friend) }}"
+                                                   stroke="{{ $friendshipTranslator->getStatusIconColor($friend) }}"
+                                                   width="20"
+                                                   height="20"
+                                                   class="m-2"
+                                            />
+                                        </td>
+                                        <td>
+                                            {{ $friendshipTranslator->getFriendNameOfLoggedUser($friend) }}
+                                        </td>
+                                        <td class="flex justify-end items-center">
+                                            @foreach ($friendshipTranslator->getPossibleActions($friend) as $action)
+                                                <x-svg icon="{{ $action['icon'] }}"
+                                                       stroke="{{ $action['color'] }}"
+                                                       width="20"
+                                                       height="20"
+                                                       class="m-2"
+                                                />
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                <!-- Add Friend -->
                                 <tr>
                                     <td class="h-16 flex justify-center items-center">
                                         <x-svg icon="search"
@@ -77,7 +69,9 @@
                                         />
                                     </td>
                                     <td>
-                                        <input type="text"
+                                        <label for="friend"></label>
+                                        <input id="friend"
+                                               type="text"
                                                class="
                                                 w-full
                                                 py-1.5
@@ -100,6 +94,7 @@
                                         />
                                     </td>
                                 </tr>
+
                             </tbody>
                         </table>
 
