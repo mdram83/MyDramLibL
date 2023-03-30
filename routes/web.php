@@ -27,11 +27,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
-    Route::resource('friends', FriendsController::class)
-        ->except(['create', 'show', 'edit'])
-        ->names([
-            'index' => 'friends',
-        ]);
+    Route::get('/friends', [FriendsController::class, 'index'])->name('friends');
+    Route::get('/friends/accept/{id}', [FriendsController::class, 'accept'])->name('friends.accept');
+    Route::get('/friends/reject/{id}', [FriendsController::class, 'reject'])->name('friends.reject');
+    Route::get('/friends/remove/{id}', [FriendsController::class, 'remove'])->name('friends.remove');
+    Route::post('/friends', [FriendsController::class, 'add'])->name('friends.add');
 
     Route::resource('books', BookController::class)->names([
        'index' => 'books',

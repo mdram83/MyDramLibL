@@ -48,12 +48,13 @@
                                         </td>
                                         <td class="flex justify-end items-center">
                                             @foreach ($friendshipTranslator->getPossibleActions($friend) as $action)
-                                                <x-svg icon="{{ $action['icon'] }}"
-                                                       stroke="{{ $action['color'] }}"
-                                                       width="20"
-                                                       height="20"
-                                                       class="m-2"
-                                                />
+                                                <a class="m-2" href="{{ route($action['route'], $friend->id) }}">
+                                                    <x-svg icon="{{ $action['icon'] }}"
+                                                           stroke="{{ $action['color'] }}"
+                                                           width="20"
+                                                           height="20"
+                                                    />
+                                                </a>
                                             @endforeach
                                         </td>
                                     </tr>
@@ -69,9 +70,14 @@
                                         />
                                     </td>
                                     <td>
+                                        <form id="friends" method="post" action="{{ route('friends.add') }}">
+                                            @csrf
                                         <label for="friend"></label>
                                         <input id="friend"
+                                               name="friend"
                                                type="text"
+                                               maxlength="255"
+                                               value="{{ old('friend') }}"
                                                class="
                                                 w-full
                                                 py-1.5
@@ -82,17 +88,26 @@
                                                 focus:border-indigo-300
                                                 focus:ring
                                                 focus:ring-indigo-200
-                                                focus:ring-opacity-50
-                                        ">
+                                                focus:ring-opacity-50"
+                                               required
+                                        >
+                                        </form>
                                     </td>
                                     <td class="flex justify-end items-center">
-                                        <x-svg icon="user-plus"
-                                               stroke="rgb(34 197 94)"
-                                               width="20"
-                                               height="20"
-                                               class="m-2"
-                                        />
+                                        <a class="m-2 cursor-pointer" onclick="
+                                            let form = document.getElementById('friends');
+                                            if (form.checkValidity()) {
+                                                form.submit();
+                                            }
+                                        ">
+                                            <x-svg icon="user-plus"
+                                                   stroke="rgb(34 197 94)"
+                                                   width="20"
+                                                   height="20"
+                                            />
+                                        </a>
                                     </td>
+
                                 </tr>
 
                             </tbody>
