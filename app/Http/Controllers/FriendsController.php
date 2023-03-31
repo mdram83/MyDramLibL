@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FriendshipInvite;
 use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Models\User;
 use App\View\Utilities\FriendshipTranslator;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FriendsController extends Controller
 {
@@ -34,6 +36,7 @@ class FriendsController extends Controller
         }
 
         if ($this->user->befriend($friend)) {
+            Mail::to($friend->email)->send(new FriendshipInvite($this->user->username));
             return $this->onSuccess('Invite sent');
         }
 

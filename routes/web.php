@@ -20,6 +20,11 @@ Route::get('/', function() {
     return redirect('about');
 });
 
+Route::get('/testmail', function() {
+    $friend = 'TestFriend123';
+    return new App\Mail\FriendshipInvite($friend);
+});
+
 Route::get('/about', fn() => view('welcome'))->name('about');
 Route::get('/terms', fn() => view('terms'))->name('terms');
 
