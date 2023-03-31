@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FriendshipAccept;
 use App\Mail\FriendshipInvite;
 use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Models\User;
@@ -54,6 +55,7 @@ class FriendsController extends Controller
         }
 
         $this->user->acceptFriendRequest($sender);
+        Mail::to($sender->email)->send(new FriendshipAccept($this->user->username));
         return $this->onSuccess("{$sender->username} is now added to your friends list");
     }
 

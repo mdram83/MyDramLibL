@@ -4,7 +4,7 @@
 Click on below button to accept or reject this invitation.
 
 <x-mail::button :url="$link">
-Accept or Reject
+Manage Friends List
 </x-mail::button>
 
 Thanks,<br>
