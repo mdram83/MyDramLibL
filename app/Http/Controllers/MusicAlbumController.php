@@ -24,6 +24,7 @@ class MusicAlbumController extends Controller
 
     public function __construct(
         protected string $userRelationshipName = 'musicAlbums',
+        protected string $itemableClassName = MusicAlbum::class,
         protected string $itemableTableName = 'music_albums',
         protected string $indexComponentName = 'musicAlbum.row-content',
         protected string $showComponentName = 'musicAlbum.show-content',

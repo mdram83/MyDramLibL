@@ -56,7 +56,7 @@ trait ItemableTrait
     protected function onIndex(string $header) : View
     {
         return view('itemables.index', [
-            'itemables' => auth()->user()->{$this->userRelationshipName}()->latest()->paginate(10),
+            'itemables' => ($this->itemableClassName)::ofUsers([auth()->user()->id])->latest()->paginate(10),
             'header' => $header,
             'componentName' => $this->indexComponentName,
         ]);

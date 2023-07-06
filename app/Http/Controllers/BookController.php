@@ -21,6 +21,7 @@ class BookController extends Controller
 
     public function __construct(
         protected string $userRelationshipName = 'books',
+        protected string $itemableClassName = Book::class,
         protected string $itemableTableName = 'books',
         protected string $indexComponentName = 'book.row-content',
         protected string $showComponentName = 'book.show-content',

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Builder;
 
 trait ItemableTrait
 {
@@ -44,5 +45,12 @@ trait ItemableTrait
     public function getItemableType() : string
     {
         return $this->item->itemable_type;
+    }
+
+    public function scopeOfUsers($query, array $userIds)
+    {
+        return $query->whereHas('item', function($query) use ($userIds) {
+            $query->whereIn('user_id', $userIds);
+        });
     }
 }
