@@ -9,6 +9,10 @@
                 </h2>
             </div>
 
+            <div class="flex">
+                <x-filters.friends/>
+            </div>
+
             <div class="flex-auto items-center text-right">
 
                 <div class="inline-flex">
