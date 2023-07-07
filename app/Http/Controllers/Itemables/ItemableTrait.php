@@ -71,7 +71,7 @@ trait ItemableTrait
         }
 
         return view('itemables.index', [
-            'itemables' => ($this->itemableClassName)::ofUsers($userIds)->latest()->paginate(10),
+            'itemables' => ($this->itemableClassName)::ofUsers($userIds)->latest()->paginate(10)->withQueryString(),
             'header' => $header,
             'componentName' => $this->indexComponentName,
         ]);
@@ -79,6 +79,7 @@ trait ItemableTrait
 
     protected function onShow(int $itemableId) : View
     {
+        // TODO need to adjust querying method to get also friends items (as done in onIndex method)
         return view('itemable.show', [
             'itemable' => $this->getUserItemable($itemableId),
             'componentName' => $this->showComponentName,
