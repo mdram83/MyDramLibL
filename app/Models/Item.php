@@ -26,6 +26,7 @@ class Item extends Model
         'authors',
         'mainArtists',
         'mainBands',
+        'user',
     ];
 
     public function syncCollections(array $relationCollection) : void

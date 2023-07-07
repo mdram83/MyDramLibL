@@ -49,6 +49,11 @@
         </x-itemables.itemable-main-paragraph>
     @endif
 
+    <!-- Itemable Owner -->
+    @if ($itemable->item->user->id !== auth()->user()->id)
+        <x-itemables.itemable-main-owner :owner="$itemable->item->user->username"/>
+    @endif
+
 </x-itemables.itemable-main>
 
 <!-- Details -->
