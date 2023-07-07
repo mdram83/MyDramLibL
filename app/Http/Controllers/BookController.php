@@ -41,9 +41,9 @@ class BookController extends Controller
         return $this->onIndex('Books', $request, $friendsRepository);
     }
 
-    public function show(int $id)
+    public function show(int $id, IFriendsRepository $friendsRepository): View
     {
-        return $this->onShow($id);
+        return $this->onShow($id, $friendsRepository);
     }
 
     public function create()

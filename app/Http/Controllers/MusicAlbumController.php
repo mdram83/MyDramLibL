@@ -44,9 +44,9 @@ class MusicAlbumController extends Controller
         return $this->onIndex('Music Albums', $request, $friendsRepository);
     }
 
-    public function show(int $id)
+    public function show(int $id, IFriendsRepository $friendsRepository): View
     {
-        return $this->onShow($id);
+        return $this->onShow($id, $friendsRepository);
     }
 
     public function create()

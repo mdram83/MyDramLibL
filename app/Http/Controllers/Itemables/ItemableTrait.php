@@ -17,6 +17,24 @@ use ReflectionClass;
 
 trait ItemableTrait
 {
+    protected function getUserIds(IFriendsRepository $friendsRepository, bool $withFriends = true): array
+    {
+        $user = auth()->user();
+        $userIds = [$user->id];
+
+        if ($withFriends) {
+            $friends = $friendsRepository->getAcceptedFriends($user);
+            foreach ($friends as $friend) {
+                $userIds[] =
+                    $friend->sender()->first()->id !== $user->id
+                        ? $friend->sender()->first()->id
+                        : $friend->recipient()->first()->id;
+            }
+        }
+
+        return $userIds;
+    }
+
     protected function getUserItemable(int $itemableId) : Model
     {
         return auth()->user()->{$this->userRelationshipName}()
@@ -57,31 +75,20 @@ trait ItemableTrait
 
     protected function onIndex(string $header, Request $request, IFriendsRepository $friendsRepository) : View
     {
-        $user = auth()->user();
-        $userIds = [$user->id];
-
-        if ($request->query('friends') == 1) {
-            $friends = $friendsRepository->getAcceptedFriends($user);
-            foreach ($friends as $friend) {
-                $userIds[] =
-                    $friend->sender()->first()->id !== $user->id
-                        ? $friend->sender()->first()->id
-                        : $friend->recipient()->first()->id;
-            }
-        }
-
         return view('itemables.index', [
-            'itemables' => ($this->itemableClassName)::ofUsers($userIds)->latest()->paginate(10)->withQueryString(),
+            'itemables' => ($this->itemableClassName)::ofUsers(
+                $this->getUserIds($friendsRepository, $request->query('friends') == 1)
+            )->latest()->paginate(10)->withQueryString(),
             'header' => $header,
             'componentName' => $this->indexComponentName,
         ]);
     }
 
-    protected function onShow(int $itemableId) : View
+    protected function onShow(int $itemableId, IFriendsRepository $friendsRepository) : View
     {
-        // TODO need to adjust querying method to get also friends items (as done in onIndex method)
         return view('itemable.show', [
-            'itemable' => $this->getUserItemable($itemableId),
+            'itemable' => ($this->itemableClassName)::ofUsers($this->getUserIds($friendsRepository))
+                ->findOrFail($itemableId),
             'componentName' => $this->showComponentName,
         ]);
     }
