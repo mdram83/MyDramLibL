@@ -101,6 +101,11 @@
     <!-- Tags -->
     <x-itemable.itemable-main-tags :tags="$itemable->getTags()"/>
 
+    <!-- Owner -->
+    @if ($itemable->item->user->id !== auth()->user()->id)
+        <x-itemables.itemable-main-owner :owner="$itemable->item->user->username"/>
+    @endif
+
 </x-itemable.itemable-main>
 
 <!-- Music Album Details -->

@@ -12,8 +12,11 @@
             <div class="flex-auto items-center text-right">
 
                 <div class="inline-flex"><x-itemable.button.add/></div>
-                <div class="inline-flex"><x-itemable.button.edit/></div>
-                <div class="inline-flex"><x-itemable.button.delete id="{{ $itemable->id }}"/></div>
+
+                @if ($itemable->item->user->id === auth()->user()->id)
+                    <div class="inline-flex"><x-itemable.button.edit/></div>
+                    <div class="inline-flex"><x-itemable.button.delete id="{{ $itemable->id }}"/></div>
+                @endif
 
             </div>
         </div>

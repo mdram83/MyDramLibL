@@ -1,9 +1,8 @@
-<div class="flex text-sm pt-1 leading-tight">
+<div class="flex text-xs text-[#ff6200] pt-1 leading-tight">
     <x-svg icon="user"
-           stroke="#ff6200"
-           width="16"
-           height="16"
-           class="mr-2"
+           width="12"
+           height="12"
+           class="mr-1"
     />
     {{ $owner }}
 </div>
