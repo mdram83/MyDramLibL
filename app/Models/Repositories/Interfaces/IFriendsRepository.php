@@ -8,6 +8,7 @@ use Multicaret\Acquaintances\Models\Friendship;
 
 interface IFriendsRepository
 {
-    public function getActiveFriends(User $user) : Collection;
-    public function getUserFriend(User $user, int $id) : Friendship;
+    public function getActiveFriends(User $user): Collection;
+    public function getAcceptedFriends(User $user): Collection;
+    public function getUserFriend(User $user, int $id): Friendship;
 }

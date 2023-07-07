@@ -7,6 +7,7 @@ use App\Models\MainArtist;
 use App\Models\MainBand;
 use App\Models\MusicAlbum;
 use App\Models\Repositories\Interfaces\IArtistRepository;
+use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Models\Repositories\Interfaces\IGuildRepository;
 use App\Models\Repositories\Interfaces\IPublisherRepository;
 use App\Models\Repositories\Interfaces\ITagRepository;
@@ -16,7 +17,9 @@ use App\Rules\EAN;
 use App\Rules\OneLiner;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class MusicAlbumController extends Controller
 {
@@ -36,9 +39,9 @@ class MusicAlbumController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request, IFriendsRepository $friendsRepository): View
     {
-        return $this->onIndex('Music Albums');
+        return $this->onIndex('Music Albums', $request, $friendsRepository);
     }
 
     public function show(int $id)

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Itemables;
 
 use App\Models\Item;
+use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Models\Repositories\Interfaces\IPublisherRepository;
 use App\Rules\OneLiner;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -53,10 +55,23 @@ trait ItemableTrait
         ])->withInput();
     }
 
-    protected function onIndex(string $header) : View
+    protected function onIndex(string $header, Request $request, IFriendsRepository $friendsRepository) : View
     {
+        $user = auth()->user();
+        $userIds = [$user->id];
+
+        if ($request->query('friends') == 1) {
+            $friends = $friendsRepository->getAcceptedFriends($user);
+            foreach ($friends as $friend) {
+                $userIds[] =
+                    $friend->sender()->first()->id !== $user->id
+                        ? $friend->sender()->first()->id
+                        : $friend->recipient()->first()->id;
+            }
+        }
+
         return view('itemables.index', [
-            'itemables' => ($this->itemableClassName)::ofUsers([auth()->user()->id])->latest()->paginate(10),
+            'itemables' => ($this->itemableClassName)::ofUsers($userIds)->latest()->paginate(10),
             'header' => $header,
             'componentName' => $this->indexComponentName,
         ]);

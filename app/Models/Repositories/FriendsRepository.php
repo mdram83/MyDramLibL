@@ -10,12 +10,17 @@ use Multicaret\Acquaintances\Models\Friendship;
 class FriendsRepository implements Interfaces\IFriendsRepository
 {
 
-    public function getActiveFriends(User $user) : Collection
+    public function getActiveFriends(User $user): Collection
     {
         return $user->getAllFriendships()->where('status', '<>', 'denied');
     }
 
-    public function getUserFriend(User $user, int $id) : Friendship
+    public function getAcceptedFriends(User $user): Collection
+    {
+        return $user->getAllFriendships()->where('status', '=', 'accepted');
+    }
+
+    public function getUserFriend(User $user, int $id): Friendship
     {
         return
             $user->getAllFriendships()->where('id', $id)->first()

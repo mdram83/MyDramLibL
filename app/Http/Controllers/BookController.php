@@ -6,6 +6,7 @@ use App\Http\Controllers\Itemables\ItemableTrait;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Repositories\Interfaces\IArtistRepository;
+use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Models\Repositories\Interfaces\IPublisherRepository;
 use App\Models\Repositories\Interfaces\ITagRepository;
 use App\Rules\ArtistName;
@@ -13,7 +14,9 @@ use App\Rules\ISBN;
 use App\Rules\OneLiner;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class BookController extends Controller
 {
@@ -33,9 +36,9 @@ class BookController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request, IFriendsRepository $friendsRepository): View
     {
-        return $this->onIndex('Books');
+        return $this->onIndex('Books', $request, $friendsRepository);
     }
 
     public function show(int $id)
