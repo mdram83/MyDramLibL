@@ -70,4 +70,9 @@ class Item extends Model
     {
         return $this->morphedByMany(MainBand::class, 'guildable', 'guildable_item');
     }
+
+    public function scopeOfUsers($query, array $userIds)
+    {
+        return $query->whereIn('user_id', $userIds);
+    }
 }

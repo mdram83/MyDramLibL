@@ -8,7 +8,7 @@ use App\Http\Controllers\Ajax\PlayMusicAlbumController;
 use App\Http\Controllers\Ajax\PublisherController;
 use App\Http\Controllers\Ajax\TagController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\MusicAlbumController;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +25,7 @@ Route::get('/terms', fn() => view('terms'))->name('terms');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('/friends', [FriendsController::class, 'index'])->name('friends');
     Route::get('/friends/accept/{id}', [FriendsController::class, 'accept'])->name('friends.accept');
