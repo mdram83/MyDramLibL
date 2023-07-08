@@ -89,6 +89,31 @@
 
                 </x-dashboard.widget>
 
+                <!-- Recently added friends -->
+                <x-dashboard.widget title="Recent contacts">
+                    @if(count($friends) > 0)
+                        <ul>
+                            @foreach($friends as $friend)
+                                <li class="pb-1 truncate">
+                                    <div class="flex items-center">
+                                        <span class="pl-0.5">
+                                            {{ $friendshipTranslator->getFriendNameOfLoggedUser($friend) }}
+                                        </span>
+                                        <span class="pl-2 text-gray-400">({{ $friend->status }})</span>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>You have no friends on your list</p>
+                    @endif
+
+                    <div class="mt-4">
+                        <a class="hover:underline text-[#ff6200]" href="{{ route('friends') }}">[manage list]</a>
+                    </div>
+
+                </x-dashboard.widget>
+
                 <!-- Recently friends' added items -->
                 <x-dashboard.widget title="Your friends' new items">
                     <x-dashboard.items-list :items="$friendsItems" noItemsMessage="No friends' items" />
@@ -98,11 +123,6 @@
                 <x-dashboard.widget title="Your new items">
                     <x-dashboard.items-list :items="$items" noItemsMessage="You have no items yet" />
                 </x-dashboard.widget>
-
-{{--                <!-- Recently added friends -->--}}
-{{--                <x-dashboard.widget title="Recent contacts">--}}
-{{--                    <p><i>Under construction</i></p>--}}
-{{--                </x-dashboard.widget>--}}
 
             </div>
         </div>

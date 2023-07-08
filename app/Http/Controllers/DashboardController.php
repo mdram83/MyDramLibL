@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Utilities\Librarian\NavigatorInterface;
+use App\View\Utilities\FriendshipTranslator;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function __invoke(NavigatorInterface $navigator, IFriendsRepository $friendsRepository)
     {
-        // TODO recently added friends
+        $user = auth()->user();
 
         return view('dashboard', [
             'items' => auth()->user()->items()->withOnly([])->latest()->take(5)->get(),
-            'friendsItems' => Item::ofUsers($friendsRepository->getAcceptedFriendsIds(auth()->user()))
+            'friendsItems' => Item::ofUsers($friendsRepository->getAcceptedFriendsIds($user))
                 ->withOnly([])
                 ->latest()
                 ->take(5)
@@ -25,6 +26,8 @@ class DashboardController extends Controller
                 ->orderBy('played_on', 'desc')
                 ->take(5)
                 ->get(),
+            'friends' => $friendsRepository->getActiveFriends($user),
+            'friendshipTranslator' => new FriendshipTranslator(),
         ]);
     }
 }
