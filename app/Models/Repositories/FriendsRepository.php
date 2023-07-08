@@ -27,4 +27,13 @@ class FriendsRepository implements Interfaces\IFriendsRepository
             ??
             throw new Exception('Can not accept requested friend');
     }
+
+    public function getAcceptedFriendsIds(User $user): array
+    {
+        return $this->getAcceptedFriends($user)->map(function (Friendship $friendship) use ($user) {
+            return $friendship->sender()->first()->id !== $user->id
+                ? $friendship->sender()->first()->id
+                : $friendship->recipient()->first()->id;
+        })->all();
+    }
 }

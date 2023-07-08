@@ -23,13 +23,7 @@ trait ItemableTrait
         $userIds = [$user->id];
 
         if ($withFriends) {
-            $friends = $friendsRepository->getAcceptedFriends($user);
-            foreach ($friends as $friend) {
-                $userIds[] =
-                    $friend->sender()->first()->id !== $user->id
-                        ? $friend->sender()->first()->id
-                        : $friend->recipient()->first()->id;
-            }
+            $userIds = array_merge($userIds, $friendsRepository->getAcceptedFriendsIds($user));
         }
 
         return $userIds;
