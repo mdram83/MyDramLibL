@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
 use App\Models\MusicAlbum;
+use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Utilities\API\Spotify\SpotifyRestAPI;
 use App\Utilities\API\Spotify\SpotifyRestAPIAuthorization;
 use App\Utilities\API\YouTube\YouTubeRestAPI;
@@ -13,6 +14,8 @@ use Illuminate\Http\JsonResponse;
 
 class PlayMusicAlbumController extends Controller
 {
+    protected IFriendsRepository $friendsRepository;
+
     protected ?string $ean;
     protected string $title;
     protected array $artists;
@@ -21,8 +24,10 @@ class PlayMusicAlbumController extends Controller
     protected array $links = [];
     protected MusicAlbum $musicAlbum;
 
-    public function show(int $id)
+    public function __invoke(int $id, IFriendsRepository $friendsRepository)
     {
+        $this->friendsRepository = $friendsRepository;
+
         $this->loadMusicAlbumParams($id);
 
         if ($this->links === []) {
@@ -47,7 +52,6 @@ class PlayMusicAlbumController extends Controller
         } catch (Exception) {
             return $this->returnServerError();
         }
-
 
         return response()->json($this->links);
     }
@@ -117,11 +121,11 @@ class PlayMusicAlbumController extends Controller
         }
     }
 
-
-
     protected function loadMusicAlbumParams(int $musicAlbumId): void
     {
-        $this->musicAlbum = auth()->user()->musicAlbums()->where('music_albums.id', $musicAlbumId)->firstOrFail();
+        $this->musicAlbum = MusicAlbum::ofUsers(
+            $this->friendsRepository->getAcceptedFriendsIds(auth()->user(), true)
+        )->findOrFail($musicAlbumId);
 
         $this->ean = $this->musicAlbum->ean;
         $this->title = $this->musicAlbum->item->title;
@@ -154,6 +158,4 @@ class PlayMusicAlbumController extends Controller
     {
         return response()->json([], 500);
     }
-
-
 }

@@ -20,13 +20,12 @@ trait ItemableTrait
     protected function getUserIds(IFriendsRepository $friendsRepository, bool $withFriends = true): array
     {
         $user = auth()->user();
-        $userIds = [$user->id];
 
         if ($withFriends) {
-            $userIds = array_merge($userIds, $friendsRepository->getAcceptedFriendsIds($user));
+            return $friendsRepository->getAcceptedFriendsIds($user, true);
         }
 
-        return $userIds;
+        return [$user->id];
     }
 
     protected function getUserItemable(int $itemableId) : Model

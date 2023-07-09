@@ -28,12 +28,23 @@ class FriendsRepository implements Interfaces\IFriendsRepository
             throw new Exception('Can not accept requested friend');
     }
 
-    public function getAcceptedFriendsIds(User $user): array
+    public function getAcceptedFriendsIds(User $user, bool $withLoggedUserId = false): array
     {
-        return $this->getAcceptedFriends($user)->map(function (Friendship $friendship) use ($user) {
-            return $friendship->sender()->first()->id !== $user->id
+        $loggedUserId = $user->id;
+
+        $userIds = $this->getAcceptedFriends($user)->map(function (Friendship $friendship) use ($loggedUserId) {
+            return $friendship->sender()->first()->id !== $loggedUserId
                 ? $friendship->sender()->first()->id
                 : $friendship->recipient()->first()->id;
         })->all();
+
+        if ($withLoggedUserId) {
+            if (count($userIds) > 0) {
+                return array_merge($userIds, [$loggedUserId]);
+            }
+            return [$loggedUserId];
+        }
+
+        return $userIds;
     }
 }
