@@ -53,4 +53,21 @@ trait ItemableTrait
             $query->whereIn('user_id', $userIds);
         });
     }
+
+    public function scopeUsingQueryString($query, array $queryParams)
+    {
+        if (isset($queryParams['publishedAtMin'])) {
+            $query = $query->whereHas('item', function($query) use ($queryParams) {
+                $query->where('published_at', '>=', $queryParams['publishedAtMin']);
+            });
+        }
+
+        if (isset($queryParams['publishedAtMax'])) {
+            $query = $query->whereHas('item', function($query) use ($queryParams) {
+                $query->where('published_at', '<=', $queryParams['publishedAtMax']);
+            });
+        }
+
+        return $query;
+    }
 }

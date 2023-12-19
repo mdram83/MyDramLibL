@@ -71,7 +71,7 @@ trait ItemableTrait
         return view('itemables.index', [
             'itemables' => ($this->itemableClassName)::ofUsers(
                 $this->getUserIds($friendsRepository, $request->query('friends') == 1)
-            )->latest()->paginate(10)->withQueryString(),
+            )->usingQueryString($request->query())->latest()->paginate(10)->withQueryString(),
             'header' => $header,
             'componentName' => $this->indexComponentName,
         ]);
