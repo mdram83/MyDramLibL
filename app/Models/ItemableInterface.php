@@ -15,4 +15,6 @@ interface ItemableInterface
     public function getComment() : ?string;
     public function getTags() : ?Collection;
     public function getItemableType() : string;
+    public function scopeOfUsers($query, array $userIds);
+    public function scopeUsingQueryString($query, array $queryParams);
 }
