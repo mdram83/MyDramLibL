@@ -7,4 +7,5 @@
         focus:border-[#ffa240]
         focus:ring ring-[#ff7210]
     "
+    disabled="disabled"
 >Apply</x-library-button>
