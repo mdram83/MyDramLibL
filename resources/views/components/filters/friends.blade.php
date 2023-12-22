@@ -1,4 +1,4 @@
-<div class="text-gray-400">
+<div class="text-gray-400 px-1">
 
     @php
 

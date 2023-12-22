@@ -11,6 +11,7 @@
 
             <div class="flex">
                 <x-filters.friends/>
+                <x-filters.toggle-filters/>
             </div>
 
             <div class="flex-auto items-center text-right">
