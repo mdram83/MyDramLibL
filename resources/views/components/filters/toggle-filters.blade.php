@@ -6,7 +6,7 @@
 
     @endphp
 
-    <a href="#">
+    <a id="toggle-filters" href="#">
         <x-svg icon="filter"
                stroke="{{ $color }}"
                width="20"
