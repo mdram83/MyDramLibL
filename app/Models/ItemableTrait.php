@@ -68,6 +68,23 @@ trait ItemableTrait
             });
         }
 
+        if (filter_var($queryParams['publishedAtEmpty'] ?? false, FILTER_VALIDATE_BOOLEAN)) {
+            $query = $query->orWhereHas('item', function($query) use ($queryParams) {
+                $query->whereNull('published_at');
+            });
+        }
+
+        if (
+            isset($queryParams['publishedAtEmpty'])
+            && !isset($queryParams['publishedAtMin'])
+            && !isset($queryParams['publishedAtMax'])
+            && filter_var($queryParams['publishedAtEmpty'], FILTER_VALIDATE_BOOLEAN) === false
+        ) {
+            $query = $query->WhereHas('item', function($query) use ($queryParams) {
+                $query->whereNotNull('published_at');
+            });
+        }
+
         return $query;
     }
 }

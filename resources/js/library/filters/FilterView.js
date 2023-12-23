@@ -1,3 +1,5 @@
+import PublishedAtFilter from "@/library/filters/PublishedAtFilter";
+
 class FilterView
 {
     constructor()
@@ -5,10 +7,11 @@ class FilterView
         this.filtersContainer = document.querySelector('#filters-container');
         this.toggleFiltersElement = document.querySelector('#toggle-filters');
         this.applyFiltersButtons = document.querySelectorAll('[name="apply-filters"]');
-        this.filters = []; // TODO add FilterXXX object as an element of this array (pass link to THIS mother object in specific filter constructor so that it is called on updates)
 
         this.filtersContainerVisible = false;
-        this.filtersUpdated = false;
+
+        this.filters = [];
+        this.filters.push(new PublishedAtFilter({parent: this}));
 
         this.#events();
     }
@@ -28,26 +31,48 @@ class FilterView
         } else {
             this.filtersContainer.classList.remove('hidden');
         }
-
         this.filtersContainerVisible = !this.filtersContainerVisible;
     }
 
-    #applyFilters()
+    #applyFilters() // TODO adjust function when applying updated filters
     {
-        const targetHref = window.location.href; // TODO adjust function when applying specific filters
-        window.location.replace(targetHref);
+        const queryParams = this.#getQueryParamsFromFilters(this.filters);
+        const baseUrl = window.location.origin + window.location.pathname;
+
+        if (Object.keys(queryParams).length === 0) {
+            window.location.replace(baseUrl);
+            return;
+        }
+
+        const targetUrl = this.#addQueryParamsToBaseUrl(baseUrl, queryParams);
+        window.location.replace(targetUrl);
     }
 
-    // TODO call THIS mother object method from each single Filter object after it is updated
     registerFiltersChange()
     {
-        this.filtersUpdated = true;
         this.applyFiltersButtons.forEach(el => {
             el.disabled = false;
         });
+    }
 
-        // TODO consider if I want to update target URL with each single filter change, or at the end (and do I want to read all filter objects then or just updated ones)
-        // TODO consider kind of Interface for each Filter object
+    #getQueryParamsFromFilters(filters)
+    {
+        const queryParams = {};
+        filters.forEach(function(filter) {
+            for (const [key, value] of Object.entries(filter.getFilters())) {
+                queryParams[key] = value;
+            }
+        });
+        return queryParams;
+    }
+
+    #addQueryParamsToBaseUrl(baseUrl, queryParams)
+    {
+        let targetUrl = baseUrl + '?';
+        for (const [key, value] of Object.entries(queryParams)) {
+            targetUrl += key + '=' + value + '&';
+        }
+        return targetUrl;
     }
 }
 
