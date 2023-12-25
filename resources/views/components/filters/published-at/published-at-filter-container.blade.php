@@ -40,7 +40,7 @@
 </div>
 
 <div class="-mt-2">
-    <input type="checkbox" id="filter-publishedAt-empty" name="filter-publishedAt-empty" checked>
+    <input type="checkbox" id="filter-publishedAt-empty" name="filter-publishedAt-empty">
     <label for="filter-publishedAt-empty" class="text-sm px-1.5">
         Include items without date
     </label>

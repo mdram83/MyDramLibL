@@ -5,14 +5,18 @@ class PublishedAtFilter
     constructor({parent})
     {
         this.parent = parent;
-        this.rangeMin = 0;
         this.loaded = false;
         this.initialized = false;
 
+        this.rangeMin = 0;
+        this.min = null;
+        this.max = null;
+
+
         this.filters = {
-            publishedAtMin: 1900,
-            publishedAtMax: 2024,
-            publishedAtEmpty: true,
+            publishedAtMin: null,
+            publishedAtMax: null,
+            publishedAtEmpty: null,
         }
 
         this.range = document.querySelector(".filter-publishedAt-range-selected");
@@ -30,7 +34,15 @@ class PublishedAtFilter
 
     getFilters()
     {
-        return this.filters;
+        const filters = {};
+
+        for (const [key, value] of Object.entries(this.filters)) {
+            if (value !== null) {
+                filters[key] = value;
+            }
+        }
+
+        return filters;
     }
 
     #events()
@@ -56,15 +68,19 @@ class PublishedAtFilter
                     this.rangeValue[1].innerHTML = maxRange.toString();
                     this.filters.publishedAtMax = maxRange;
 
-                    this.range.style.left = (1 - ((this.rangeInput[0].max - minRange) / (this.rangeInput[0].max - this.rangeInput[0].min))) * 100 + "%";
-                    this.range.style.right = ((this.rangeInput[1].max - maxRange) / (this.rangeInput[1].max - this.rangeInput[1].min)) * 100 + "%";
-
+                    this.#adjustSlider();
                     this.#registerFiltersChange();
                 }
             });
         });
 
         this.includeEmptyCheckbox.addEventListener('change', () => this.#toggleEmpty());
+    }
+
+    #adjustSlider()
+    {
+        this.range.style.left = (1 - ((this.rangeInput[0].max - parseInt(this.rangeInput[0].value)) / (this.rangeInput[0].max - this.rangeInput[0].min))) * 100 + "%";
+        this.range.style.right = ((this.rangeInput[1].max - parseInt(this.rangeInput[1].value)) / (this.rangeInput[1].max - this.rangeInput[1].min)) * 100 + "%";
     }
 
     initialize()
@@ -87,30 +103,62 @@ class PublishedAtFilter
         axios.get(window.location.origin + '/ajax/item/published-at-min-max')
             .then(response => {
 
-                const min = response.data.publishedAtMin;
-                const max = response.data.publishedAtMax;
+                this.min = response.data.publishedAtMin;
+                this.max = response.data.publishedAtMax;
 
-                this.rangeInput[0].min = min;
-                this.rangeInput[0].max = max;
-                this.rangeInput[0].value = min;
+                this.rangeInput[0].min = this.min;
+                this.rangeInput[0].max = this.max;
+                this.rangeInput[0].value = this.min;
 
-                this.rangeInput[1].min = min;
-                this.rangeInput[1].max = max;
-                this.rangeInput[1].value = max;
+                this.rangeInput[1].min = this.min;
+                this.rangeInput[1].max = this.max;
+                this.rangeInput[1].value = this.max;
 
-                this.rangeValue[0].innerHTML = min.toString();
-                this.rangeValue[1].innerHTML = max.toString();
+                this.rangeValue[0].innerHTML = this.min.toString();
+                this.rangeValue[1].innerHTML = this.max.toString();
 
                 this.loaded = true;
+                this.#setFilterValuesFromUrl();
             })
             .catch(error => {
                 console.log('Sorry, could not provide min and max published dates from library');
+                this.#setFilterValuesFromUrl();
             });
+
     }
+
+    #setFilterValuesFromUrl()
+    {
+        for (const [key, value] of Object.entries(this.filters)) {
+            const currentValue = this.parent.getCurrentQueryParam(key);
+            if (currentValue !== null) {
+                this.filters[key] = currentValue;
+            }
+        }
+        this.#updateFrontendForCurrentValues();
+    }
+
+    #updateFrontendForCurrentValues()
+    {
+        this.includeEmptyCheckbox.checked = this.filters.publishedAtEmpty === 'true';
+
+        if (this.filters.publishedAtMin !== null) {
+            this.rangeInput[0].value = this.filters.publishedAtMin;
+            this.rangeValue[0].innerHTML = this.filters.publishedAtMin.toString();
+        }
+
+        if (this.filters.publishedAtMax !== null) {
+            this.rangeInput[1].value = this.filters.publishedAtMax;
+            this.rangeValue[1].innerHTML = this.filters.publishedAtMax.toString();
+        }
+
+        this.#adjustSlider();
+    }
+
 
     #toggleEmpty()
     {
-        this.filters.publishedAtEmpty = !this.filters.publishedAtEmpty;
+        this.filters.publishedAtEmpty = this.includeEmptyCheckbox.checked;
         this.#registerFiltersChange();
     }
 }

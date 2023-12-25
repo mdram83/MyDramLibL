@@ -10,6 +10,7 @@ class FilterView
 
         this.filtersContainerVisible = false;
         this.initialized = false;
+        this.currentQueryParams = new URLSearchParams(window.location.search);
 
         this.filters = [];
         this.filters.push(new PublishedAtFilter({parent: this}));
@@ -68,6 +69,11 @@ class FilterView
         this.applyFiltersButtons.forEach(el => {
             el.disabled = false;
         });
+    }
+
+    getCurrentQueryParam(paramName)
+    {
+        return this.currentQueryParams.get(paramName);
     }
 
     #getQueryParamsFromFilters(filters)
