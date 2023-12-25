@@ -12,17 +12,16 @@ class PublishedAtFilter
         this.min = null;
         this.max = null;
 
-
         this.filters = {
             publishedAtMin: null,
             publishedAtMax: null,
-            publishedAtEmpty: null,
+            publishedAtRequired: null,
         }
 
         this.range = document.querySelector(".filter-publishedAt-range-selected");
         this.rangeInput = document.querySelectorAll(".filter-publishedAt-range-input input");
         this.rangeValue = document.querySelectorAll(".filter-publishedAt-range-value p");
-        this.includeEmptyCheckbox = document.querySelector("#filter-publishedAt-empty");
+        this.requiredCheckbox = document.querySelector("#filter-publishedAt-required");
 
         this.#events();
     }
@@ -40,6 +39,18 @@ class PublishedAtFilter
             if (value !== null) {
                 filters[key] = value;
             }
+        }
+
+        if (filters.publishedAtMin === this.min) {
+            delete filters.publishedAtMin;
+        }
+
+        if (filters.publishedAtMax === this.max) {
+            delete filters.publishedAtMax;
+        }
+
+        if (filters.publishedAtRequired !== true && filters.publishedAtRequired !== 'true') {
+            delete filters.publishedAtRequired;
         }
 
         return filters;
@@ -74,7 +85,7 @@ class PublishedAtFilter
             });
         });
 
-        this.includeEmptyCheckbox.addEventListener('change', () => this.#toggleEmpty());
+        this.requiredCheckbox.addEventListener('change', () => this.#toggleRequired());
     }
 
     #adjustSlider()
@@ -88,9 +99,7 @@ class PublishedAtFilter
         if (this.initialized) {
             return;
         }
-
         this.#loadData();
-
         this.initialized = true;
     }
 
@@ -140,7 +149,7 @@ class PublishedAtFilter
 
     #updateFrontendForCurrentValues()
     {
-        this.includeEmptyCheckbox.checked = this.filters.publishedAtEmpty === 'true';
+        this.requiredCheckbox.checked = this.filters.publishedAtRequired === 'true';
 
         if (this.filters.publishedAtMin !== null) {
             this.rangeInput[0].value = this.filters.publishedAtMin;
@@ -155,10 +164,9 @@ class PublishedAtFilter
         this.#adjustSlider();
     }
 
-
-    #toggleEmpty()
+    #toggleRequired()
     {
-        this.filters.publishedAtEmpty = this.includeEmptyCheckbox.checked;
+        this.filters.publishedAtRequired = this.requiredCheckbox.checked;
         this.#registerFiltersChange();
     }
 }

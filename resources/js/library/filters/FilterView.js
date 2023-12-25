@@ -50,7 +50,7 @@ class FilterView
         this.filtersContainerVisible = !this.filtersContainerVisible;
     }
 
-    #applyFilters() // TODO adjust function when applying updated filters
+    #applyFilters()
     {
         const queryParams = this.#getQueryParamsFromFilters(this.filters);
         const baseUrl = window.location.origin + window.location.pathname;
