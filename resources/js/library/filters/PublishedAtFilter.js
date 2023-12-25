@@ -18,6 +18,7 @@ class PublishedAtFilter
             publishedAtRequired: null,
         }
 
+        this.clearFiltersButton = document.querySelector('[name="filter-publishedAt-clear"]');
         this.range = document.querySelector(".filter-publishedAt-range-selected");
         this.rangeInput = document.querySelectorAll(".filter-publishedAt-range-input input");
         this.rangeValue = document.querySelectorAll(".filter-publishedAt-range-value p");
@@ -29,6 +30,12 @@ class PublishedAtFilter
     #registerFiltersChange()
     {
         this.parent.registerFiltersChange();
+        this.#setClearFiltersButtonStatus();
+    }
+
+    #setClearFiltersButtonStatus()
+    {
+        this.clearFiltersButton.disabled = Object.keys(this.getFilters()).length === 0;
     }
 
     getFilters()
@@ -86,6 +93,7 @@ class PublishedAtFilter
         });
 
         this.requiredCheckbox.addEventListener('change', () => this.#toggleRequired());
+        this.clearFiltersButton.addEventListener('click', () => this.#clearFilters());
     }
 
     #adjustSlider()
@@ -147,6 +155,23 @@ class PublishedAtFilter
         this.#updateFrontendForCurrentValues();
     }
 
+    #clearFilters()
+    {
+        this.rangeInput[0].value = this.min;
+        this.rangeValue[0].innerHTML = this.min;
+        this.filters.publishedAtMin = null;
+
+        this.rangeInput[1].value = this.max;
+        this.rangeValue[1].innerHTML = this.max;
+        this.filters.publishedAtMax = null;
+
+        this.requiredCheckbox.checked = false;
+        this.filters.publishedAtRequired = null;
+
+        this.#adjustSlider();
+        this.#registerFiltersChange();
+    }
+
     #updateFrontendForCurrentValues()
     {
         this.requiredCheckbox.checked = this.filters.publishedAtRequired === 'true';
@@ -161,6 +186,7 @@ class PublishedAtFilter
             this.rangeValue[1].innerHTML = this.filters.publishedAtMax.toString();
         }
 
+        this.#setClearFiltersButtonStatus();
         this.#adjustSlider();
     }
 
