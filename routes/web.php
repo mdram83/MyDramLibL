@@ -4,6 +4,7 @@ use App\Http\Controllers\Ajax\ArtistController;
 use App\Http\Controllers\Ajax\EANMusicController;
 use App\Http\Controllers\Ajax\GuildController;
 use App\Http\Controllers\Ajax\ISBNOpenlibraryController;
+use App\Http\Controllers\Ajax\ItemPublishedAtMinMax;
 use App\Http\Controllers\Ajax\PlayMusicAlbumController;
 use App\Http\Controllers\Ajax\PublisherController;
 use App\Http\Controllers\Ajax\TagController;
@@ -50,6 +51,7 @@ Route::middleware(['auth.ajax'])->group(function() {
     Route::get('/ajax/isbn/{isbn}', [ISBNOpenlibraryController::class, 'show']);
     Route::get('/ajax/ean/{ean}', [EANMusicController::class, 'show']);
     Route::get('/ajax/play-music-links/{id}', PlayMusicAlbumController::class);
+    Route::get('/ajax/item/published-at-min-max', ItemPublishedAtMinMax::class);
 });
 
 require __DIR__.'/auth.php';

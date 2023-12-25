@@ -9,6 +9,7 @@ class FilterView
         this.applyFiltersButtons = document.querySelectorAll('[name="apply-filters"]');
 
         this.filtersContainerVisible = false;
+        this.initialized = false;
 
         this.filters = [];
         this.filters.push(new PublishedAtFilter({parent: this}));
@@ -24,12 +25,26 @@ class FilterView
         });
     }
 
+    #initialize()
+    {
+        if (this.initialized) {
+            return;
+        }
+
+        this.filters.forEach(function(filter) {
+            filter.initialize();
+        });
+
+        this.initialized = true;
+    }
+
     #toggleFilters()
     {
         if (this.filtersContainerVisible) {
             this.filtersContainer.classList.add('hidden');
         } else {
             this.filtersContainer.classList.remove('hidden');
+            this.#initialize();
         }
         this.filtersContainerVisible = !this.filtersContainerVisible;
     }
@@ -72,7 +87,7 @@ class FilterView
         for (const [key, value] of Object.entries(queryParams)) {
             targetUrl += key + '=' + value + '&';
         }
-        return targetUrl;
+        return targetUrl.slice(0, -1);
     }
 }
 
