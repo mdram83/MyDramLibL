@@ -7,17 +7,17 @@
                     <x-filters.apply-filters-button />
                 </div>
 
-                <div class="mx-1 grid grid-cols-1 gap-2 sm:grid-cols-3 flex justify-center sm:divide-y-0 divide-y">
+                <div class="mx-1 grid grid-cols-1 gap-0 sm:gap-6 sm:grid-cols-3 flex justify-center sm:divide-y-0 divide-y">
 
-                    <x-filters.filter-container filterName="Published At" >
-                        <x-filters.published-at.published-at-filter-container />
+                    <x-filters.filter-container filterName="Published At">
+                        <x-filters.containers.published-at-filter-container />
                     </x-filters.filter-container>
 
-                    <x-filters.filter-container filterName="Tags" >
-                        Test content
+                    <x-filters.filter-container filterName="Tags">
+                        <x-filters.containers.tags-filter-container />
                     </x-filters.filter-container>
 
-                    <x-filters.filter-container filterName="Users" >
+                    <x-filters.filter-container filterName="Users">
                         Test content
                     </x-filters.filter-container>
 

@@ -56,18 +56,6 @@ trait ItemableTrait
 
     public function scopeUsingQueryString($query, array $queryParams)
     {
-//        if (isset($queryParams['publishedAtMin'])) {
-//            $query = $query->whereHas('item', function($query) use ($queryParams) {
-//                $query->where('published_at', '>=', $queryParams['publishedAtMin']);
-//            });
-//        }
-//
-//        if (isset($queryParams['publishedAtMax'])) {
-//            $query = $query->whereHas('item', function($query) use ($queryParams) {
-//                $query->where('published_at', '<=', $queryParams['publishedAtMax']);
-//            });
-//        }
-
         if (isset($queryParams['publishedAtMin'])) {
             $query = $query->whereHas('item', function($query) use ($queryParams) {
                 $query
@@ -89,23 +77,6 @@ trait ItemableTrait
                 $query->whereNotNull('published_at');
             });
         }
-
-//        if (filter_var($queryParams['publishedAtEmpty'] ?? false, FILTER_VALIDATE_BOOLEAN)) {
-//            $query = $query->orWhereHas('item', function($query) use ($queryParams) {
-//                $query->whereNull('published_at');
-//            });
-//        }
-
-//        if (
-//            isset($queryParams['publishedAtEmpty'])
-//            && !isset($queryParams['publishedAtMin'])
-//            && !isset($queryParams['publishedAtMax'])
-//            && filter_var($queryParams['publishedAtEmpty'], FILTER_VALIDATE_BOOLEAN) === false
-//        ) {
-//            $query = $query->WhereHas('item', function($query) use ($queryParams) {
-//                $query->whereNotNull('published_at');
-//            });
-//        }
 
         return $query;
     }

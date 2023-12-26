@@ -47,17 +47,6 @@
 </div>
 
 <div class="mt-2">
-    <x-library-button
-        name="filter-publishedAt-clear"
-        class="
-            bg-[#ff6200]
-            hover:bg-[#ff8220]
-            active:bg-[#ffa240]
-            focus:border-[#ffa240]
-            focus:ring ring-[#ff7210]
-            text-xs
-        "
-        disabled="disabled"
-    >Clear</x-library-button>
+    <x-filters.clear-filter-button name="filter-publishedAt-clear" />
 </div>
 

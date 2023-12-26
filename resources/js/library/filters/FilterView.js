@@ -1,4 +1,5 @@
 import PublishedAtFilter from "@/library/filters/PublishedAtFilter";
+import TagsFilter from "@/library/filters/TagsFilter";
 
 class FilterView
 {
@@ -14,6 +15,7 @@ class FilterView
 
         this.filters = [];
         this.filters.push(new PublishedAtFilter({parent: this}));
+        this.filters.push(new TagsFilter({parent: this}));
 
         this.#events();
     }
