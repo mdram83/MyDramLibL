@@ -4,34 +4,7 @@
 
 <div>
 
-    <div id="filter-tags-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap">
-
-        <span class="my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl">
-            Rock
-            <a href="#" class="ml-2 font-bold cursor-pointer">&#10005;</a>
-        </span>
-
-        <span class="my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl">
-            Crime
-            <a href="#" class="ml-2 font-bold cursor-pointer">&#10005;</a>
-        </span>
-
-        <span class="my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl">
-            Blues
-            <a href="#" class="ml-2 font-bold cursor-pointer">&#10005;</a>
-        </span>
-
-        <span class="my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl">
-            Drum'n'base
-            <a href="#" class="ml-2 font-bold cursor-pointer">&#10005;</a>
-        </span>
-
-        <span class="my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl">
-            Something long that probably won't fit into single line in the filter view. Js symbol for multiplication is \u2715.html is & + #10005;.
-            <a href="#" class="ml-2 font-bold cursor-pointer">&#10005;</a>
-        </span>
-
-    </div>
+    <div id="filter-tags-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
 
     <div class="my-4">
         <x-itemable.form.input type="text"

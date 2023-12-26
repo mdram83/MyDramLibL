@@ -11,7 +11,7 @@ class FilterView
 
         this.filtersContainerVisible = false;
         this.initialized = false;
-        this.currentQueryParams = new URLSearchParams(window.location.search);
+        this.currentQueryParams = this.#getCurrentQueryParams();
 
         this.filters = [];
         this.filters.push(new PublishedAtFilter({parent: this}));
@@ -73,9 +73,20 @@ class FilterView
         });
     }
 
+    #getCurrentQueryParams()
+    {
+        const queryString = new URL(window.location.href).search;
+        const queryParams = {};
+        queryString.slice(1).split('&').forEach(function(param) {
+            const [key, value] = param.split('=');
+            queryParams[key] = value;
+        });
+        return queryParams;
+    }
+
     getCurrentQueryParam(paramName)
     {
-        return this.currentQueryParams.get(paramName);
+        return this.currentQueryParams[paramName] ?? null;
     }
 
     #getQueryParamsFromFilters(filters)
