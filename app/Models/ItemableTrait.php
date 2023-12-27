@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Utilities\Request\UndecodedRequestParams;
 use App\Utilities\Request\UndecodedRequestParamsInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -60,7 +61,8 @@ trait ItemableTrait
     public function scopeUsingQueryString(
         $query,
         Request $request,
-        UndecodedRequestParamsInterface $undecodedRequestParams
+        UndecodedRequestParamsInterface $undecodedRequestParams,
+        IFriendsRepository $friendsRepository
     )
     {
         $queryParams = $request->query();
@@ -88,7 +90,6 @@ trait ItemableTrait
         }
 
         if (isset($queryParams['tags'])) {
-
             $tags = array_map(
                 fn($tag) => rawurldecode($tag),
                 explode(',', $undecodedRequestParams->get('tags')));
@@ -98,7 +99,32 @@ trait ItemableTrait
                     $query->whereIn('name', $tags);
                 });
             });
+        }
 
+        if (isset($queryParams['users'])) {
+
+            $allowedUsersIds = $friendsRepository->getAcceptedFriendsIds($request->user(), true);
+
+            $selectedUsersNames = array_map(
+                fn($user) => rawurldecode($user),
+                explode(',', $undecodedRequestParams->get('users')));
+            $selectedUsersArray = User::whereIn('username', $selectedUsersNames)->get(['id'])->toArray();
+            $selectedUsersIds = array_map(fn($value) => $value['id'], $selectedUsersArray);
+
+            $allowedAndSelectedUsersIds = array_intersect($allowedUsersIds, $selectedUsersIds);
+
+            if (!filter_var($queryParams['excludeMyItems'] ?? false, FILTER_VALIDATE_BOOLEAN)) {
+                $allowedAndSelectedUsersIds[] = $request->user()->id;
+            }
+
+            $query = $query->whereHas('item', function($query) use ($allowedAndSelectedUsersIds) {
+                $query->whereIn('user_id', $allowedAndSelectedUsersIds);
+            });
+
+        } else {
+            $query = $query->whereHas('item', function($query) use ($request) {
+                $query->where('user_id', '=', $request->user()->id);
+            });
         }
 
         return $query;

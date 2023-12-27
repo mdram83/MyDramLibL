@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Utilities\Request\UndecodedRequestParamsInterface;
 use Illuminate\Database\Eloquent\Collection;
 use \Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -18,5 +19,10 @@ interface ItemableInterface
     public function getTags() : ?Collection;
     public function getItemableType() : string;
     public function scopeOfUsers($query, array $userIds);
-    public function scopeUsingQueryString($query, Request $request, UndecodedRequestParamsInterface $undecodedRequestParams);
+    public function scopeUsingQueryString(
+        $query,
+        Request $request,
+        UndecodedRequestParamsInterface $undecodedRequestParams,
+        IFriendsRepository $friendsRepository
+    );
 }

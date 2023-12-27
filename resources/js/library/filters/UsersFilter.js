@@ -111,8 +111,13 @@ class UsersFilter
 
         if (filters.users.length === 0) {
             delete filters.users;
+            filters.excludeMyItems = false;
         } else {
             filters.users = filters.users.map((element) => encodeURIComponent(element)).join(',');
+        }
+
+        if (!filters.excludeMyItems) {
+            delete filters.excludeMyItems;
         }
 
         return filters;
