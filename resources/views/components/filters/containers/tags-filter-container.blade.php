@@ -2,7 +2,7 @@
     @vite('resources/js/library/ajax/generic-datalist.js')
 @endpush
 
-<div>
+<div class="sm:min-h-[120px]">
 
     <div class="mb-4">
         <x-itemable.form.input type="text"

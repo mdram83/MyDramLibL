@@ -10,7 +10,6 @@
             </div>
 
             <div class="flex">
-                <x-filters.friends/>
                 <x-filters.toggle-filters/>
             </div>
 

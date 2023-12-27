@@ -19,7 +19,7 @@
     }
 </style>
 
-<div>
+<div class="sm:min-h-[120px]">
 
     <div class="h-2 relative bg-gray-200 rounded-sm">
         <span class="filter-publishedAt-range-selected h-full right-px left-px absolute rounded bg-[#ff6200]"></span>
@@ -37,13 +37,13 @@
         <p class="text-base text-gray-500">2024</p>
     </div>
 
-</div>
+    <div class="-mt-2">
+        <input type="checkbox" id="filter-publishedAt-required" name="filter-publishedAt-required">
+        <label for="filter-publishedAt-required" class="text-sm px-1.5">
+            Exclude items without date
+        </label>
+    </div>
 
-<div class="-mt-2">
-    <input type="checkbox" id="filter-publishedAt-required" name="filter-publishedAt-required">
-    <label for="filter-publishedAt-required" class="text-sm px-1.5">
-        Exclude items without date
-    </label>
 </div>
 
 <div class="mt-2">
