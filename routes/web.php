@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Ajax\ArtistController;
 use App\Http\Controllers\Ajax\EANMusicController;
+use App\Http\Controllers\Ajax\FriendsList;
 use App\Http\Controllers\Ajax\GuildController;
 use App\Http\Controllers\Ajax\ISBNOpenlibraryController;
 use App\Http\Controllers\Ajax\ItemPublishedAtMinMax;
@@ -52,6 +53,7 @@ Route::middleware(['auth.ajax'])->group(function() {
     Route::get('/ajax/ean/{ean}', [EANMusicController::class, 'show']);
     Route::get('/ajax/play-music-links/{id}', PlayMusicAlbumController::class);
     Route::get('/ajax/item/published-at-min-max', ItemPublishedAtMinMax::class);
+    Route::get('/ajax/friends', FriendsList::class);
 });
 
 require __DIR__.'/auth.php';
