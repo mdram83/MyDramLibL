@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Repositories\Interfaces\IFriendsRepository;
 use App\Models\Repositories\Interfaces\IPublisherRepository;
 use App\Rules\OneLiner;
+use App\Utilities\Request\UndecodedRequestParamsInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
@@ -66,12 +67,20 @@ trait ItemableTrait
         ])->withInput();
     }
 
-    protected function onIndex(string $header, Request $request, IFriendsRepository $friendsRepository) : View
+    protected function onIndex(
+        string $header,
+        Request $request,
+        IFriendsRepository $friendsRepository,
+        UndecodedRequestParamsInterface $undecodedRequestParams
+    ) : View
     {
         return view('itemables.index', [
             'itemables' => ($this->itemableClassName)::ofUsers(
                 $this->getUserIds($friendsRepository, $request->query('friends') == 1)
-            )->usingQueryString($request->query())->latest()->paginate(10)->withQueryString(),
+            )->usingQueryString($request, $undecodedRequestParams)
+                ->latest()
+                ->paginate(10)
+                ->withQueryString(),
             'header' => $header,
             'componentName' => $this->indexComponentName,
         ]);

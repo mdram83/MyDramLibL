@@ -19,8 +19,11 @@ use App\Utilities\API\ISBN\ISBNRestAPI;
 use App\Utilities\API\ISBN\OpenlibraryISBNRestAPI;
 use App\Utilities\Librarian\Navigator;
 use App\Utilities\Librarian\NavigatorInterface;
+use App\Utilities\Request\UndecodedRequestParams;
+use App\Utilities\Request\UndecodedRequestParamsInterface;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
         app()->bind(IGuildRepository::class, fn() => new GuildRepository());
         app()->bind(NavigatorInterface::class, fn() => new Navigator());
         app()->bind(IFriendsRepository::class, fn() => new FriendsRepository());
+
+        app()->bind(UndecodedRequestParamsInterface::class, fn() => new UndecodedRequestParams(request()));
     }
 
     /**

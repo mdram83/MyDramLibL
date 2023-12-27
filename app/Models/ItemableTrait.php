@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Utilities\Request\UndecodedRequestParams;
+use App\Utilities\Request\UndecodedRequestParamsInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 
 trait ItemableTrait
 {
@@ -54,8 +57,14 @@ trait ItemableTrait
         });
     }
 
-    public function scopeUsingQueryString($query, array $queryParams)
+    public function scopeUsingQueryString(
+        $query,
+        Request $request,
+        UndecodedRequestParamsInterface $undecodedRequestParams
+    )
     {
+        $queryParams = $request->query();
+
         if (isset($queryParams['publishedAtMin'])) {
             $query = $query->whereHas('item', function($query) use ($queryParams) {
                 $query
@@ -76,6 +85,20 @@ trait ItemableTrait
             $query = $query->whereHas('item', function($query) use ($queryParams) {
                 $query->whereNotNull('published_at');
             });
+        }
+
+        if (isset($queryParams['tags'])) {
+
+            $tags = array_map(
+                fn($tag) => rawurldecode($tag),
+                explode(',', $undecodedRequestParams->get('tags')));
+
+            $query = $query->whereHas('item', function($query) use ($tags) {
+                $query->whereHas('tags', function ($query) use ($tags) {
+                    $query->whereIn('name', $tags);
+                });
+            });
+
         }
 
         return $query;

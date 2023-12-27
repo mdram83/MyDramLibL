@@ -15,6 +15,7 @@ use App\Rules\ArtistName;
 use App\Rules\Duration;
 use App\Rules\EAN;
 use App\Rules\OneLiner;
+use App\Utilities\Request\UndecodedRequestParamsInterface;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,9 +40,13 @@ class MusicAlbumController extends Controller
 
     }
 
-    public function index(Request $request, IFriendsRepository $friendsRepository): View
+    public function index(
+        Request $request,
+        IFriendsRepository $friendsRepository,
+        UndecodedRequestParamsInterface $undecodedRequestParams
+    ): View
     {
-        return $this->onIndex('Music Albums', $request, $friendsRepository);
+        return $this->onIndex('Music Albums', $request, $friendsRepository, $undecodedRequestParams);
     }
 
     public function show(int $id, IFriendsRepository $friendsRepository): View

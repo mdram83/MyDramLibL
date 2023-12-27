@@ -12,6 +12,7 @@ use App\Models\Repositories\Interfaces\ITagRepository;
 use App\Rules\ArtistName;
 use App\Rules\ISBN;
 use App\Rules\OneLiner;
+use App\Utilities\Request\UndecodedRequestParamsInterface;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,9 +37,13 @@ class BookController extends Controller
 
     }
 
-    public function index(Request $request, IFriendsRepository $friendsRepository): View
+    public function index(
+        Request $request,
+        IFriendsRepository $friendsRepository,
+        UndecodedRequestParamsInterface $undecodedRequestParams
+    ): View
     {
-        return $this->onIndex('Books', $request, $friendsRepository);
+        return $this->onIndex('Books', $request, $friendsRepository, $undecodedRequestParams);
     }
 
     public function show(int $id, IFriendsRepository $friendsRepository): View
