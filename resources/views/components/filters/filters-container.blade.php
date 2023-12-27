@@ -17,8 +17,8 @@
                         <x-filters.containers.tags-filter-container />
                     </x-filters.filter-container>
 
-                    <x-filters.filter-container filterName="Users">
-                        Test content
+                    <x-filters.filter-container filterName="Friends & You">
+                        <x-filters.containers.users-filter-container />
                     </x-filters.filter-container>
 
                 </div>

@@ -4,9 +4,7 @@
 
 <div>
 
-    <div id="filter-tags-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
-
-    <div class="my-4">
+    <div class="mb-4">
         <x-itemable.form.input type="text"
                                id="filter-tags-input"
                                name="filter-tags-input"
@@ -18,6 +16,8 @@
         />
         <datalist id="filter-tags-datalist"></datalist>
     </div>
+
+    <div id="filter-tags-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
 
 </div>
 
