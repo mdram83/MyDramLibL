@@ -19,7 +19,12 @@ interface ItemableInterface
     public function getTags() : ?Collection;
     public function getItemableType() : string;
     public function scopeOfUsers($query, array $userIds);
-    public function scopeUsingQueryString(
+    public function scopeUsingClassSpecificQueryString(
+        $query,
+        Request $request,
+        UndecodedRequestParamsInterface $undecodedRequestParams
+    );
+    public function scopeUsingGenericQueryString(
         $query,
         Request $request,
         UndecodedRequestParamsInterface $undecodedRequestParams,

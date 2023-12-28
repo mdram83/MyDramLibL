@@ -76,7 +76,8 @@ trait ItemableTrait
     {
         return view('itemables.index', [
             'itemables' => ($this->itemableClassName)
-                ::usingQueryString($request, $undecodedRequestParams, $friendsRepository)
+                ::usingGenericQueryString($request, $undecodedRequestParams, $friendsRepository)
+                ->usingClassSpecificQueryString($request, $undecodedRequestParams)
                 ->latest()
                 ->paginate(10)
                 ->withQueryString(),

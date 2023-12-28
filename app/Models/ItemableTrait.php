@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Repositories\Interfaces\IFriendsRepository;
-use App\Utilities\Request\UndecodedRequestParams;
 use App\Utilities\Request\UndecodedRequestParamsInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
@@ -58,7 +57,7 @@ trait ItemableTrait
         });
     }
 
-    public function scopeUsingQueryString(
+    public function scopeUsingGenericQueryString(
         $query,
         Request $request,
         UndecodedRequestParamsInterface $undecodedRequestParams,
