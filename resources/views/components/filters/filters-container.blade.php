@@ -23,7 +23,19 @@
 
                     @if(request()->path() === 'books')
                         <x-filters.filter-container filterName="Authors">
-                            <x-filters.containers.authors-filter-container />
+                            <x-filters.containers.artists-filter-container
+                                filterName="authors"
+                                inputPlaceholder="Select Author"
+                            />
+                        </x-filters.filter-container>
+                    @endif
+
+                    @if(request()->path() === 'music')
+                        <x-filters.filter-container filterName="Main Artists">
+                            <x-filters.containers.artists-filter-container
+                                filterName="mainArtists"
+                                inputPlaceholder="Select Main Artist"
+                            />
                         </x-filters.filter-container>
                     @endif
 

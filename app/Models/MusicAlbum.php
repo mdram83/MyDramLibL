@@ -44,7 +44,26 @@ class MusicAlbum extends Model implements ItemableInterface
     {
         $queryParams = $request->query();
 
-        // specific filters implementation goes here
+        if (isset($queryParams['mainArtists'])) {
+
+            $artistsNamesFromQueryString = array_map(
+                fn($item) => rawurldecode($item),
+                explode(',', $undecodedRequestParams->get('mainArtists'))
+            );
+
+            $artistsNamesWithIdKeys = [];
+            foreach(Artist::all() as $artist) {
+                $artistsNamesWithIdKeys[$artist->id] = $artist->getName();
+            }
+
+            $requestedArtistsIds = array_keys(array_intersect($artistsNamesWithIdKeys, $artistsNamesFromQueryString));
+
+            $query = $query->whereHas('item', function($query) use ($requestedArtistsIds) {
+                $query->whereHas('mainArtists', function($query) use ($requestedArtistsIds) {
+                    $query->whereIn('artistable_id', $requestedArtistsIds);
+                });
+            });
+        }
 
         return $query;
     }
