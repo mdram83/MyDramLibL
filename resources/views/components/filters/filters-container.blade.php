@@ -21,6 +21,12 @@
                         <x-filters.containers.users-filter-container />
                     </x-filters.filter-container>
 
+                    @if(request()->path() === 'books')
+                        <x-filters.filter-container filterName="Authors">
+                            <x-filters.containers.authors-filter-container />
+                        </x-filters.filter-container>
+                    @endif
+
                 </div>
 
                 <div class="flex justify-center mt-1">
