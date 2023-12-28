@@ -2,30 +2,10 @@
     @vite('resources/js/library/ajax/generic-datalist.js')
 @endpush
 
-<div class="sm:min-h-[120px]">
 
-    <div class="mb-4">
-        <x-itemable.form.input type="text"
-                               id="filter-users-input"
-                               name="filter-users-input"
-                               list="filter-users-datalist"
-                               autocomplete="off"
-                               placeholder="Select Friend"
-                               class="rounded-xl"
-        />
-        <datalist id="filter-users-datalist"></datalist>
-    </div>
-
-    <div id="filter-users-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
-
+<x-slot name="controlButtons">
     <div>
-        <input type="checkbox" id="filter-users-excludeMyItems" name="filter-users-excludeMyItems">
-        <label for="filter-users-excludeMyItems" class="text-sm px-1.5">
-            Exclude your items
-        </label>
-    </div>
 
-    <div class="mt-2">
         <x-library-button
             name="filter-users-addAllFriends"
             id="filter-users-addAllFriends"
@@ -37,11 +17,42 @@
                 focus:ring ring-[#ff7210]
                 text-xs
             "
-        >Add All Friends</x-library-button>
+        >Add All</x-library-button>
+
     </div>
+</x-slot>
 
-</div>
+<x-slot name="additionalControls">
+    <div class="pt-4">
 
-<div class="mt-2">
-    <x-filters.clear-filter-button name="filter-users-clear" />
-</div>
+        <input type="checkbox" id="filter-users-excludeMyItems" name="filter-users-excludeMyItems">
+        <label for="filter-users-excludeMyItems" class="text-sm px-1.5">
+            Exclude your items
+        </label>
+
+    </div>
+</x-slot>
+
+<x-slot name="mainFilterControl">
+    <div>
+
+        <x-itemable.form.input type="text"
+                               id="filter-users-input"
+                               name="filter-users-input"
+                               list="filter-users-datalist"
+                               autocomplete="off"
+                               placeholder="Select Friend"
+                               class="rounded-xl"
+        />
+        <datalist id="filter-users-datalist"></datalist>
+
+    </div>
+</x-slot>
+
+<x-slot name="selectedFilterItems">
+    <div>
+
+        <div id="filter-users-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
+
+    </div>
+</x-slot>

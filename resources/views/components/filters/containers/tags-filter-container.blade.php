@@ -2,9 +2,15 @@
     @vite('resources/js/library/ajax/generic-datalist.js')
 @endpush
 
-<div class="sm:min-h-[120px]">
+<x-slot name="controlButtons">
+</x-slot>
 
-    <div class="mb-4">
+<x-slot name="additionalControls">
+</x-slot>
+
+<x-slot name="mainFilterControl">
+    <div>
+
         <x-itemable.form.input type="text"
                                id="filter-tags-input"
                                name="filter-tags-input"
@@ -15,12 +21,14 @@
                                class="rounded-xl"
         />
         <datalist id="filter-tags-datalist"></datalist>
+
     </div>
+</x-slot>
 
-    <div id="filter-tags-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
+<x-slot name="selectedFilterItems">
+    <div>
 
-</div>
+        <div id="filter-tags-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
 
-<div class="mt-2">
-    <x-filters.clear-filter-button name="filter-tags-clear" />
-</div>
+    </div>
+</x-slot>

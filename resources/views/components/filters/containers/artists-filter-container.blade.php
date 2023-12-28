@@ -1,8 +1,14 @@
 @props(['filterName', 'inputPlaceholder'])
 
-<div class="sm:min-h-[120px]">
+<x-slot name="controlButtons">
+</x-slot>
 
-    <div class="mb-4">
+<x-slot name="additionalControls">
+</x-slot>
+
+<x-slot name="mainFilterControl">
+    <div>
+
         <x-itemable.form.input type="text"
                                id="filter-{{ $filterName }}-input"
                                name="filter-{{ $filterName }}-input"
@@ -12,12 +18,16 @@
                                class="rounded-xl"
         />
         <datalist id="filter-{{ $filterName }}-datalist"></datalist>
+
     </div>
+</x-slot>
 
-    <div id="filter-{{ $filterName }}-selected" class="col-span-2 text-sm text-white leading-6 flex flex-wrap"></div>
+<x-slot name="selectedFilterItems">
+    <div>
 
-</div>
+        <div id="filter-{{ $filterName }}-selected"
+             class="{{--col-span-2 --}}text-sm text-white leading-6 flex flex-wrap"
+        ></div>
 
-<div class="mt-2">
-    <x-filters.clear-filter-button name="filter-{{ $filterName }}-clear" />
-</div>
+    </div>
+</x-slot>

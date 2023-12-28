@@ -168,7 +168,7 @@ class GuildsFilter
     {
         const span = document.createElement("span");
         span.setAttribute("id", "filter-" + this.filterName + "-span-" + filterIndex);
-        span.setAttribute("class", "my-1 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl");
+        span.setAttribute("class", "mb-2 mx-1 px-2 py-0.5 bg-gray-400 rounded-xl");
         span.appendChild(document.createTextNode(filterValue));
 
         const a = document.createElement("a");
