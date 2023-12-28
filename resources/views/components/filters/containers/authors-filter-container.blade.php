@@ -1,7 +1,3 @@
-@push('custom-scripts')
-    @vite('resources/js/library/ajax/generic-datalist.js')
-@endpush
-
 <div class="sm:min-h-[120px]">
 
     <div class="mb-4">
@@ -10,7 +6,6 @@
                                name="filter-authors-input"
                                list="filter-authors-datalist"
                                autocomplete="off"
-                               onfocus="window.ajaxPopulateGenericDatalist('filter-authors-datalist', 'name', '/ajax/tags');"
                                placeholder="Select Author"
                                class="rounded-xl"
         />

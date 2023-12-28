@@ -1,6 +1,7 @@
 import PublishedAtFilter from "@/library/filters/PublishedAtFilter";
 import TagsFilter from "@/library/filters/TagsFilter";
 import UsersFilter from "@/library/filters/UsersFilter";
+import AuthorsFilter from "@/library/filters/AuthorsFilter";
 
 class FilterView
 {
@@ -18,6 +19,9 @@ class FilterView
         this.filters.push(new PublishedAtFilter({parent: this}));
         this.filters.push(new TagsFilter({parent: this}));
         this.filters.push(new UsersFilter({parent: this}));
+        if (window.location.pathname === '/books') {
+            this.filters.push(new AuthorsFilter({parent: this}));
+        }
 
         this.#events();
     }
