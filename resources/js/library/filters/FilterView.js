@@ -2,6 +2,7 @@ import PublishedAtFilter from "@/library/filters/PublishedAtFilter";
 import TagsFilter from "@/library/filters/TagsFilter";
 import UsersFilter from "@/library/filters/UsersFilter";
 import ArtistsFilter from "@/library/filters/ArtistsFilter";
+import GuildsFilter from "@/library/filters/GuildsFilter";
 
 class FilterView
 {
@@ -24,6 +25,7 @@ class FilterView
         }
         if (window.location.pathname === '/music') {
             this.filters.push(new ArtistsFilter({parent: this, filterName: 'mainArtists'}));
+            this.filters.push(new GuildsFilter({parent: this, filterName: 'mainBands'}));
         }
 
         this.#events();

@@ -65,6 +65,27 @@ class MusicAlbum extends Model implements ItemableInterface
             });
         }
 
+        if (isset($queryParams['mainBands'])) {
+
+            $guildsNamesFromQueryString = array_map(
+                fn($item) => rawurldecode($item),
+                explode(',', $undecodedRequestParams->get('mainBands'))
+            );
+
+            $guildsNamesWithIdKeys = [];
+            foreach(Guild::all() as $guild) {
+                $guildsNamesWithIdKeys[$guild->id] = $guild->name;
+            }
+
+            $requestedGuildsIds = array_keys(array_intersect($guildsNamesWithIdKeys, $guildsNamesFromQueryString));
+
+            $query = $query->whereHas('item', function($query) use ($requestedGuildsIds) {
+                $query->whereHas('mainBands', function($query) use ($requestedGuildsIds) {
+                    $query->whereIn('guildable_id', $requestedGuildsIds);
+                });
+            });
+        }
+
         return $query;
     }
 }

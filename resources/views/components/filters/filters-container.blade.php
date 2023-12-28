@@ -37,6 +37,13 @@
                                 inputPlaceholder="Select Main Artist"
                             />
                         </x-filters.filter-container>
+
+                        <x-filters.filter-container filterName="Main Bands">
+                            <x-filters.containers.guilds-filter-container
+                                filterName="mainBands"
+                                inputPlaceholder="Select Main Band"
+                            />
+                        </x-filters.filter-container>
                     @endif
 
                 </div>
